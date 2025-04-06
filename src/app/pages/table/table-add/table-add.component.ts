@@ -18,7 +18,7 @@ export class TableAddComponent {
     this.closePupAdd.emit();
   }
 
-  selectedRoom: any = {};
+  @Input() selectedRoom: any = {};
   tables = [
     { label: 'Danh mục', icon: 'bi-folder', tab: 'category' },
     { label: 'Nội dung mở rộng', icon: 'bi-file-earmark-text', tab: 'extraContent' },

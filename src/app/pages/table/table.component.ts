@@ -9,10 +9,15 @@ export class TableComponent {
 
   showoffcanvas = false;
   showAdd = false;
-
+  selectedRoom: any = {};
+  
   click(event: any) {
     if (event === '101') {
       this.showoffcanvas = true;
+      this.selectedRoom = {};
+    } else if (event === '102') {
+      this.showoffcanvas = true;
+      this.selectedRoom.roomName = 'hahha';
     }
   }
 

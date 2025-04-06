@@ -7,16 +7,15 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, 
 })
 export class FormAddComponent implements AfterViewInit {
   @Input() headerDiv?: any;
-  @Input() categoryContent: TemplateRef<any[]> | null = null;
+  // @Input() categoryContent: TemplateRef<any[]> | null = null;
   @Input() tabTemplates: { [key: string]: TemplateRef<any> } = {};
-  @Input() extraContent: TemplateRef<any> | null = null;
+  // @Input() extraContent: TemplateRef<any> | null = null;
 
-  @ViewChild('contentContainer', { read: ViewContainerRef }) contentContainer!: ViewContainerRef;
-  @ViewChild('extraContainer', { read: ViewContainerRef }) extraContainer!: ViewContainerRef;
+  // @ViewChild('contentContainer', { read: ViewContainerRef }) contentContainer!: ViewContainerRef;
+  // @ViewChild('extraContainer', { read: ViewContainerRef }) extraContainer!: ViewContainerRef;
 
 
   @Input() showoffcanvas = false;
-
 
   isLargeScreen: boolean = window.innerWidth > 470;
 
@@ -30,6 +29,9 @@ export class FormAddComponent implements AfterViewInit {
     this.cdr.detectChanges();
   }
 
+
+
+  //#region  event
 
   selectedTab: string = 'category';
   selectTab(tab: string) {

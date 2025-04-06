@@ -9,6 +9,12 @@ export class LayoutComponent {
 
   @Output() showPupAdd = new EventEmitter<void>();
 
+
+
+
+
+  //#region  event
+
   onChildClick(event: any) {
     this.showPupAdd.emit(event);
   }

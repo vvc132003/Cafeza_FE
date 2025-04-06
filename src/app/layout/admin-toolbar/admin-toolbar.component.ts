@@ -46,6 +46,8 @@ export class AdminToolbarComponent {
   @Output() showPupAdd = new EventEmitter<string>();
 
 
+  //#region  event
+
   toggleButtons() {
     this.showButtons = !this.showButtons;
   }
