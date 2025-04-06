@@ -1,0 +1,7 @@
+<app-layout (showPupAdd)="click($event)">
+
+</app-layout>
+
+<!-- <ng-container *ngIf="showAdd"> -->
+    <app-table-add [showoffcanvas]="showoffcanvas" (closePupAdd)="close()"></app-table-add>
+<!-- </ng-container> -->

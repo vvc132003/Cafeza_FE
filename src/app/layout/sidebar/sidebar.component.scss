@@ -1,0 +1,118 @@
+.sidebar {
+  position: fixed;
+  top: 60px;
+  /* dưới header */
+  left: 0;
+  width: 220px;
+  height: calc(100vh - 60px);
+  background-color: #2e3a59;
+  color: white;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.sidebar ul li a.active {
+  color: red !important;
+  font-weight: bold;
+  border-left: 4px solid red;
+  padding-left: 10px;
+}
+
+
+.sidebar ul li a p {
+  margin: 0;
+  font-size: 20px;
+  /* Cỡ icon */
+  margin-right: 10px;
+}
+
+.sidebar ul li a:hover {
+  background: #495057;
+}
+
+/* Khi màn hình nhỏ hơn 420px */
+@media (max-width: 470px) {
+  .sidebar {
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    top: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+    background: white;
+    overflow: hidden;
+    z-index: 1000;
+  }
+
+  .sidebar ul {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .sidebar ul li {
+    flex: 1;
+    text-align: center;
+  }
+
+  .sidebar ul li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    /* Đảm bảo menu ngang đều */
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    flex-direction: column;
+    /* Icon trên, text dưới */
+  }
+
+  .sidebar ul li a p {
+    margin: 0;
+    font-size: 24px;
+    /* Icon lớn hơn */
+  }
+
+  .sidebar ul li a span {
+    // font-size: 12px;
+    display: none;
+  }
+
+  .sidebar ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .sidebar ul li a.active {
+    border-left: none;
+    border-bottom: 4px solid #000;
+  }
+}

@@ -1,0 +1,25 @@
+<app-form-add [headerDiv]="tables" [showoffcanvas]="showoffcanvas" (closePupAdd)="close()"
+  [tabTemplates]="{ category: categoryContent, extraContent: extraContent, setting:setting }">
+</app-form-add>
+
+<ng-template #categoryContent>
+  <div class="mb-3">
+    <label for="roomName" class="form-label small ">Tên phòng</label>
+    <input type="text" class="form-control form-control-sm" id="roomName" name="roomName"
+      [(ngModel)]="selectedRoom.roomName" required>
+  </div>
+  <div class="offcanvas-footer">
+    <button type="button" class="btn btn-primary px-4" (click)="save()">
+      <i class="fa fa-save"></i>
+      Lưu
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #extraContent>
+  <p>Chỗ này có thể chèn thêm bất kỳ HTML nào bạn muốn</p>
+</ng-template>
+
+<ng-template #setting>
+  <p>Csettingốn</p>
+</ng-template>

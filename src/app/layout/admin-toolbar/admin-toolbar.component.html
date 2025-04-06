@@ -1,0 +1,13 @@
+<div class="admin-toolbar">
+  <div class="toolbar-title">Quản lý Quán Cafe</div>
+  <div class="toolbar-buttons" [class.show]="showButtons">
+    <button *ngFor="let button of buttons" class="btn" [ngClass]="getButtonClass(button.type)"
+      (click)="button.action()">
+      <i class="me-1 fa" [class]="button.icon"></i>
+      <span>{{ button.label }}</span>
+    </button>
+  </div>
+  <button class="show-buttons btn btn-primary" (click)="toggleButtons()">
+    <i class="fas fa-caret-up"></i>
+  </button>
+</div>
