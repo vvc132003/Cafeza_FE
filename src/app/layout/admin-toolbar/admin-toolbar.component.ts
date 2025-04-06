@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-admin-toolbar',
@@ -7,6 +7,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class AdminToolbarComponent {
   showButtons = false;
+
   buttons = [
     {
       id: '101',
@@ -44,7 +45,7 @@ export class AdminToolbarComponent {
 
 
   @Output() showPupAdd = new EventEmitter<string>();
-
+  @Input() text: string = "";
 
   //#region  event
 

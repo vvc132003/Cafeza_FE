@@ -1,0 +1,6 @@
+<app-layout [text]="'Quản lý món'" (showPupAdd)="click($event)">
+</app-layout>
+
+<app-admin-menu-add [showoffcanvas]="showoffcanvas" [drink]="drink" (closePupAdd)="close()"></app-admin-menu-add>
+
+<app-drink-detail [showoffcanvas]="showDetail" (closePupAdd)="close()"></app-drink-detail>

@@ -9,7 +9,7 @@ export class TableAddComponent {
   @ViewChild('extraContent') extraContent!: TemplateRef<any>;
   @ViewChild('categoryContent') categoryContent!: TemplateRef<any>;
   @ViewChild('setting') setting!: TemplateRef<any>;
-  @ViewChild('button') button!: TemplateRef<any>;
+  // @ViewChild('button') button!: TemplateRef<any>;
 
   @Input() showoffcanvas = false;
   @Output() closePupAdd = new EventEmitter<void>();

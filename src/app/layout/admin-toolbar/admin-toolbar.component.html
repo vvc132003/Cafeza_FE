@@ -1,5 +1,5 @@
 <div class="admin-toolbar">
-  <div class="toolbar-title">Quản lý Quán Cafe</div>
+  <div class="toolbar-title">{{text}}</div>
   <div class="toolbar-buttons" [class.show]="showButtons">
     <button *ngFor="let button of buttons" class="btn" [ngClass]="getButtonClass(button.type)"
       (click)="button.action()">
