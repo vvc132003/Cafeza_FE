@@ -16,6 +16,9 @@ import { AdminToolbarComponent } from './layout/admin-toolbar/admin-toolbar.comp
 import { AdminMenuComponent } from './pages/admin-menu/admin-menu.component';
 import { AdminMenuAddComponent } from './pages/admin-menu/admin-menu-add/admin-menu-add.component';
 import { DrinkDetailComponent } from './pages/admin-menu/drink-detail/drink-detail.component';
+import { ToastrModule } from 'ngx-toastr';
+import { HttpClientModule } from '@angular/common/http';
+import { AdminMenuListComponent } from './pages/admin-menu/admin-menu-list/admin-menu-list.component';
 
 @NgModule({
   declarations: [
@@ -31,12 +34,16 @@ import { DrinkDetailComponent } from './pages/admin-menu/drink-detail/drink-deta
     AdminToolbarComponent,
     AdminMenuComponent,
     AdminMenuAddComponent,
-    DrinkDetailComponent
+    DrinkDetailComponent,
+    AdminMenuListComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ToastrModule.forRoot(),
+    HttpClientModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

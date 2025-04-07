@@ -1,35 +1,67 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { DrinkService } from 'src/app/services/drinkservice';
 
 @Component({
   selector: 'app-admin-menu',
   templateUrl: './admin-menu.component.html',
   styleUrls: ['./admin-menu.component.scss']
 })
-export class AdminMenuComponent {
+export class AdminMenuComponent implements OnInit, OnDestroy {
   showoffcanvas = false;
   showAdd = false;
   showDetail = false;
   selectedRoom: any = {};
-  drink: any = {};
+  drinks: any[] = [];
+  drink: any;
+  drinkUpdate: any = {};
+  @ViewChild('adminMenuList', { static: true }) adminMenuList!: TemplateRef<any>;
+  @ViewChild('adminMenuAdd', { static: true }) adminMenuAdd!: TemplateRef<any>;
 
+
+
+  private subscription = new Subscription();
+
+  constructor(private drinkService: DrinkService, private cdr: ChangeDetectorRef) { }
+
+  ngOnInit(): void {
+    this.loadDrinks();
+  }
+  //#region load
+  loadDrinks() {
+    this.subscription.add(
+      this.drinkService.getData().subscribe((data: any) => {
+        this.drinks = data;
+        this.drink = this.drinks[0];
+        // console.log(data);
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  //#region event
+
+  newDrink(data: any) {
+    this.drinks.unshift(data);
+  }
+
+  dblclickDrink() {
+    this.showoffcanvas = true;
+  }
+  selectDrink(event: any) {
+    this.drink = event;
+  }
 
   click(event: any) {
     if (event === '101') {
       this.showoffcanvas = true;
-      this.drink = {};
+      this.drinkUpdate = {};
     } else if (event === '102') {
       this.showoffcanvas = true;
-      this.drink = {
-        sku: 'SKU123456',
-        name: 'Cà phê sữa đá',
-        categoryId: 1,
-        price: 25000,
-        description: 'Một ly cà phê sữa đá thơm ngon, đậm đà.',
-        quantity: 10,
-        status: 'available',
-        size: 'medium',
-        image: null
-      };
+      this.drinkUpdate = this.drinks.find(dr => dr.id == this.drink.id);
     }
     else if (event === '103') {
       this.showDetail = true;

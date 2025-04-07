@@ -5,6 +5,9 @@
     <app-sidebar></app-sidebar>
     <div class="admin-content">
       <router-outlet></router-outlet>
+      <ng-container *ngFor="let entry of tabTemplates | keyvalue">
+        <ng-container [ngTemplateOutlet]="entry.value"></ng-container>
+      </ng-container>
     </div>
   </div>
 </div>

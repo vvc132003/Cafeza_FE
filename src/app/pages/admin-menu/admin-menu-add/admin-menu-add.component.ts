@@ -1,15 +1,20 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { DrinkService } from 'src/app/services/drinkservice';
+import { NotificationService } from 'src/app/services/notification';
 
 @Component({
   selector: 'app-admin-menu-add',
   templateUrl: './admin-menu-add.component.html',
   styleUrls: ['./admin-menu-add.component.scss']
 })
-export class AdminMenuAddComponent implements OnInit, OnChanges {
+export class AdminMenuAddComponent implements OnInit, OnChanges, OnDestroy {
 
   // @ViewChild('extraContent') extraContent!: TemplateRef<any>;
   @Input() showoffcanvas = false;
   @Output() closePupAdd = new EventEmitter<void>();
+  @Output() newDrink = new EventEmitter<void>();
+
 
 
   @Input() drink: any = {};
@@ -25,11 +30,21 @@ export class AdminMenuAddComponent implements OnInit, OnChanges {
     // { label: 'Cài đặt', icon: 'bi-file-earmark-text', tab: 'setting' },
   ];
 
+  private subscription = new Subscription();
+
+  constructor(private notificationService: NotificationService, private drinkService: DrinkService) { }
+
+
   //#region  load
 
   ngOnInit(): void {
 
   }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['drink'] && changes['drink'].currentValue) {
@@ -50,11 +65,17 @@ export class AdminMenuAddComponent implements OnInit, OnChanges {
 
   //#region  event
 
-  save() {
-    throw new Error('Method not implemented.');
+  save(): void {
+    this.saveDrink();
+  }
+  saveDrink() {
+    this.drinkService.postData(this.drink).subscribe((data: any) => {
+      this.close();
+      // console.log(data);
+      this.newDrink.emit(data);
+    })
   }
   onFileChange($event: Event) {
-    throw new Error('Method not implemented.');
   }
 
   close() {

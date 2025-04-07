@@ -1,0 +1,21 @@
+<div class="container mt-4 mb-4">
+    <div class="list-group-item d-flex fw-bold shadow-sm mb-2 sticky-header">
+        <div class="col-2 p">Mã món</div>
+        <div class="col-2">Tên món</div>
+        <div class="col-2">Giá bán</div>
+        <div class="col-2">Số lượng tồn</div>
+        <div class="col-2">Trạng thái</div>
+        <div class="col-2 p">Ảnh</div>
+    </div>
+    <div class="list-group">
+        <div *ngFor="let drink of drinks" (dblclick)="dblclickDrink()" (click)="clickDrink(drink)" class="list-group-item d-flex mb-2"
+            [ngClass]="{'selected-drink': drinkselect?.id === drink?.id}">
+            <div class="col-2 p">{{ drink.sku }}</div>
+            <div class="col-2">{{ drink.name }}</div>
+            <div class="col-2">{{ drink.price | number }} VNĐ</div>
+            <div class="col-2">{{ drink.quantity }}</div>
+            <div class="col-2"><span class="task-status" [ngClass]="getStatusClass(drink.status)">
+                    {{ getStatusText(drink.status) }}</span></div>
+        </div>
+    </div>
+</div>
