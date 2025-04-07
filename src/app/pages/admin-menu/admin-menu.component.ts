@@ -11,6 +11,7 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
   showoffcanvas = false;
   showAdd = false;
   showDetail = false;
+
   selectedRoom: any = {};
   drinks: any[] = [];
   drink: any;
@@ -46,11 +47,16 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
 
   newDrink(data: any) {
     this.drinks.unshift(data);
+    this.drink = data;
   }
 
   dblclickDrink() {
-    this.showoffcanvas = true;
+    const found = this.drinks.find(dr => dr.id == this.drink.id);
+    if (!found) return;
+    this.drinkUpdate = found;
+    setTimeout(() => this.showDetail = true, 100);
   }
+
   selectDrink(event: any) {
     this.drink = event;
   }
@@ -64,7 +70,7 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
       this.drinkUpdate = this.drinks.find(dr => dr.id == this.drink.id);
     }
     else if (event === '103') {
-      this.showDetail = true;
+      this.dblclickDrink();
     }
   }
 

@@ -1,16 +1,52 @@
 <div class="custom-offcanvas" [class.show]="showoffcanvas">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasRightLabel">ới</h5>
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{text}}</h5>
         <button class="close-btn" (click)="close()">
             <i class="bi bi-x-lg"></i>
         </button>
     </div>
     <div class="container-fluid p-3 ">
         <div class="offcanvas-body">
-            <div class="row">
-                
+            <div class="product-card ">
+                <div class="image-wrapper" (mouseenter)="onHover()" (mouseleave)="onLeave()">
+                    <img *ngIf="drink?.imagePath; else noImage" [src]="drink.imagePath" alt="{{drink.name}}"
+                        (click)="openModal()" class="full-image">
+                    <ng-template #noImage>
+                        <div class="image-placeholder">
+                            <i class="bi bi-image text-muted fs-3"></i>
+                            <p class="text-muted small">Không có ảnh</p>
+                        </div>
+                    </ng-template>
+                    <div class="zoom-btn" *ngIf="showZoomBtn" (click)="openModal()">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <h4 class="product-name">{{ drink?.name }}</h4>
+                    <div class="info-grid">
+                        <div><strong>Mã món:</strong> {{ drink?.sku }}</div>
+                        <div><strong>Giá bán:</strong> {{ drink?.price | number }} VNĐ</div>
+                        <div><strong>Số lượng tồn:</strong> {{ drink?.quantity }}</div>
+                        <div><strong>Kích thước:</strong> {{ drink?.size }}</div>
+                        <div><strong>Danh mục:</strong> {{ drink?.categoryId }}</div>
+                        <div><strong class="me-1">Trạng thái:</strong>
+                            <span class="task-status" [ngClass]="getStatusClass(drink.status)">
+                                {{ getStatusText(drink.status) }}</span>
+                        </div>
+                    </div>
+                    <textarea class="form-control form-control-sm" [(ngModel)]="drink.description" rows="6" cols="50"
+                        readonly></textarea>
+                    <!-- <p class="description text-muted">{{ drink?.description }}</p> -->
+                </div>
             </div>
         </div>
     </div>
 </div>
 <div class="custom-backdrop" [class.show]="showoffcanvas"></div>
+
+<div *ngIf="isModalOpen" class="modal-backdrop" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <img [src]="drink?.imagePath" alt="{{drink.name}}" class="modal-image">
+        <button class="close-btns" (click)="closeModal()">X</button>
+    </div>
+</div>

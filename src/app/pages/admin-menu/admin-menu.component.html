@@ -1,13 +1,16 @@
-<app-layout [text]="'Quản lý món'" (showPupAdd)="click($event)"
-    [tabTemplates]="{adminMenuList, adminMenuAdd}">
+<app-layout [text]="'Quản lý món'" (showPupAdd)="click($event)" [tabTemplates]="{adminMenuList, adminMenuAdd}">
 </app-layout>
 
 <ng-template #adminMenuAdd>
-    <app-admin-menu-add [showoffcanvas]="showoffcanvas" [drink]="drinkUpdate" (newDrink)="newDrink($event)"  (closePupAdd)="close()"></app-admin-menu-add>
+    <app-admin-menu-add [showoffcanvas]="showoffcanvas" [drink]="drinkUpdate" (newDrink)="newDrink($event)"
+        (closePupAdd)="close()"></app-admin-menu-add>
 </ng-template>
 
-<app-drink-detail [showoffcanvas]="showDetail" (closePupAdd)="close()"></app-drink-detail>
+<app-drink-detail *ngIf="drinkUpdate" [showoffcanvas]="showDetail" [drink]="drinkUpdate" (closePupAdd)="close()">
+</app-drink-detail>
+
 
 <ng-template #adminMenuList>
-    <app-admin-menu-list [drinks]="drinks" [drinkselect]="drink" (drink)="selectDrink($event)" (dblclick)="dblclickDrink()"></app-admin-menu-list>
+    <app-admin-menu-list [drinks]="drinks" [drinkselect]="drink" (drink)="selectDrink($event)"
+        (dblclick)="dblclickDrink()"></app-admin-menu-list>
 </ng-template>

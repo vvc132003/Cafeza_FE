@@ -39,6 +39,7 @@ export class AdminMenuListComponent implements OnInit {
     this.drinkselect = drink;
     this.drink.emit(drink);
   }
+  
   dblclickDrink() {
     this.dblclick.emit();
   }
