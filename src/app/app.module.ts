@@ -43,7 +43,6 @@ import { AdminMenuListComponent } from './pages/admin-menu/admin-menu-list/admin
     FormsModule,
     ToastrModule.forRoot(),
     HttpClientModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]

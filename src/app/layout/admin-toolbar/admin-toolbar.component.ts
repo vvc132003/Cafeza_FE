@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-admin-toolbar',
   templateUrl: './admin-toolbar.component.html',
   styleUrls: ['./admin-toolbar.component.scss']
 })
-export class AdminToolbarComponent {
+export class AdminToolbarComponent implements OnInit, OnChanges {
   showButtons = false;
 
   buttons = [
@@ -40,12 +40,42 @@ export class AdminToolbarComponent {
       type: 'danger',
       action: () => this.event('104'),
       display: 'block'
+    },
+    {
+      id: '106',
+      label: 'Hoàn tất',
+      icon: 'fa-check',
+      type: 'success',
+      action: () => this.event('106'),
+      display: 'block'
+    },
+    {
+      id: '108',
+      label: 'Tạo hoá đơn',
+      icon: 'fa-file-invoice',
+      type: 'success',
+      action: () => this.event('108'),
+      display: 'block'
     }
   ];
 
 
   @Output() showPupAdd = new EventEmitter<string>();
+  @Output() showButtonss = new EventEmitter<any>();
+
   @Input() text: string = "";
+  @Input() count: number = 0;
+  @Input() buttonNone: any[] = [];
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['buttonNone']) {
+      this.buttonNone = this.buttonNone;
+    }
+  }
+
+  ngOnInit(): void {
+    this.showButtonss.emit(this.buttons);
+  }
 
   //#region  event
 
@@ -65,6 +95,7 @@ export class AdminToolbarComponent {
       case 'secondary': return 'btn-secondary';
       case 'warning': return 'btn-warning';
       case 'danger': return 'btn-danger';
+      case 'success': return 'btn-success';
       default: return 'light';
     }
   }

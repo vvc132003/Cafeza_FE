@@ -14,10 +14,12 @@ export class AdminMenuAddComponent implements OnInit, OnChanges, OnDestroy {
   @Input() showoffcanvas = false;
   @Output() closePupAdd = new EventEmitter<void>();
   @Output() newDrink = new EventEmitter<void>();
-
-
+  @Input() data: any;
+  text: string = "";
+  action: string = "";
 
   @Input() drink: any = {};
+  
   categories = [
     { id: '1', name: 'Đồ uống' },
     { id: '2', name: 'Đồ ăn' },
@@ -61,13 +63,23 @@ export class AdminMenuAddComponent implements OnInit, OnChanges, OnDestroy {
       }
       this.drink.sku = sku
     }
+    if (changes['data'] && changes['data'].currentValue) {
+      this.data = { ...changes['data'].currentValue };
+      this.text = this.data.text;
+      this.action = this.data.action;
+    }
   }
 
   //#region  event
 
   save(): void {
-    this.saveDrink();
+    if (this.action === 'add') {
+      this.saveDrink();
+    } else if (this.action === 'update') {
+      this.updateDrink();
+    }
   }
+
   saveDrink() {
     this.drinkService.postData(this.drink).subscribe((data: any) => {
       this.close();
@@ -75,6 +87,15 @@ export class AdminMenuAddComponent implements OnInit, OnChanges, OnDestroy {
       this.newDrink.emit(data);
     })
   }
+
+  updateDrink() {
+    this.drinkService.updateData(this.drink).subscribe((data: any) => {
+      this.close();
+      // console.log(data);
+      this.newDrink.emit(data);
+    })
+  }
+
   onFileChange($event: Event) {
   }
 

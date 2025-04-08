@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DrinkService } from 'src/app/services/drinkservice';
 
@@ -16,6 +16,7 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
   drinks: any[] = [];
   drink: any;
   drinkUpdate: any = {};
+  count: number = 0;
   @ViewChild('adminMenuList', { static: true }) adminMenuList!: TemplateRef<any>;
   @ViewChild('adminMenuAdd', { static: true }) adminMenuAdd!: TemplateRef<any>;
 
@@ -34,7 +35,11 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
       this.drinkService.getData().subscribe((data: any) => {
         this.drinks = data;
         this.drink = this.drinks[0];
-        // console.log(data);
+        this.count = this.drinks.length;
+        if (this.pendingActions.length > 0) {
+          this.evetnbuttons(this.pendingActions);
+          // this.pendingActions = [];
+        }
       })
     );
   }
@@ -46,11 +51,17 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
   //#region event
 
   newDrink(data: any) {
-    this.drinks.unshift(data);
+    const index = this.drinks.findIndex(drink => drink.id === data.id);
+    if (index === -1) {
+      this.drinks.unshift(data);
+    } else {
+      this.drinks[index] = data;
+    }
     this.drink = data;
   }
 
-  dblclickDrink() {
+
+  dbclickDrink() {
     const found = this.drinks.find(dr => dr.id == this.drink.id);
     if (!found) return;
     this.drinkUpdate = found;
@@ -59,18 +70,40 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
 
   selectDrink(event: any) {
     this.drink = event;
+    this.evetnbuttons(this.pendingActions);
+    // console.log(this.drink);
   }
-
+  data: any = {};
   click(event: any) {
-    if (event === '101') {
-      this.showoffcanvas = true;
-      this.drinkUpdate = {};
-    } else if (event === '102') {
-      this.showoffcanvas = true;
-      this.drinkUpdate = this.drinks.find(dr => dr.id == this.drink.id);
-    }
-    else if (event === '103') {
-      this.dblclickDrink();
+    switch (event) {
+      case '101':
+        this.showoffcanvas = true;
+        this.drinkUpdate = {};
+        this.data = {
+          action: 'add',
+          text: 'Thêm món'
+        };
+        break;
+      case '102':
+        this.showoffcanvas = true;
+        this.drinkUpdate = this.drinks.find(dr => dr.id == this.drink.id);
+        this.data = {
+          action: 'update',
+          text: 'Cập nhật món'
+        };
+        break;
+      case '103':
+        this.dbclickDrink();
+        break;
+      case '104':
+        // console.log(this.drink.id);
+        this.drinkService.deleteData(this.drink.id).subscribe(data => {
+          this.drinks = this.drinks.filter(d => d.id !== this.drink.id);
+          this.drink = this.drinks[0];
+        })
+        break;
+      default:
+        break;
     }
   }
 
@@ -78,4 +111,44 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
     this.showDetail = false;
     this.showoffcanvas = false;
   }
+
+  showButtonsnone: any[] = [];
+  pendingActions: any[] = [];
+
+  evetnbuttons(actions: any[]) {
+    if (!this.drink || !this.drink.status) {
+      this.pendingActions = actions;
+      return;
+    }
+    switch (this.drink.status) {
+      case 'available':
+        this.showButtonsnone = actions.map(action => {
+          if (action.id === '106' || action.id === '108') {
+            return { ...action, display: 'none' };
+          }
+          return action;
+        });
+        break;
+      case 'out_of_stock':
+        this.showButtonsnone = actions.map(action => {
+          if (action.id === '106' || action.id === '108') {
+            return { ...action, display: 'none' };
+          }
+          return action;
+        });
+        break;
+      case 'Cleaning':
+        break;
+      default:
+        break;
+    }
+    // this.showButtonsnone = actions.map(action => {
+    //   if (action.id === '106'|| action.id === '108') {
+    //     return { ...action, display: 'none' };
+    //   }
+    //   return action;
+    // });
+    this.cdr.detectChanges();
+  }
+
 }

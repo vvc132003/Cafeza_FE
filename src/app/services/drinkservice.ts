@@ -21,13 +21,13 @@ export class DrinkService {
     }
 
     // Phương thức PUT
-    updateData(id: string, data: any): Observable<any> {
-        return this.http.put<any>(`${this.apiUrl}/data/${id}`, data);
+    updateData(data: any): Observable<any> {
+        return this.http.put<any>(this.apiUrl, data);
     }
 
     // Phương thức DELETE
     deleteData(id: string): Observable<any> {
-        return this.http.delete<any>(`${this.apiUrl}/data/${id}`);
-    }
+        return this.http.delete<any>(`${this.apiUrl}/${id}`);
+    }    
 
 }

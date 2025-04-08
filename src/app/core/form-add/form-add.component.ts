@@ -10,7 +10,7 @@ export class FormAddComponent implements AfterViewInit {
   // @Input() categoryContent: TemplateRef<any[]> | null = null;
   @Input() tabTemplates: { [key: string]: TemplateRef<any> } = {};
   // @Input() extraContent: TemplateRef<any> | null = null;
-
+  @Input() text: string = "";
   // @ViewChild('contentContainer', { read: ViewContainerRef }) contentContainer!: ViewContainerRef;
   // @ViewChild('extraContainer', { read: ViewContainerRef }) extraContainer!: ViewContainerRef;
 

@@ -7,16 +7,8 @@ import { LayoutComponent } from './layout/layout.component';
 import { AdminMenuComponent } from './pages/admin-menu/admin-menu.component';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: LayoutComponent,
-  //   children: [
-  //     { path: '', component: TableComponent },
-  //   ]
-  // }
   { path: 'admin/tables', component: TableComponent }, 
   { path: 'admin/drinks', component: AdminMenuComponent }, 
-
 ];
 
 @NgModule({
