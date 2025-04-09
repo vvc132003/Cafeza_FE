@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CategoryService } from 'src/app/services/category.service';
 
@@ -12,7 +12,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
   showButtonsnone: any[] = [];
   pendingActions: any[] = [];
   categories: any[] = [];
-  categori: any;
+  category: any = {};
+  categoryUpcate: any = {};
+
   showoffcanvas = false;
 
   @ViewChild('categoryTree', { static: true }) categoryTree!: TemplateRef<any>;
@@ -20,7 +22,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.loadCategorys();
@@ -32,7 +34,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
       this.categoryService.getData().subscribe((data: any) => {
         this.categories = data;
         // console.log(this.categories);
-        this.categori = this.categories[0];
+        this.category = this.categories[0];
         this.count = this.categories.length;
         if (this.pendingActions.length > 0) {
           this.evetnbuttons(this.pendingActions);
@@ -51,7 +53,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   //#region event
 
   evetnbuttons(actions: any[]) {
-    if (!this.categori) {
+    if (!this.category) {
       this.pendingActions = actions;
       return;
     }
@@ -61,6 +63,14 @@ export class CategoryComponent implements OnInit, OnDestroy {
       }
       return action;
     });
+
+    this.cdr.detectChanges();
+  }
+
+  selectCategory(event: any) {
+    this.category = event;
+    // this.evetnbuttons(this.pendingActions);
+    // console.log(this.category);
   }
 
   data: any = {};
@@ -68,19 +78,19 @@ export class CategoryComponent implements OnInit, OnDestroy {
     switch (event) {
       case '101':
         this.showoffcanvas = true;
-        // this.drinkUpdate = {};
+        this.category = {};
         this.data = {
           action: 'add',
           text: 'Thêm loại món'
         };
         break;
       case '102':
-        // this.showoffcanvas = true;
-        // this.drinkUpdate = this.drinks.find(dr => dr.id == this.drink.id);
-        // this.data = {
-        //   action: 'update',
-        //   text: 'Cập nhật món'
-        // };
+        this.showoffcanvas = true;
+        this.category = this.categories.find(dr => dr.id == this.category.id);
+        this.data = {
+          action: 'update',
+          text: 'Cập nhật loại món'
+        };
         break;
       case '103':
         break;
@@ -100,7 +110,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     } else {
       this.categories[index] = data;
     }
-    this.categori = data;
+    this.category = data;
   }
 
   close() {

@@ -4,10 +4,11 @@
 
 
 <ng-template #categoryAdd>
-    <app-category-add [showoffcanvas]="showoffcanvas" [data]="data" (newData)="newData($event)"
-        (closePupAdd)="close()"></app-category-add>
+    <app-category-add [listcategoryparentId]="categories" [showoffcanvas]="showoffcanvas" [data]="data" (newData)="newData($event)" (closePupAdd)="close()"
+        [category]="category"></app-category-add>
 </ng-template>
 
 <ng-template #categoryTree>
-    <app-category-tree [categories]="categories"></app-category-tree>
+    <app-category-tree (clickcategory)="selectCategory($event)" [cateogryselect]="category"
+        [categories]="categories"></app-category-tree>
 </ng-template>

@@ -2,7 +2,55 @@
     [tabTemplates]="{category: categoryContent, setting: setting}">
 </app-form-add>
 
-<ng-template #categoryContent>c
+<ng-template #categoryContent>
+    <!-- <div class="mb-3">
+        <label for="parentId" class="form-label small">Loại món</label>
+        <input type="text" id="parentId" class="form-control form-control-smF" [(ngModel)]="category.parentId"
+            placeholder="Loại món cha (nếu có)" />
+    </div> -->
+    <div class="mb-3">
+        <label for="parentId" class="form-label small">Loại món</label>
+        <select id="parentId" class="form-select form-select-sm" [(ngModel)]="category.parentId">
+            <option [ngValue]="null">-- Không có loại món cha --</option>
+            <option *ngFor="let item of listcategoryparentId" [ngValue]="item.id">
+                {{ item.name }}
+            </option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="code" class="form-label small">Mã loại món</label>
+        <input type="text" id="code" name="code" class="form-control form-control-sm" [(ngModel)]="category.code"
+            readonly />
+    </div>
+    <div class="mb-3">
+        <label for="name" class="form-label small">Tên </label>
+        <input type="text" id="name" name="name" class="form-control form-control-sm" [(ngModel)]="category.name"
+            (input)="onNameChange()" required="" />
+    </div>
+    <div class="mb-3">
+        <label for="slug" class="form-label small">Đường dẫn</label>
+        <input type="text" id="slug" name="slug" class="form-control form-control-sm" [(ngModel)]="category.slug"
+            readonly />
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label small">Mô tả</label>
+        <input type="text" id="description" name="description" class="form-control form-control-sm"
+            [(ngModel)]="category.description" readonly />
+    </div>
+
+    <div class="mb-3">
+        <label for="notes" class="form-label small">Ghi chú (Notes)</label>
+        <textarea id="notes" class="form-control form-control-sm" [(ngModel)]="category.notes" rows="3"
+            placeholder="Ghi chú thêm (nếu có)"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="displayOrder" class="form-label small">Thứ tự hiển thị</label>
+        <input type="number" id="displayOrder" name="displayOrder" class="form-control form-control-sm"
+            [(ngModel)]="category.displayOrder" min="0" />
+    </div>
+
     <div class="offcanvas-footer">
         <button type="button" class="btn btn-primary px-4" (click)="save()">
             <i class="fa fa-save"></i>
@@ -12,7 +60,48 @@
 </ng-template>
 
 <ng-template #setting>
-    cs
+
+    <div class="mb-3">
+        <label for="viewCount" class="form-label small">Lượt xem </label>
+        <input type="number" id="viewCount" class="form-control form-control-sm" [(ngModel)]="category.viewCount"
+            min="0" readonly />
+    </div>
+
+    <div class="form-check form-switch">
+        <label class="form-check-label" for="isActive">
+            {{ category.isActive ? 'Đang hoạt động' : 'Không hoạt động' }}
+        </label>
+        <input class="form-check-input" type="checkbox" role="switch" id="isActive" [(ngModel)]="category.isActive"
+            name="isActive" />
+    </div>
+
+    <div class="form-check form-switch">
+        <label class="form-check-label" for="showOnHome">
+            {{ category.showOnHome ? 'Hiển thị lên trang chủ' : 'Không hiển thị lên trang chủ' }}
+        </label>
+        <input class="form-check-input" type="checkbox" role="switch" id="showOnHome" [(ngModel)]="category.showOnHome"
+            name="showOnHome" />
+    </div>
+
+    <div class="mb-3">
+        <label for="icon" class="form-label small">Biểu tượng</label>
+        <div class="d-flex">
+            <input type="text" id="icon" class="form-control form-control-sm" [(ngModel)]="category.icon"
+                placeholder="Ví dụ: fa-coffee, fa-user" />
+            <button class="btn btn-outline-black ms-2">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <div class="mb-3">
+        <label for="colorCode" class="form-label small">Mã màu</label>
+        <input type="color" id="colorCode" class="form-control form-control-color form-control-sm"
+            [(ngModel)]="category.colorCode" />
+    </div>
+
+
     <div class="offcanvas-footer">
         <button type="button" class="btn btn-primary px-4" (click)="save()">
             <i class="fa fa-save"></i>

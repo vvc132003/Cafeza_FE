@@ -13,6 +13,19 @@
 
 }
 
+.content {
+    max-height: 520px;
+    overflow-y: auto;
+}
+
+.content::-webkit-scrollbar {
+    width: 2px;
+}
+
+.content::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 5px;
+}
 
 .custom-offcanvas.show {
     right: 0;

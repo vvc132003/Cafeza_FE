@@ -1,5 +1,5 @@
 <li class="tree-node">
-  <div class="node-label" [ngClass]="{'selected-drink': drinkselect?.id === category?.id}"
+  <div class="node-label" [ngClass]="{'selected-drink': cateogryselect?.id === category?.id}"
     (click)="toggleExpand(); clickEvent()" style="cursor: pointer;">
     <span class="tree-line">
       {{ getPrefix() }}
@@ -15,7 +15,7 @@
 
   <ul *ngIf="category.children?.length && isExpanded" class="list-unstyled">
     <app-category-node *ngFor="let child of category.children" [category]="child" [level]="level + 1"
-      [isLast]="child === category.children[category.children.length - 1]" [drinkselect]="drinkselect"
+      [isLast]="child === category.children[category.children.length - 1]" [cateogryselect]="cateogryselect"
       (nodeSelected)="nodeSelected.emit($event)">
     </app-category-node>
   </ul>

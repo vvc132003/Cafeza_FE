@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-category-tree',
@@ -8,7 +8,12 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 export class CategoryTreeComponent implements OnInit, OnChanges {
   @Input() categories: any[] = [];
   tree: any[] = [];
-  drinkselect: any = null;
+  @Input() cateogryselect: any = null;
+  @Output() clickcategory = new EventEmitter<void>();
+
+  clickdrinkselect(event: any) {
+    this.clickcategory.emit(event);
+  }
 
   ngOnInit() {
 
@@ -21,6 +26,10 @@ export class CategoryTreeComponent implements OnInit, OnChanges {
       this.categories = Array.isArray(raw) ? raw : Object.values(raw);
       this.tree = this.buildTree(this.categories, null);
     }
+    // if (changes['drinkselect'] && changes['drinkselect'].currentValue) {
+    //   this.drinkselect = { ...changes['drinkselect'].currentValue };
+    //   console.log(this.drinkselect);
+    // }
   }
 
 

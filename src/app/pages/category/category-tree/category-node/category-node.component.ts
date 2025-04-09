@@ -10,7 +10,7 @@ export class CategoryNodeComponent {
   @Input() level: number = 0;
   @Input() isLast: boolean = false;
   isExpanded: boolean = false;
-  @Input() drinkselect: any;
+  @Input() cateogryselect: any;
   @Output() nodeSelected = new EventEmitter<any>();
 
   clickEvent() {

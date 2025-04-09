@@ -1,6 +1,6 @@
-<ul class="list-unstyled">
+<ul class="list-unstyled container mt-4 mb-4">
   <ng-container *ngFor="let category of tree">
-    <app-category-node [category]="category" [level]="0" [drinkselect]="drinkselect"
-      (nodeSelected)="drinkselect = $event" [isLast]="category === tree[tree.length - 1]"></app-category-node>
+    <app-category-node [category]="category" [level]="0" [cateogryselect]="cateogryselect"
+      (nodeSelected)="clickdrinkselect($event)" [isLast]="category === tree[tree.length - 1]"></app-category-node>
   </ng-container>
 </ul>
