@@ -5,10 +5,13 @@ import { TableAddComponent } from './pages/table/table-add/table-add.component';
 import { TableComponent } from './pages/table/table.component';
 import { LayoutComponent } from './layout/layout.component';
 import { AdminMenuComponent } from './pages/admin-menu/admin-menu.component';
+import { CategoryComponent } from './pages/category/category.component';
 
 const routes: Routes = [
-  { path: 'admin/tables', component: TableComponent }, 
-  { path: 'admin/drinks', component: AdminMenuComponent }, 
+  { path: 'admin/tables', component: TableComponent },
+  { path: 'admin/drinks', component: AdminMenuComponent },
+  { path: 'admin/categories', component: CategoryComponent },
+
 ];
 
 @NgModule({

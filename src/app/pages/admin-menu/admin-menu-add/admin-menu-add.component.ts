@@ -13,13 +13,13 @@ export class AdminMenuAddComponent implements OnInit, OnChanges, OnDestroy {
   // @ViewChild('extraContent') extraContent!: TemplateRef<any>;
   @Input() showoffcanvas = false;
   @Output() closePupAdd = new EventEmitter<void>();
-  @Output() newDrink = new EventEmitter<void>();
+  @Output() newData= new EventEmitter<void>();
   @Input() data: any;
   text: string = "";
   action: string = "";
 
   @Input() drink: any = {};
-  
+
   categories = [
     { id: '1', name: 'Đồ uống' },
     { id: '2', name: 'Đồ ăn' },
@@ -84,7 +84,7 @@ export class AdminMenuAddComponent implements OnInit, OnChanges, OnDestroy {
     this.drinkService.postData(this.drink).subscribe((data: any) => {
       this.close();
       // console.log(data);
-      this.newDrink.emit(data);
+      this.newData.emit(data);
     })
   }
 
@@ -92,7 +92,7 @@ export class AdminMenuAddComponent implements OnInit, OnChanges, OnDestroy {
     this.drinkService.updateData(this.drink).subscribe((data: any) => {
       this.close();
       // console.log(data);
-      this.newDrink.emit(data);
+      this.newData.emit(data);
     })
   }
 

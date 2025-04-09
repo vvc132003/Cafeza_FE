@@ -1,0 +1,26 @@
+.node-label {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding: 0 12px;
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.selected-drink {
+  // background-color: #f1f3f5;
+  // border-color: #adb5bd;
+  border: 1px solid rgb(86, 86, 205);
+}
+
+
+
+.tree-line {
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre;
+  margin: 0;
+
+}

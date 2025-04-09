@@ -19,6 +19,10 @@ import { DrinkDetailComponent } from './pages/admin-menu/drink-detail/drink-deta
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminMenuListComponent } from './pages/admin-menu/admin-menu-list/admin-menu-list.component';
+import { CategoryComponent } from './pages/category/category.component';
+import { CategoryTreeComponent } from './pages/category/category-tree/category-tree.component';
+import { CategoryNodeComponent } from './pages/category/category-tree/category-node/category-node.component';
+import { CategoryAddComponent } from './pages/category/category-add/category-add.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +40,10 @@ import { AdminMenuListComponent } from './pages/admin-menu/admin-menu-list/admin
     AdminMenuAddComponent,
     DrinkDetailComponent,
     AdminMenuListComponent,
+    CategoryComponent,
+    CategoryTreeComponent,
+    CategoryNodeComponent,
+    CategoryAddComponent,
   ],
   imports: [
     BrowserModule,

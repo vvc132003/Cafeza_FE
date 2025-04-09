@@ -4,12 +4,11 @@
 
 <ng-template #adminMenuAdd>
     <app-admin-menu-add [showoffcanvas]="showoffcanvas" [data]="data" [drink]="drinkUpdate"
-        (newDrink)="newDrink($event)" (closePupAdd)="close()"></app-admin-menu-add>
+        (newData)="newData($event)" (closePupAdd)="close()"></app-admin-menu-add>
 </ng-template>
 
 <app-drink-detail *ngIf="drinkUpdate" [showoffcanvas]="showDetail" [drink]="drinkUpdate" (closePupAdd)="close()">
 </app-drink-detail>
-
 
 <ng-template #adminMenuList>
     <app-admin-menu-list [drinks]="drinks" [drinkselect]="drink" (drink)="selectDrink($event)"

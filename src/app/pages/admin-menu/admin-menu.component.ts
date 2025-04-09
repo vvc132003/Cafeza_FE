@@ -9,7 +9,7 @@ import { DrinkService } from 'src/app/services/drinkservice';
 })
 export class AdminMenuComponent implements OnInit, OnDestroy {
   showoffcanvas = false;
-  showAdd = false;
+  // showAdd = false;
   showDetail = false;
 
   selectedRoom: any = {};
@@ -50,9 +50,10 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
 
   //#region event
 
-  newDrink(data: any) {
+  newData(data: any) {
     const index = this.drinks.findIndex(drink => drink.id === data.id);
     if (index === -1) {
+      this.count += 1;
       this.drinks.unshift(data);
     } else {
       this.drinks[index] = data;
@@ -123,7 +124,7 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
     switch (this.drink.status) {
       case 'available':
         this.showButtonsnone = actions.map(action => {
-          if (action.id === '106' || action.id === '108') {
+          if (action.id === '106' || action.id === '108' || action.id === '104') {
             return { ...action, display: 'none' };
           }
           return action;

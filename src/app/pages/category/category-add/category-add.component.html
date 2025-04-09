@@ -1,0 +1,22 @@
+<app-form-add [headerDiv]="tables" [text]="text" [showoffcanvas]="showoffcanvas" (closePupAdd)="close()"
+    [tabTemplates]="{category: categoryContent, setting: setting}">
+</app-form-add>
+
+<ng-template #categoryContent>c
+    <div class="offcanvas-footer">
+        <button type="button" class="btn btn-primary px-4" (click)="save()">
+            <i class="fa fa-save"></i>
+            Lưu
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #setting>
+    cs
+    <div class="offcanvas-footer">
+        <button type="button" class="btn btn-primary px-4" (click)="save()">
+            <i class="fa fa-save"></i>
+            Lưu
+        </button>
+    </div>
+</ng-template>
