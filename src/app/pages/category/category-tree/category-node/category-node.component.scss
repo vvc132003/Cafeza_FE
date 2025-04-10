@@ -1,19 +1,20 @@
 .node-label {
-  display: flex;
   align-items: center;
-  height: 60px;
-  padding: 0 12px;
+  cursor: pointer;
+  height: 63px;
+  padding: 12px 10px;
   background-color: white;
   border: 1px solid #dee2e6;
-  border-radius: 4px;
+  border-radius: 8px;
   margin-bottom: 4px;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: all 0.3s ease;
+  font-size: 15px;
 }
 
 .selected-drink {
   // background-color: #f1f3f5;
   // border-color: #adb5bd;
-  border: 1px solid rgb(86, 86, 205);
+  border: 2px solid rgb(85, 99, 209) !important;
 }
 
 
@@ -22,5 +23,4 @@
   // font-family: 'Courier New', Courier, monospace;
   // white-space: pre;
   margin: 20px;
-
 }

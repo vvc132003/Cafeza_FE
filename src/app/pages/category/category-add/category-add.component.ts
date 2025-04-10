@@ -33,7 +33,7 @@ export class CategoryAddComponent implements OnChanges {
     }
 
     if (this.category != null) {
-      this.category.isActive = true;
+      // this.category.isActive = true;
       this.category.viewCount = this.category.viewCount ? this.category.viewCount : 0;
       this.categoryIcons = [{ icon: this.category.icon }];
       // console.log(this.category);
@@ -75,8 +75,24 @@ export class CategoryAddComponent implements OnChanges {
   }
 
   save(): void {
+    if (this.action === 'add') {
+      this.saveCategory();
+    }else{
+      this.updateCategory();
+    }
+  }
+
+  saveCategory() {
     this.category.icon = this.categoryIcons[0].icon;
     this.categoryService.postData(this.category).subscribe((data: any) => {
+      // console.log(data);
+      this.close();
+      this.newData.emit(data);
+    })
+  }
+  updateCategory() {
+    this.category.icon = this.categoryIcons[0].icon;
+    this.categoryService.updateData(this.category).subscribe((data: any) => {
       // console.log(data);
       this.close();
       this.newData.emit(data);

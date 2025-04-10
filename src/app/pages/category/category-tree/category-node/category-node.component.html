@@ -1,17 +1,30 @@
 <li class="tree-node">
-  <div class="node-label" [ngClass]="{'selected-drink': cateogryselect?.id === category?.id}"
-    (click)="toggleExpand(); clickEvent()" style="cursor: pointer;">
-    <span class="tree-line">
-      {{ getPrefix() }}
-      <i class="fas" [ngClass]="{
-           'fa-chevron-down': category.isExpanded,
-           'fa-chevron-right': !category.isExpanded
-         }" *ngIf="category.children?.length || category.hasChildren"></i>
+  <div class="node-label d-flex list-group-item mb-2"
+    [ngClass]="{ 'selected-drink': cateogryselect?.id === category?.id }" (click)="toggleExpand(); clickEvent()">
+    {{ getPrefix() }}
+    <div class="col-1">
+      <i class="fas pe-2" [ngClass]="{
+         'fa-chevron-down': category.isExpanded,
+         'fa-chevron-right': !category.isExpanded
+       }" *ngIf="category.children?.length || category.hasChildren"></i>
 
-      <i class="fas fa-chevron-right" *ngIf="!category.children?.length && !category.hasChildren"></i>
-      {{ category.name }}
-    </span>
+      <i class="fas fa-chevron-right pe-2" *ngIf="!category.children?.length && !category.hasChildren"></i>
+    </div>
+    <div class="col-2 text-center fw-bold text-secondary p">{{ category.code }}</div>
+    <div class="col-2 text-center">{{ category.name }}</div>
+    <div class="col-1 text-center">{{ category.viewCount }}</div>
+    <div class="col-2 text-center">{{ category.description }}</div>
+    <div class="col-2 text-center">
+      <span class="badge px-3 py-2" [ngClass]="{
+                'bg-success text-white': category.isActive,
+                'bg-danger text-white': !category.isActive
+              }">
+        {{ category.isActive ? 'Đang hoạt động' : 'Không hoạt động' }}
+      </span>
+    </div>
+    <div class="col-2 text-center">{{ category.slug }}</div>
   </div>
+
 
   <ul *ngIf="category.children?.length && category.isExpanded" class="list-unstyled">
     <app-category-node *ngFor="let child of category.children" [category]="child" [level]="level + 1"

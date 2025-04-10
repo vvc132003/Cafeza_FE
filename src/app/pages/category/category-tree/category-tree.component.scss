@@ -1,3 +1,20 @@
-.selected-drink {
-  border: 1px solid rgb(86, 86, 205);
+.list-group-item {
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 12px 10px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+    font-size: 15px;
+    flex-wrap: wrap;
+}
+
+.list-group-item>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
 }

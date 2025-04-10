@@ -28,7 +28,7 @@ export class CategoryNodeComponent {
   getPrefix(): string {
     const lines = [];
     for (let i = 0; i < this.level - 1; i++) {
-      lines.push('│   ');
+      lines.push('│  ');
     }
     if (this.level > 0) {
       lines.push(this.isLast ? ' └── ' : ' ├── ');

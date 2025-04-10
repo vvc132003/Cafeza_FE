@@ -103,7 +103,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
       case '103':
         break;
       case '104':
-
+        this.categoryService.deleteData(this.category.id).subscribe(data => {
+          this.categories = this.categories.filter(d => d.id !== this.category.id);
+          this.category = this.categories[0];
+        })
         break;
       default:
         break;
