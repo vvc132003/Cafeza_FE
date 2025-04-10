@@ -25,11 +25,27 @@ export class CategoryTreeComponent implements OnInit, OnChanges {
       const raw = changes['categories'].currentValue;
       this.categories = Array.isArray(raw) ? raw : Object.values(raw);
       this.tree = this.buildTree(this.categories, null);
+      if (this.cateogryselect?.parentId) {
+        this.expandParentPath(this.cateogryselect.parentId, this.tree);
+      }
     }
-    // if (changes['drinkselect'] && changes['drinkselect'].currentValue) {
-    //   this.drinkselect = { ...changes['drinkselect'].currentValue };
-    //   console.log(this.drinkselect);
-    // }
+  }
+  /// đệ quy
+  expandParentPath(parentId: any, nodes: any[]): boolean {
+    for (let node of nodes) {
+      if (node.id === parentId) {
+        node.isExpanded = true;
+        return true;
+      }
+      if (node.children?.length) {
+        const found = this.expandParentPath(parentId, node.children);
+        if (found) {
+          node.isExpanded = true;
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
 
@@ -38,6 +54,7 @@ export class CategoryTreeComponent implements OnInit, OnChanges {
       .filter(cat => cat.parentId === parentId)
       .map(cat => ({
         ...cat,
+        isExpanded: false,
         children: this.buildTree(categories, cat.id)
       }));
   }

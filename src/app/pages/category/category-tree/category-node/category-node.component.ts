@@ -17,12 +17,13 @@ export class CategoryNodeComponent {
     // console.log(this.category);
     this.nodeSelected.emit(this.category);
   }
-  
+
   toggleExpand() {
     if (this.category.children?.length) {
-      this.isExpanded = !this.isExpanded;
+      this.category.isExpanded = !this.category.isExpanded;
     }
   }
+
 
   getPrefix(): string {
     const lines = [];

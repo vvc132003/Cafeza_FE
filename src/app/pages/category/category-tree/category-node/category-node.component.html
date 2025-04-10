@@ -4,8 +4,8 @@
     <span class="tree-line">
       {{ getPrefix() }}
       <i class="fas" [ngClass]="{
-           'fa-chevron-down': isExpanded,
-           'fa-chevron-right': !isExpanded
+           'fa-chevron-down': category.isExpanded,
+           'fa-chevron-right': !category.isExpanded
          }" *ngIf="category.children?.length || category.hasChildren"></i>
 
       <i class="fas fa-chevron-right" *ngIf="!category.children?.length && !category.hasChildren"></i>
@@ -13,7 +13,7 @@
     </span>
   </div>
 
-  <ul *ngIf="category.children?.length && isExpanded" class="list-unstyled">
+  <ul *ngIf="category.children?.length && category.isExpanded" class="list-unstyled">
     <app-category-node *ngFor="let child of category.children" [category]="child" [level]="level + 1"
       [isLast]="child === category.children[category.children.length - 1]" [cateogryselect]="cateogryselect"
       (nodeSelected)="nodeSelected.emit($event)">

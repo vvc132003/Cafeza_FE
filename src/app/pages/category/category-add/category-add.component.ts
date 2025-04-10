@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
   selector: 'app-category-add',
@@ -20,6 +21,9 @@ export class CategoryAddComponent implements OnChanges {
     { label: 'Cài đặt', icon: 'bi-gear', tab: 'setting' }
   ];
 
+  constructor(private categoryService: CategoryService) {
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
 
     if (changes['listcategoryparentId'] && changes['listcategoryparentId'].currentValue) {
@@ -28,8 +32,13 @@ export class CategoryAddComponent implements OnChanges {
       this.listcategoryparentId = list.filter(item => item.parentId == null);
     }
 
-    this.category.isActive = true;
-    this.category.viewCount = this.category.viewCount ? this.category.viewCount : 0;
+    if (this.category != null) {
+      this.category.isActive = true;
+      this.category.viewCount = this.category.viewCount ? this.category.viewCount : 0;
+      this.categoryIcons = [{ icon: this.category.icon }];
+      // console.log(this.category);
+    }
+
     if (changes['data'] && changes['data'].currentValue) {
       this.data = { ...changes['data'].currentValue };
       this.text = this.data.text;
@@ -66,10 +75,30 @@ export class CategoryAddComponent implements OnChanges {
   }
 
   save(): void {
-
+    this.category.icon = this.categoryIcons[0].icon;
+    this.categoryService.postData(this.category).subscribe((data: any) => {
+      // console.log(data);
+      this.close();
+      this.newData.emit(data);
+    })
   }
 
   close() {
     this.closePupAdd.emit();
   }
+
+  isCardVisible = false;
+  toggleCard() {
+    this.isCardVisible = true;
+  }
+  closeCard() {
+    this.isCardVisible = false;
+  }
+
+  categoryIcons: any = {}
+  getCategoryIcon(item: any) {
+    // console.log(item);
+    this.categoryIcons = item;
+  }
+
 }

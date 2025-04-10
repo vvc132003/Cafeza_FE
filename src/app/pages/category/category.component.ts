@@ -13,6 +13,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
   pendingActions: any[] = [];
   categories: any[] = [];
   category: any = {};
+  newcategory: any = {};
+
   categoryUpcate: any = {};
 
   showoffcanvas = false;
@@ -30,6 +32,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   //#region load
   loadCategorys() {
+    // this.category = null;
     this.subscription.add(
       this.categoryService.getData().subscribe((data: any) => {
         this.categories = data;
@@ -53,10 +56,15 @@ export class CategoryComponent implements OnInit, OnDestroy {
   //#region event
 
   evetnbuttons(actions: any[]) {
-    if (!this.category) {
+
+    this.showButtonsnone = actions.filter(action => action.id === '101');
+    this.cdr.detectChanges();
+
+    if (!this.category || !this.category.id) {
       this.pendingActions = actions;
       return;
     }
+
     this.showButtonsnone = actions.map(action => {
       if (action.id === '106' || action.id === '108') {
         return { ...action, display: 'none' };
@@ -78,7 +86,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     switch (event) {
       case '101':
         this.showoffcanvas = true;
-        this.category = {};
+        this.newcategory = {};
         this.data = {
           action: 'add',
           text: 'Thêm loại món'
@@ -86,7 +94,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
         break;
       case '102':
         this.showoffcanvas = true;
-        this.category = this.categories.find(dr => dr.id == this.category.id);
+        this.newcategory = this.categories.find(dr => dr.id == this.category.id);
         this.data = {
           action: 'update',
           text: 'Cập nhật loại món'
@@ -106,11 +114,18 @@ export class CategoryComponent implements OnInit, OnDestroy {
     const index = this.categories.findIndex(c => c.id === data.id);
     if (index === -1) {
       this.count += 1;
-      this.categories.unshift(data);
+      // this.categories.unshift(data);
+      this.categories = [data, ...this.categories];
     } else {
-      this.categories[index] = data;
+      const updated = [...this.categories];
+      updated[index] = data;
+      this.categories = updated;
     }
     this.category = data;
+    if (this.pendingActions.length > 0) {
+      this.evetnbuttons(this.pendingActions);
+      // this.pendingActions = [];
+    }
   }
 
   close() {

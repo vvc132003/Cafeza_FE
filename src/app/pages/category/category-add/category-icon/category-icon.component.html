@@ -1,0 +1,35 @@
+<div [class.show]="isCategoryiconOpen" class="overlay"></div>
+<div class="card category-icon-card" [class.show]="isCategoryiconOpen">
+    <div class="card-body">
+        <button class="btn-close position-absolute top-0 end-0 m-2" (click)="closeIcon()"></button>
+
+        <h5 class="card-title text-center">Thông tin các loại icon</h5>
+
+        <div class="mb-3">
+            <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Tìm kiếm icon"
+                (input)="onSearch()" />
+        </div>
+
+        <!-- <div class="d-flex justify-content-between mb-3">
+            <span class="mr-2">Chọn tất cả</span>
+            <input type="checkbox" [(ngModel)]="checkAll" class="form-check-input" id="selectAll"
+                (change)="onSelectAll($event)">
+        </div> -->
+
+        <div class="furniture-list-container">
+            <div *ngFor="let item of categoryIconList; let i = index" class="furniture-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <i [class]="item.icon" class="me-2"></i> {{ item.name }}
+                    <input type="checkbox" [(ngModel)]="item.selected" (change)="onSelectCategoryIcon(item)"
+                        class="custom-checkbox">
+                </div>
+                <hr class="furniture-divider">
+            </div>
+        </div>
+        <div class="d-flex justify-content-end mt-3">
+            <button class="btn btn-primary px-4" (click)="selectCategoryIcon()">
+                <i class="fa fa-save"></i> Lưu
+            </button>
+        </div>
+    </div>
+</div>

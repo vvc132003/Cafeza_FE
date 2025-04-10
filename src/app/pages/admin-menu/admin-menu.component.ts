@@ -59,6 +59,10 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
       this.drinks[index] = data;
     }
     this.drink = data;
+    if (this.pendingActions.length > 0) {
+      this.evetnbuttons(this.pendingActions);
+      // this.pendingActions = [];
+    }
   }
 
 
@@ -117,11 +121,15 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
   pendingActions: any[] = [];
 
   evetnbuttons(actions: any[]) {
-    if (!this.drink || !this.drink.status) {
+    this.showButtonsnone = actions.filter(action => action.id === '101');
+    this.cdr.detectChanges();
+
+    if (!this.drink || !this.drink?.status) {
       this.pendingActions = actions;
       return;
     }
-    switch (this.drink.status) {
+    
+    switch (this.drink?.status) {
       case 'available':
         this.showButtonsnone = actions.map(action => {
           if (action.id === '106' || action.id === '108' || action.id === '104') {

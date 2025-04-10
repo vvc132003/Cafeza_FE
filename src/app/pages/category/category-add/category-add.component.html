@@ -2,12 +2,8 @@
     [tabTemplates]="{category: categoryContent, setting: setting}">
 </app-form-add>
 
+
 <ng-template #categoryContent>
-    <!-- <div class="mb-3">
-        <label for="parentId" class="form-label small">Loại món</label>
-        <input type="text" id="parentId" class="form-control form-control-smF" [(ngModel)]="category.parentId"
-            placeholder="Loại món cha (nếu có)" />
-    </div> -->
     <div class="mb-3">
         <label for="parentId" class="form-label small">Loại món</label>
         <select id="parentId" class="form-select form-select-sm" [(ngModel)]="category.parentId">
@@ -35,20 +31,14 @@
     </div>
     <div class="mb-3">
         <label for="description" class="form-label small">Mô tả</label>
-        <input type="text" id="description" name="description" class="form-control form-control-sm"
-            [(ngModel)]="category.description" readonly />
+        <textarea id="description" name="description" class="form-control form-control-sm" rows="3"
+            [(ngModel)]="category.description" required></textarea>
     </div>
 
     <div class="mb-3">
-        <label for="notes" class="form-label small">Ghi chú (Notes)</label>
+        <label for="notes" class="form-label small">Ghi chú</label>
         <textarea id="notes" class="form-control form-control-sm" [(ngModel)]="category.notes" rows="3"
-            placeholder="Ghi chú thêm (nếu có)"></textarea>
-    </div>
-
-    <div class="mb-3">
-        <label for="displayOrder" class="form-label small">Thứ tự hiển thị</label>
-        <input type="number" id="displayOrder" name="displayOrder" class="form-control form-control-sm"
-            [(ngModel)]="category.displayOrder" min="0" />
+            placeholder="Ghi chú thêm (nếu có)" required></textarea>
     </div>
 
     <div class="offcanvas-footer">
@@ -60,12 +50,6 @@
 </ng-template>
 
 <ng-template #setting>
-
-    <div class="mb-3">
-        <label for="viewCount" class="form-label small">Lượt xem </label>
-        <input type="number" id="viewCount" class="form-control form-control-sm" [(ngModel)]="category.viewCount"
-            min="0" readonly />
-    </div>
 
     <div class="form-check form-switch">
         <label class="form-check-label" for="isActive">
@@ -84,19 +68,34 @@
     </div>
 
     <div class="mb-3">
-        <label for="icon" class="form-label small">Biểu tượng</label>
-        <div class="d-flex">
-            <input type="text" id="icon" class="form-control form-control-sm" [(ngModel)]="category.icon"
-                placeholder="Ví dụ: fa-coffee, fa-user" />
-            <button class="btn btn-outline-black ms-2">
-                <i class="fa fa-plus"></i>
-            </button>
-        </div>
-
+        <label for="viewCount" class="form-label small">Lượt xem </label>
+        <input type="number" id="viewCount" class="form-control form-control-sm" [(ngModel)]="category.viewCount"
+            min="0" readonly />
     </div>
 
     <div class="mb-3">
-        <label for="colorCode" class="form-label small">Mã màu</label>
+        <label for="displayOrder" class="form-label small">Thứ tự hiển thị</label>
+        <input type="number" id="displayOrder" name="displayOrder" class="form-control form-control-sm"
+            [(ngModel)]="category.displayOrder" min="0" required />
+    </div>
+
+    <div class="mb-3 position-relative">
+        <label for="icon" class="form-label small">Biểu tượng</label>
+        <div class="d-flex">
+            <div class="furniture-list">
+                <span *ngFor="let item of categoryIcons; let i = index" class="tenant-tag">
+                    <i [class]="item.icon" [style.color]="item.color || 'black'"></i>
+                </span>
+                <input type="text" class="input-box" />
+            </div>
+            <button class="btn btn-outline-black ms-2" (click)="toggleCard()">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="colorCode" class="form-label small">Màu chữ</label>
         <input type="color" id="colorCode" class="form-control form-control-color form-control-sm"
             [(ngModel)]="category.colorCode" />
     </div>
@@ -109,3 +108,8 @@
         </button>
     </div>
 </ng-template>
+
+<!-- <ng-container *ngIf="isCardVisible"> -->
+<app-category-icon (categoryIconSelected)="getCategoryIcon($event)" [isCategoryiconOpen]="isCardVisible"
+    (closeIconModal)="closeCard()"></app-category-icon>
+<!-- </ng-container> -->
