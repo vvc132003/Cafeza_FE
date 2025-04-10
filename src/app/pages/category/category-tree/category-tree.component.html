@@ -1,14 +1,14 @@
 <ul class="list-unstyled container mt-4 mb-4">
   <!-- <div class="container"> -->
-  <div class="list-group-item d-flex fw-bold shadow-sm mb-2 sticky-header">
-    <div class="col-1"></div>
-    <div class="col-2 text-center p">Mã loại</div>
-    <div class="col-2 text-center">Tên loại</div>
-    <div class="col-1 text-center">Lượt xem</div>
-    <div class="col-2 text-center">Mô tả</div>
-    <div class="col-2 text-center">Trạng thái</div>
-    <div class="col-2 text-center p">Đường dẫn</div>
-  </div>
+    <div class="list-group-item d-flex fw-bold shadow-sm mb-2 sticky-header">
+      <div class="col-2 hide-on-mobile">Mã loại</div>
+      <div class="col-2">Tên loại</div>
+      <div class="col-1">Lượt xem</div>
+      <div class="col-3 hide-on-mobile">Mô tả</div>
+      <div class="col-2">Trạng thái</div>
+      <div class="col-2 hide-on-mobile">Đường dẫn</div>
+    </div>
+    
   <!-- </div> -->
   <ng-container *ngFor="let category of tree">
     <app-category-node [category]="category" [level]="0" [cateogryselect]="cateogryselect"

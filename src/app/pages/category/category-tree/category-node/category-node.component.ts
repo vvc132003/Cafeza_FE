@@ -28,11 +28,28 @@ export class CategoryNodeComponent {
   getPrefix(): string {
     const lines = [];
     for (let i = 0; i < this.level - 1; i++) {
-      lines.push('│  ');
+      lines.push('|  ');
     }
     if (this.level > 0) {
-      lines.push(this.isLast ? ' └── ' : ' ├── ');
+      lines.push(this.isLast ? '└─' : '├─');
     }
     return lines.join('');
   }
+
+  getStatusText(isActive: boolean): string {
+    switch (isActive) {
+      case true: return 'Đang hoạt động';
+      case false: return 'Không hoạt động';
+      default: return '';
+    }
+  }
+
+  getStatusClass(isActive: boolean): string {
+    switch (isActive) {
+      case true: return 'status-available';
+      case false: return 'status-rented';
+      default: return '';
+    }
+  }
+
 }

@@ -111,19 +111,17 @@
 @media (max-width: 768px) {}
 
 @media (max-width: 768px) {
-    .list-group-item {
-        flex-direction: row;
-        /* Chuyển thành hàng ngang */
-        overflow-x: auto;
-        /* Cuộn ngang nếu không đủ chỗ */
-        white-space: nowrap;
-        /* Ngăn chữ xuống dòng */
-        padding: 10px;
-    }
+    // .list-group-item {
+    //     flex-direction: row;
+    //     overflow-x: auto;
+    //     white-space: nowrap;
+    //     padding: 10px;
+    // }
 
     .list-group-item .col-2 {
         font-size: 13px;
     }
+    
     .list-group-item .p {
         display: none;
     }
