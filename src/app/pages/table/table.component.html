@@ -1,6 +1,9 @@
-<app-layout [text]="'Quản lý bàn'" (showPupAdd)="click($event)">
-
+<app-layout [text]="'Quản lý bàn'" (showButtonss)="evetnbuttons($event)" [buttonNone]="showButtonsnone" [count]="count" (showPupAdd)="click($event)" [tabTemplates]="{tableList}">
 </app-layout>
+
+<ng-template #tableList>
+    <app-table-list [tables]="tables"></app-table-list>
+</ng-template>
 
 <!-- <ng-container *ngIf="showAdd"> -->
 <app-table-add [showoffcanvas]="showoffcanvas" [selectedRoom]="selectedRoom" (closePupAdd)="close()"></app-table-add>

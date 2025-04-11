@@ -24,6 +24,7 @@ import { CategoryTreeComponent } from './pages/category/category-tree/category-t
 import { CategoryNodeComponent } from './pages/category/category-tree/category-node/category-node.component';
 import { CategoryAddComponent } from './pages/category/category-add/category-add.component';
 import { CategoryIconComponent } from './pages/category/category-add/category-icon/category-icon.component';
+import { TableListComponent } from './pages/table/table-list/table-list.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { CategoryIconComponent } from './pages/category/category-add/category-ic
     CategoryNodeComponent,
     CategoryAddComponent,
     CategoryIconComponent,
+    TableListComponent,
   ],
   imports: [
     BrowserModule,
