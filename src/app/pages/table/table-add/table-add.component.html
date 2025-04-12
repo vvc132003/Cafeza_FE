@@ -1,10 +1,10 @@
-<app-form-add [headerDiv]="tables" [showoffcanvas]="showoffcanvas" (closePupAdd)="close()"
+<app-form-add [text]="'Thêm bàn'" [headerDiv]="tables" [showoffcanvas]="showoffcanvas" (closePupAdd)="close()"
   [tabTemplates]="{ category: categoryContent, extraContent: extraContent, setting:setting }">
 </app-form-add>
 
 <ng-template #categoryContent>
   <div class="mb-3">
-    <label for="roomName" class="form-label small ">Tên phòng</label>
+    <label for="roomName" class="form-label small ">Tên bàn</label>
     <input type="text" class="form-control form-control-sm" id="roomName" name="roomName"
       [(ngModel)]="selectedRoom.roomName" required>
   </div>

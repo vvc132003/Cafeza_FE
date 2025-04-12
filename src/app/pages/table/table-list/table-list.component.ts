@@ -25,5 +25,22 @@ export class TableListComponent {
     return this.tables.filter(t => t.parentId === area);
   }
 
+  getStatusText(status: string): string {
+    switch (status) {
+      case 'empty': return 'Trống';
+      case 'reserved': return 'Đã đặt';
+      case 'occupied': return 'Có khách';
+      default: return '';
+    }
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'empty': return 'status-empty';
+      case 'reserved': return 'status-reserved';
+      case 'occupied': return 'status-occupied';
+      default: return '';
+    }
+  }
 
 }

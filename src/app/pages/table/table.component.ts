@@ -10,16 +10,16 @@ export class TableComponent implements OnInit {
   showoffcanvas = false;
   showAdd = false;
   selectedRoom: any = {};
-  category: any = {};
+  selectTable: any = {};
 
   constructor(private cdr: ChangeDetectorRef) { }
 
   tables: any[] = [
-    { id: 1, tableName: 'Bàn 1', capacity: 4, location: 'Khu A', status: 'Available', parentId: 'A' },
-    { id: 2, tableName: 'Bàn 2', capacity: 2, location: 'Khu A', status: 'Reserved', parentId: 'A' },
-    { id: 3, tableName: 'Bàn 3', capacity: 4, location: 'Khu B', status: 'Available', parentId: 'B' },
-    { id: 4, tableName: 'Bàn 4', capacity: 6, location: 'Khu B', status: 'Unavailable', parentId: 'B' },
-    { id: 5, tableName: 'Bàn 5', capacity: 4, location: 'Khu C', status: 'Available', parentId: 'C' },
+    { id: 1, tableName: 'Bàn 1', capacity: 4, location: 'Khu A', status: 'empty', parentId: 'A' },
+    { id: 2, tableName: 'Bàn 2', capacity: 2, location: 'Khu A', status: 'reserved', parentId: 'A' },
+    { id: 3, tableName: 'Bàn 3', capacity: 4, location: 'Khu B', status: 'occupied', parentId: 'B' },
+    { id: 4, tableName: 'Bàn 4', capacity: 6, location: 'Khu B', status: 'occupied', parentId: 'B' },
+    { id: 5, tableName: 'Bàn 5', capacity: 4, location: 'Khu C', status: 'occupied', parentId: 'C' },
   ];
   
   
@@ -27,6 +27,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.count = this.tables.length;
+    this.selectTable = this.tables[0];
   }
 
   showButtonsnone: any[] = [];
@@ -36,7 +37,7 @@ export class TableComponent implements OnInit {
     this.showButtonsnone = actions.filter(action => action.id === '101');
     this.cdr.detectChanges();
 
-    if (!this.category || !this.category.id) {
+    if (!this.selectTable || !this.selectTable.id) {
       this.pendingActions = actions;
       return;
     }

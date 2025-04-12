@@ -8,8 +8,8 @@
         <div class="col-2 p">Ảnh</div>
     </div>
     <div class="list-group">
-        <div *ngFor="let drink of drinks" (dblclick)="dblclickDrink()" (click)="clickDrink(drink)" class="list-group-item d-flex mb-2"
-            [ngClass]="{'selected-drink': drinkselect?.id === drink?.id}">
+        <div *ngFor="let drink of drinks" (dblclick)="dblclickDrink()" (click)="clickDrink(drink)"
+            class="list-group-item d-flex mb-2" [ngClass]="{'selected-drink': drinkselect?.id === drink?.id}">
             <div class="col-2 p">{{ drink.sku }}</div>
             <div class="col-2">{{ drink.name }}</div>
             <div class="col-2">{{ drink.price | number }} VNĐ</div>
