@@ -9,5 +9,6 @@
 </ng-template>
 
 <!-- <ng-container *ngIf="showAdd"> -->
-<app-table-add [showoffcanvas]="showoffcanvas" [selectedRoom]="selectedRoom" (closePupAdd)="close()"></app-table-add>
+<app-table-add [listTablesparentId]="tables" (newPupAdd)="newData($event)" [showoffcanvas]="showoffcanvas"
+    [table]="table" [data]="data" (closePupAdd)="close()"></app-table-add>
 <!-- </ng-container> -->

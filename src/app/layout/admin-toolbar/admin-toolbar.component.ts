@@ -56,6 +56,14 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
       type: 'success',
       action: () => this.event('108'),
       display: 'block'
+    },
+    {
+      id: '109',
+      label: 'Thêm khu vực',
+      icon: 'fa-plus',
+      type: 'success',
+      action: () => this.event('109'),
+      display: 'block'
     }
   ];
 

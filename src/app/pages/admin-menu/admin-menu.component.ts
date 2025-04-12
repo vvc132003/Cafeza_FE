@@ -128,11 +128,11 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
       this.pendingActions = actions;
       return;
     }
-    
+
     switch (this.drink?.status) {
       case 'available':
         this.showButtonsnone = actions.map(action => {
-          if (action.id === '106' || action.id === '108' || action.id === '104') {
+          if (action.id === '106' || action.id === '108' || action.id === '104' || action.id === '109') {
             return { ...action, display: 'none' };
           }
           return action;
@@ -140,7 +140,7 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
         break;
       case 'out_of_stock':
         this.showButtonsnone = actions.map(action => {
-          if (action.id === '106' || action.id === '108') {
+          if (action.id === '106' || action.id === '108' || action.id === '109') {
             return { ...action, display: 'none' };
           }
           return action;

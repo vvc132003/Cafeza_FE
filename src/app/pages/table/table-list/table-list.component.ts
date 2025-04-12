@@ -16,15 +16,15 @@ export class TableListComponent {
     this.table.emit(table);
   }
 
-  getUniqueAreas(): string[] {
-    const unique = new Set(this.tables.map(t => t.parentId));
-    return Array.from(unique);
+  getUniqueAreas(): any[] {
+    return this.tables.filter(t => t.parentId == null);
   }
+  
 
-  getTablesByArea(area: string): any[] {
-    return this.tables.filter(t => t.parentId === area);
+  getTablesByArea(parentId: string): any[] {
+    return this.tables.filter(t => t.parentId === parentId);
   }
-
+  
   getStatusText(status: string): string {
     switch (status) {
       case 'empty': return 'Trống';
