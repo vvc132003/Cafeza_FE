@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { CategoryService } from 'src/app/services/category.service';
 import { DrinkService } from 'src/app/services/drinkservice';
 import { NotificationService } from 'src/app/services/notification';
 
@@ -13,18 +14,14 @@ export class AdminMenuAddComponent implements OnInit, OnChanges, OnDestroy {
   // @ViewChild('extraContent') extraContent!: TemplateRef<any>;
   @Input() showoffcanvas = false;
   @Output() closePupAdd = new EventEmitter<void>();
-  @Output() newData= new EventEmitter<void>();
+  @Output() newData = new EventEmitter<void>();
   @Input() data: any;
   text: string = "";
   action: string = "";
 
   @Input() drink: any = {};
 
-  categories = [
-    { id: '1', name: 'Đồ uống' },
-    { id: '2', name: 'Đồ ăn' },
-    { id: '3', name: 'Tráng miệng' }
-  ];
+  categorys: any[] = [];
 
   tables = [
     { label: 'Danh mục', icon: 'bi-folder', tab: 'category' },
@@ -34,13 +31,21 @@ export class AdminMenuAddComponent implements OnInit, OnChanges, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private notificationService: NotificationService, private drinkService: DrinkService) { }
+  constructor(private notificationService: NotificationService, private drinkService: DrinkService, private categoryService: CategoryService) { }
 
 
   //#region  load
 
   ngOnInit(): void {
+    this.fetCategory();
+  }
 
+  fetCategory() {
+    this.subscription.add(
+      this.categoryService.getData().subscribe((data: any) => {
+        this.categorys = data.filter((c: any) => c.parentId === null);
+      })
+    );
   }
 
   ngOnDestroy(): void {
@@ -96,8 +101,34 @@ export class AdminMenuAddComponent implements OnInit, OnChanges, OnDestroy {
     })
   }
 
-  onFileChange($event: Event) {
+  // onFilesSelected(event: any): void {
+  //   const file: File = event.target.files[0];
+  //   if (!file) return;
+
+  //   const reader = new FileReader();
+  //   reader.onload = (e: any) => {
+  //     const base64String = e.target.result;
+  //     this.drink.imagePath = [base64String];
+  //   };
+  //   reader.readAsDataURL(file);
+  // }
+
+  onFilesSelected(event: any): void {
+    const reader = new FileReader();
+    const file = event.target.files[0];
+
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const base64Image = reader.result;
+        this.drink.imagePath = base64Image;
+      };
+      reader.onerror = (error) => {
+        console.error('Error reading file:', error);
+      };
+    }
   }
+
 
   close() {
     this.closePupAdd.emit();

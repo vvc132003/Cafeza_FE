@@ -25,6 +25,7 @@ import { CategoryNodeComponent } from './pages/category/category-tree/category-n
 import { CategoryAddComponent } from './pages/category/category-add/category-add.component';
 import { CategoryIconComponent } from './pages/category/category-add/category-icon/category-icon.component';
 import { TableListComponent } from './pages/table/table-list/table-list.component';
+import { OrderComponent } from './pages/order/order.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { TableListComponent } from './pages/table/table-list/table-list.componen
     CategoryAddComponent,
     CategoryIconComponent,
     TableListComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,

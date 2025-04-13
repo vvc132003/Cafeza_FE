@@ -66,9 +66,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
     }
 
     this.showButtonsnone = actions.map(action => {
-      if (action.id === '106' || action.id === '108' || action.id === '109') {
-        return { ...action, display: 'none' };
-      }
+      // if (action.id === '106' || action.id === '108' || action.id === '109') {
+      //   return { ...action, display: 'none' };
+      // }
       return action;
     });
 

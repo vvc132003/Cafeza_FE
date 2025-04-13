@@ -8,10 +8,10 @@ import { Component } from '@angular/core';
 export class SidebarComponent {
   menuItems = [
     { icon: '🏠', label: 'Trang chủ', route: '/admin/dashboard' },
-    { icon: '🍹', label: 'Loại món', route: '/admin/categories' },
-    { icon: '☕', label: 'Quản lý món', route: '/admin/drinks' },
+    { icon: '🍹', label: 'Loại món', route: '/admin/categories', funId: '1001' },
+    { icon: '☕', label: 'Quản lý món', route: '/admin/drinks', funId: '1001' },
     { icon: '🧾', label: 'Đơn hàng', route: '/admin/orders' },
-    { icon: '🪑', label: 'Bàn', route: '/admin/tables' },
+    { icon: '🪑', label: 'Bàn', route: '/admin/tables', funId: '1002' },
     { icon: '👨‍🍳', label: 'Nhân viên', route: '/admin/staff' },
     { icon: '📊', label: 'Doanh thu', route: '/admin/revenue' },
   ];

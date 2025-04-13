@@ -34,6 +34,7 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.drinkService.getData().subscribe((data: any) => {
         this.drinks = data;
+        console.log(this.drinks);
         this.drink = this.drinks[0];
         this.count = this.drinks.length;
         if (this.pendingActions.length > 0) {
@@ -132,7 +133,7 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
     switch (this.drink?.status) {
       case 'available':
         this.showButtonsnone = actions.map(action => {
-          if (action.id === '106' || action.id === '108' || action.id === '104' || action.id === '109') {
+          if (action.id === '104') {
             return { ...action, display: 'none' };
           }
           return action;
@@ -140,7 +141,7 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
         break;
       case 'out_of_stock':
         this.showButtonsnone = actions.map(action => {
-          if (action.id === '106' || action.id === '108' || action.id === '109') {
+          if (action.id === '109') {
             return { ...action, display: 'none' };
           }
           return action;

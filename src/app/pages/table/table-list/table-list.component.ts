@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-list',
@@ -6,10 +7,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./table-list.component.scss']
 })
 export class TableListComponent {
+  funId: string = '';
   @Input() tables: any[] = [];
   @Input() selectTable: any;
   @Output() table = new EventEmitter<void>();
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
+  onTableDoubleClick(tableId: number): void {
+    this.funId = this.route.snapshot.paramMap.get('funId') || '';
+    this.router.navigate([`/admin/tables/${this.funId}/orderdetail/${tableId}`]);
+  }
 
   clickTable(table: any) {
     this.selectTable = table;
@@ -19,12 +26,12 @@ export class TableListComponent {
   getUniqueAreas(): any[] {
     return this.tables.filter(t => t.parentId == null);
   }
-  
+
 
   getTablesByArea(parentId: string): any[] {
     return this.tables.filter(t => t.parentId === parentId);
   }
-  
+
   getStatusText(status: string): string {
     switch (status) {
       case 'empty': return 'Trống';

@@ -16,8 +16,7 @@
         <label for="category" class="form-label small">Danh mục</label>
         <select id="category" name="category" class="form-control form-control-sm" [(ngModel)]="drink.categoryId"
             required>
-            <option value="" disabled>Chọn danh mục</option>
-            <option *ngFor="let category of categories" [value]="category.id">
+            <option *ngFor="let category of categorys" [value]="category.id">
                 {{ category.name }}
             </option>
         </select>
@@ -38,7 +37,7 @@
         <!-- <label for="image" class="form-label small">Hình ảnh</label> -->
         <div class="custom-file">
             <input type="file" id="image" name="image" class="form-control form-control-sm"
-                (change)="onFileChange($event)" #fileInput style="display: none" />
+                (change)="onFilesSelected($event)" #fileInput style="display: none" />
             <a href="javascript:void(0)" class="custom-file-link" (click)="fileInput.click()">
                 Chọn ảnh
             </a>

@@ -6,11 +6,13 @@ import { TableComponent } from './pages/table/table.component';
 import { LayoutComponent } from './layout/layout.component';
 import { AdminMenuComponent } from './pages/admin-menu/admin-menu.component';
 import { CategoryComponent } from './pages/category/category.component';
+import { OrderComponent } from './pages/order/order.component';
 
 const routes: Routes = [
-  { path: 'admin/tables', component: TableComponent },
-  { path: 'admin/drinks', component: AdminMenuComponent },
-  { path: 'admin/categories', component: CategoryComponent },
+  { path: 'admin/tables/:funId', component: TableComponent },
+  { path: 'admin/tables/:funId/orderdetail/:id', component: OrderComponent },
+  { path: 'admin/drinks/:funId', component: AdminMenuComponent },
+  { path: 'admin/categories/:funId', component: CategoryComponent },
 
 ];
 

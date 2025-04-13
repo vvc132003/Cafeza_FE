@@ -1,0 +1,129 @@
+<app-layout [text]="'Quản lý chi tiết hoá đơn'" (showButtonss)="evetnbuttons($event)" [buttonNone]="showButtonsnone"
+    [tabTemplates]="{tableList}"></app-layout>
+
+<ng-template #tableList>
+    <div class="container-fluid p-2 modern-layout bg-light rounded">
+        <div class="row mb-4 g-4">
+            <!-- Danh sách sản phẩm -->
+            <div class="col-md-5">
+                <div class="card border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="fw-semibold mb-4">
+                            <!-- <i class="fas fa-coffee me-2"></i> -->
+                            Sản phẩm
+                        </h5>
+                        <!-- Thanh tìm kiếm và lọc -->
+                        <div class="row g-2 align-items-center text-center mb-4">
+                            <div class="col-md-7">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="fas fa-search text-muted"></i>
+                                    </span>
+                                    <input type="text" class="form-control form-control-sm border-start-0"
+                                        [(ngModel)]="timKiemTen" placeholder="Tìm theo tên...">
+                                </div>
+                            </div>
+                            <div class="col-md-5 d-flex">
+                                <select class="form-select form-select-sm" [(ngModel)]="loaiDuocChon">
+                                    <option *ngFor="let category of categorys" [value]="category.id">{{ category.name }}
+                                    </option>
+                                </select>
+                                <button class="btn btn-outline-black ms-2">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Danh sách sản phẩm -->
+                        <div class="row g-3 category-list">
+                            <div class="col-6 col-lg-4" *ngFor="let drink of sanPhamLoc">
+                                <div class="card product-card text-center border-0  h-100  hover-scale">
+                                    <img [src]="drink.imagePath" alt="{{ drink.name }}"
+                                        class="card-img-top p-2 rounded-top-4"
+                                        style="height: 100px; object-fit: cover;">
+                                    <div class="card-body">
+                                        <p class="fw-bold text-dark mb-1">{{ drink.name }}</p>
+                                        <p class="text-muted small mb-2">{{ drink.price | number }} VNĐ</p>
+                                        <button class="btn btn-sm btn-outline-primary w-100"
+                                            (click)="themVaoHoaDon(drink)">
+                                            <i class="fas fa-plus me-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Chi tiết hóa đơn + Thông tin thanh toán -->
+            <div class="col-md-7">
+                <!-- Chi tiết hóa đơn -->
+                <div class="card border-0  mb-4">
+                    <div class="card-body">
+                        <h5 class="text-dark mb-4">
+                            <!-- <i class="fas fa-list me-2"></i> -->
+                            Chi tiết hóa đơn
+                        </h5>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-sm text-center align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Sản phẩm</th>
+                                        <th>SL</th>
+                                        <th>Đơn giá</th>
+                                        <th>Tiền</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of chiTietHoaDon">
+                                        <td>{{ item.tenSanPham }}</td>
+                                        <td>{{ item.soLuong }}</td>
+                                        <td>{{ item.donGia | currency:'VND' }}</td>
+                                        <td>{{ item.soLuong * item.donGia | currency:'VND' }}</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-danger" (click)="xoaSanPham(item)">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thông tin thanh toán -->
+                <div class="card border-0 ">
+                    <div class="card-body">
+                        <h5 class="text-success mb-4"><i class="fas fa-cash-register me-2"></i>Thông tin thanh toán</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-3"><strong>Mã hóa đơn:</strong> {{ maHoaDon }}</div>
+                            <div class="col-md-3"><strong>Nhân viên:</strong> {{ nhanVien }}</div>
+                            <div class="col-md-3"><strong>Bàn:</strong> {{ tenBan }}</div>
+                            <div class="col-md-3"><strong>Ngày:</strong> {{ ngayTao | date:'dd/MM/yyyy HH:mm' }}</div>
+                        </div>
+                        <hr />
+                        <div class="row mb-3">
+                            <div class="col-md-4"><strong>Tạm tính:</strong> {{ tinhTongTien() | currency:'VND' }}</div>
+                            <div class="col-md-4"><strong>Giảm giá:</strong> {{ giamGia | currency:'VND' }}</div>
+                            <div class="col-md-4"><strong>Thuế:</strong> {{ thue | currency:'VND' }}</div>
+                        </div>
+                        <div class="text-end">
+                            <h5 class="text-danger"><strong>Tổng cộng:</strong> {{ tongThanhToan() | currency:'VND' }}
+                            </h5>
+                            <button class="btn btn-lg btn-danger mt-2 px-4" (click)="thanhToan()">
+                                <i class="fas fa-check me-2"></i> Xác nhận thanh toán
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</ng-template>

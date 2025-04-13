@@ -45,6 +45,7 @@ export class LayoutComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 
   @Output() showButtonss = new EventEmitter<any[]>();
   @Input() buttonNone: any[] = [];
+  
   evetnbuttons(event: any) {
     this.showButtonss.emit(event);
   }

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-admin-toolbar',
@@ -11,6 +12,7 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
   buttons = [
     {
       id: '101',
+      funId: '1001',
       label: 'Thêm',
       icon: 'fa-plus',
       type: 'primary',
@@ -19,6 +21,7 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
     },
     {
       id: '102',
+      funId: '1001',
       label: 'Cập nhật',
       icon: 'fa-refresh',
       type: 'warning',
@@ -27,6 +30,7 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
     },
     {
       id: '103',
+      funId: '1001',
       label: 'Xem',
       icon: 'fa-eye',
       type: 'secondary',
@@ -35,6 +39,7 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
     },
     {
       id: '104',
+      funId: '1001',
       label: 'Xoá',
       icon: 'fa-trash',
       type: 'danger',
@@ -43,6 +48,7 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
     },
     {
       id: '106',
+      funId: '1003',
       label: 'Hoàn tất',
       icon: 'fa-check',
       type: 'success',
@@ -51,21 +57,90 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
     },
     {
       id: '108',
-      label: 'Tạo hoá đơn',
+      funId: '1002',
+      label: 'Tạo đơn',
       icon: 'fa-file-invoice',
-      type: 'success',
+      type: '',
+      class: 'custom-create-btn',
       action: () => this.event('108'),
       display: 'block'
     },
     {
+      id: '101',
+      funId: '1002',
+      label: 'Thêm',
+      icon: 'fa-plus',
+      type: 'primary',
+      action: () => this.event('101'),
+      display: 'block'
+    },
+    {
+      id: '102',
+      funId: '1002',
+      label: 'Cập nhật',
+      icon: 'fa-refresh',
+      type: 'warning',
+      action: () => this.event('102'),
+      display: 'block'
+    },
+    {
+      id: '103',
+      funId: '1002',
+      label: 'Xem',
+      icon: 'fa-eye',
+      type: 'secondary',
+      action: () => this.event('103'),
+      display: 'block'
+    },
+    {
+      id: '104',
+      funId: '1002',
+      label: 'Xoá',
+      icon: 'fa-trash',
+      type: 'danger',
+      action: () => this.event('104'),
+      display: 'block'
+    },
+    {
       id: '109',
+      funId: '1002',
       label: 'Thêm khu vực',
       icon: 'fa-plus',
       type: 'success',
       action: () => this.event('109'),
       display: 'block'
-    }
+    },
+    {
+      id: '110',
+      funId: '1002',
+      label: 'Chuyển bàn',
+      icon: 'fa-random',        
+      type: 'primary',          
+      action: () => this.event('110'),
+      display: 'block'
+    },
+    {
+      id: '111',
+      funId: '1002',
+      label: 'Thanh toán',
+      icon: 'fa-money-bill-wave', 
+      type: 'success',            
+      action: () => this.event('111'),
+      display: 'block'
+    },
+    {
+      id: '112',
+      funId: '1002',
+      label: 'Huỷ đơn',
+      icon: 'fa-trash',
+      type: 'danger',
+      class: '',
+      action: () => this.event('112'),
+      display: 'block'
+    },
+    
   ];
+  constructor(private route: ActivatedRoute) { }
 
 
   @Output() showPupAdd = new EventEmitter<string>();
@@ -80,9 +155,11 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
       this.buttonNone = this.buttonNone;
     }
   }
-
+  funId: string = '';
   ngOnInit(): void {
-    this.showButtonss.emit(this.buttons);
+    this.funId = this.route.snapshot.paramMap.get('funId') || '';
+    const filteredButtons = this.buttons.filter(btn => btn.funId === this.funId);
+    this.showButtonss.emit(filteredButtons);
   }
 
   //#region  event

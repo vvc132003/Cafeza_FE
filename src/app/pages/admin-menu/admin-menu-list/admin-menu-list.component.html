@@ -16,6 +16,7 @@
             <div class="col-2">{{ drink.quantity }}</div>
             <div class="col-2"><span class="task-status" [ngClass]="getStatusClass(drink.status)">
                     {{ getStatusText(drink.status) }}</span></div>
+            <div class="col-2 p"><img src="{{drink.imagePath}}" width="30" alt=""></div>
         </div>
     </div>
 </div>
