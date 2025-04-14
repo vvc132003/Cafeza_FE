@@ -19,7 +19,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   evetnbuttons(actions: any[]) {
     this.showButtonsnone = actions.map(action => {
-      if (action.id != '110' && action.id != '111' && action.id != '112') {
+      if (action.id != '110' && action.id != '111' && action.id != '112' && action.id != '113' && action.id != '114') {
         return { ...action, display: 'none' };
       }
       return action;
@@ -36,7 +36,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     { tenSanPham: 'Cà phê sữa', soLuong: 2, donGia: 25000 },
     { tenSanPham: 'Trà đào', soLuong: 1, donGia: 30000 }
   ];
-
+  // chiTietHoaDon: any[] = [];
   drinks: any[] = [
     // { ten: 'Cà phê sữa', gia: 25000, loai: 'Cà phê', hinhAnh: 'assets/images/caphe-sua.jpg' },
     // { ten: 'Trà đào', gia: 30000, loai: 'Trà', hinhAnh: 'assets/images/tra-dao.jpg' },
@@ -81,7 +81,11 @@ export class OrderComponent implements OnInit, OnDestroy {
     });
   }
 
-
+  tienKhachTra: number = 0;
+  tinhTienThoi(): number {
+    const tong = this.tinhTongTien();
+    return this.tienKhachTra > tong ? this.tienKhachTra - tong : 0;
+  }
 
 
   giamGia = 10000;
@@ -104,7 +108,8 @@ export class OrderComponent implements OnInit, OnDestroy {
     if (found) {
       found.soLuong += 1;
     } else {
-      this.chiTietHoaDon.push({ tenSanPham: sp.name, soLuong: 1, donGia: sp.price });
+      // this.chiTietHoaDon.push({ tenSanPham: sp.name, soLuong: 1, donGia: sp.price });
+      this.chiTietHoaDon.unshift({ tenSanPham: sp.name, soLuong: 1, donGia: sp.price });
     }
   }
 

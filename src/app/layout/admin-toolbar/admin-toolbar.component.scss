@@ -34,12 +34,23 @@
 .show-buttons {
   display: none;
 }
+
 .custom-create-btn {
-  background-color: #8e44ad; /* tím đậm */
+  background-color: #8e44ad;
   color: white;
   border: none;
 }
 
+.btn-custom-print {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+}
+.btn-custom-update {
+  background-color: #FF5722;
+  color: white;
+  border: none;
+}
 
 @media (max-width: 470px) {
   .admin-toolbar {

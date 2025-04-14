@@ -64,7 +64,7 @@ export class TableComponent implements OnInit, OnDestroy {
     }
 
     this.showButtonsnone = actions.map(action => {
-      if (action.id === '110' || action.id === '111' || action.id === '112') {
+      if (action.id === '110' || action.id === '111' || action.id === '112' || action.id === '113' || action.id === '114') {
         return { ...action, display: 'none' };
       }
       return action;

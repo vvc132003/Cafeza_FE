@@ -6,11 +6,10 @@
         <div class="row mb-4 g-4">
             <!-- Danh sách sản phẩm -->
             <div class="col-md-5">
-                <div class="card border-0 h-100">
+                <div class="card border-0 fixed-height-no-scroll-drinks">
                     <div class="card-body">
-                        <h5 class="fw-semibold mb-4">
-                            <!-- <i class="fas fa-coffee me-2"></i> -->
-                            Sản phẩm
+                        <h5 class="section-header mb-4">
+                            <i class="fas fa-coffee me-2 icon-brown"></i> Sản phẩm
                         </h5>
                         <!-- Thanh tìm kiếm và lọc -->
                         <div class="row g-2 align-items-center text-center mb-4">
@@ -61,66 +60,89 @@
             <!-- Chi tiết hóa đơn + Thông tin thanh toán -->
             <div class="col-md-7">
                 <!-- Chi tiết hóa đơn -->
-                <div class="card border-0  mb-4">
+                <div class="card border-0  mb-4 fixed-height-no-scroll">
                     <div class="card-body">
-                        <h5 class="text-dark mb-4">
-                            <!-- <i class="fas fa-list me-2"></i> -->
-                            Chi tiết hóa đơn
+                        <h5 class="header-section mb-4">
+                            <i class="fas fa-list-alt me-2 icon-green"></i> Chi tiết hóa đơn
                         </h5>
-                        <div class="table-responsive">
-                            <table class="table table-hover table-sm text-center align-middle">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Sản phẩm</th>
-                                        <th>SL</th>
-                                        <th>Đơn giá</th>
-                                        <th>Tiền</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let item of chiTietHoaDon">
-                                        <td>{{ item.tenSanPham }}</td>
-                                        <td>{{ item.soLuong }}</td>
-                                        <td>{{ item.donGia | currency:'VND' }}</td>
-                                        <td>{{ item.soLuong * item.donGia | currency:'VND' }}</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-outline-danger" (click)="xoaSanPham(item)">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="list-group-item d-flex fw-bold shadow-sm mb-2 sticky-header">
+                            <div class="col-2 p">Sản phẩm</div>
+                            <div class="col-2">Số lượng</div>
+                            <div class="col-2">Giá bán</div>
+                            <div class="col-2">Thành tiền</div>
+                            <div class="col-2">Ghi chú</div>
+                            <div class="col-2 p">Thao tác</div>
+                        </div>
+                        <!-- <div class="row g-3 category-list"> -->
+
+                        <div class="list-group orderdetail-list">
+                            <div *ngFor="let drink of chiTietHoaDon" class="list-group-item d-flex mb-2">
+                                <div class="col-2 p">{{ drink.tenSanPham }}</div>
+                                <div class="col-2">{{ drink.soLuong }}</div>
+                                <div class="col-2">{{ drink.donGia | number }} VNĐ</div>
+                                <div class="col-2">{{ drink.soLuong * drink.donGia | currency:'VND' }}</div>
+                                <div class="col-2"></div>
+                                <div class="col-2">
+                                    <button class="btn btn-warning btn-sm me-1">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" (click)="xoaSanPham(drink)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Thông tin thanh toán -->
-                <div class="card border-0 ">
+                <div class="card border-0  mb-4 fixed-height-no-scroll">
+                    <!-- <div class="card-header  bg-brown  text-white fw-bold">
+                        <i class="fas fa-receipt me-2"></i> Thông tin hóa đơn
+                    </div> -->
                     <div class="card-body">
-                        <h5 class="text-success mb-4"><i class="fas fa-cash-register me-2"></i>Thông tin thanh toán</h5>
-                        <div class="row mb-3">
-                            <div class="col-md-3"><strong>Mã hóa đơn:</strong> {{ maHoaDon }}</div>
-                            <div class="col-md-3"><strong>Nhân viên:</strong> {{ nhanVien }}</div>
-                            <div class="col-md-3"><strong>Bàn:</strong> {{ tenBan }}</div>
-                            <div class="col-md-3"><strong>Ngày:</strong> {{ ngayTao | date:'dd/MM/yyyy HH:mm' }}</div>
-                        </div>
-                        <hr />
-                        <div class="row mb-3">
-                            <div class="col-md-4"><strong>Tạm tính:</strong> {{ tinhTongTien() | currency:'VND' }}</div>
-                            <div class="col-md-4"><strong>Giảm giá:</strong> {{ giamGia | currency:'VND' }}</div>
-                            <div class="col-md-4"><strong>Thuế:</strong> {{ thue | currency:'VND' }}</div>
-                        </div>
-                        <div class="text-end">
-                            <h5 class="text-danger"><strong>Tổng cộng:</strong> {{ tongThanhToan() | currency:'VND' }}
-                            </h5>
-                            <button class="btn btn-lg btn-danger mt-2 px-4" (click)="thanhToan()">
-                                <i class="fas fa-check me-2"></i> Xác nhận thanh toán
-                            </button>
+                        <h5 class="section-header-bill mb-2">
+                            <i class="fas fa-receipt me-2 icon-bill"></i> Hóa đơn
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between py-3 border-bottom">
+                                    <span><strong>Mã hóa đơn:</strong></span>
+                                    <span>{{ maHoaDon }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between py-3 border-bottom">
+                                    <span><strong>Tổng tiền:</strong></span>
+                                    <span>{{ tinhTongTien() | currency:'VND' }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between py-3 border-bottom">
+                                    <span><strong>Tiền thối:</strong></span>
+                                    <span>{{ tinhTienThoi() | currency:'VND' }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between py-3">
+                                    <span><strong>Nhân viên:</strong></span>
+                                    <span>{{ nhanVien }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between py-3 border-bottom">
+                                    <span><strong>Bàn:</strong></span>
+                                    <span>{{ tenBan }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between py-3 border-bottom">
+                                    <span><strong>Ngày:</strong></span>
+                                    <span>{{ ngayTao | date:'dd/MM/yyyy HH:mm' }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center py-3">
+                                    <span><strong>Tiền khách trả:</strong></span>
+                                    <input type="number" class="form-control form-control-sm w-50"
+                                        [(ngModel)]="tienKhachTra" (input)="tinhTienThoi()"
+                                        placeholder="Nhập số tiền..." />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

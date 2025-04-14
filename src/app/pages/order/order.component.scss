@@ -14,11 +14,23 @@
     border-radius: 25px;
 }
 
+.fixed-height-no-scroll {
+    height: 300px;
+    min-height: 300px;
+}
+
+.fixed-height-no-scroll-drinks{
+    height: 625px;
+    min-height: 625px;
+}
+
+
 .category-list {
-    max-height: 400px;
+    max-height: 450px;
     overflow-y: auto;
     overflow-x: hidden;
 }
+
 
 .category-list::-webkit-scrollbar {
     width: 1px;
@@ -33,6 +45,27 @@
     background-color: #dee2e6;
 }
 
+
+.orderdetail-list {
+    max-height: 139px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.orderdetail-list::-webkit-scrollbar {
+    width: 1px;
+}
+
+.orderdetail-list::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+.orderdetail-list::-webkit-scrollbar-thumb:hover {
+    background-color: #dee2e6;
+}
+
 .btn-outline-black {
     border-color: #dee2e6;
 }
@@ -41,4 +74,76 @@
     background-color: #dee2e6;
     color: white;
     border-color: #dee2e6;
+}
+
+
+.header-section {
+    padding: 0.5rem 1rem;
+    border-left: 5px solid #198754;
+    border-bottom: 1px solid #198754;
+    background-color: #f8f9fa;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    border-radius: 0.25rem;
+    color: #198754;
+}
+
+.icon-green {
+    color: #198754;
+}
+
+.section-header {
+    padding: 0.5rem 1rem;
+    background-color: #f8f9fa;
+    border-left: 5px solid #6f4e37;
+    border-bottom: 1px solid #6f4e37;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    border-radius: 0.25rem;
+    color: #6f4e37;
+}
+
+.icon-brown {
+    color: #6f4e37;
+}
+
+
+.section-header-bill {
+    padding: 0.5rem 1rem;
+    background-color: #f8f9fa;
+    border-left: 5px solid #a0522d; 
+    border-bottom: 1px solid #a0522d;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    border-radius: 0.25rem;
+    color: #a0522d;
+  }
+  
+  .icon-bill {
+    color: #a0522d;
+  }
+  
+
+.list-group-item {
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 5px 1px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    flex-wrap: wrap;
+}
+
+.list-group-item>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
 }
