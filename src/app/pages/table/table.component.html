@@ -12,3 +12,7 @@
 <app-table-add [listTablesparentId]="tables" (newPupAdd)="newData($event)" [showoffcanvas]="showoffcanvas"
     [table]="table" [data]="data" (closePupAdd)="close()"></app-table-add>
 <!-- </ng-container> -->
+
+<app-select-order-type [isTypeOpen]="isTypeOpen" (showOrder_Type)="showOrderType()" (closeTypeModal)="closeType()"></app-select-order-type>
+
+<app-order-add [showoffcanvas]="showoffOrder" [data]="data" (closePupAddOrder)="close()"></app-order-add>

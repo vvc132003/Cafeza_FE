@@ -8,8 +8,9 @@ import { TableService } from 'src/app/services/table.service';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, OnDestroy {
-
+  isTypeOpen = false;
   showoffcanvas = false;
+  showoffOrder = false;
   showAdd = false;
   table: any = {};
   selectTable: any = {};
@@ -91,6 +92,9 @@ export class TableComponent implements OnInit, OnDestroy {
           text: 'Thêm khu vực'
         };
         break;
+      case '108':
+        this.isTypeOpen = true;
+        break;
       default:
         break;
     }
@@ -120,9 +124,23 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
+  showOrderType() {
+    this.data = {
+      action: 'add',
+      text: 'Tạo đơn'
+    };
+    this.isTypeOpen = false;
+    this.showoffOrder = true;
+  }
+
   close() {
     // this.showAdd = false;
+    this.showoffOrder = false;
     this.showoffcanvas = false;
+  }
+
+  closeType() {
+    this.isTypeOpen = false;
   }
 
 }

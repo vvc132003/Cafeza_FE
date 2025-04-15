@@ -41,7 +41,7 @@ export class DrinkDetailComponent implements OnInit, OnDestroy, OnChanges {
   //#region load
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['drink']) {
-      this.drink.imagePath = 'https://classiccoffee.com.vn/upload/xzYyaYzbM7FgfiwHSe76KCpPOdgpqnyXWxw.jpg'
+      // this.drink.imagePath = 'https://classiccoffee.com.vn/upload/xzYyaYzbM7FgfiwHSe76KCpPOdgpqnyXWxw.jpg'
       this.text = "Xem chi tiết: " + this.drink.name;
     }
   }
