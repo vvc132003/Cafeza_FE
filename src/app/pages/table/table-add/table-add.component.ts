@@ -60,9 +60,10 @@ export class TableAddComponent implements OnChanges {
     }
   }
   saveLocation() {
+    if (!this.table.location) return;
     this.tableService.postData(this.table).subscribe((data) => {
       this.close();
-      this.newPupAdd.emit(data);
+      // this.newPupAdd.emit(data);
     })
   }
 

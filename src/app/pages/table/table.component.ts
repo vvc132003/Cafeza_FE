@@ -14,6 +14,8 @@ export class TableComponent implements OnInit, OnDestroy {
   showAdd = false;
   table: any = {};
   selectTable: any = {};
+  toastMessage = '';
+  showToast = false;
   private subscription = new Subscription();
 
   constructor(private cdr: ChangeDetectorRef, private tableService: TableService) { }
@@ -30,7 +32,10 @@ export class TableComponent implements OnInit, OnDestroy {
   count: number = 0;
 
   ngOnInit(): void {
-    this.loadTables();
+    // this.loadTables();
+    this.tableService.startConnection().subscribe(() => {
+      this.loadTables();
+    });
   }
 
   loadTables() {
@@ -44,12 +49,16 @@ export class TableComponent implements OnInit, OnDestroy {
           this.evetnbuttons(this.pendingActions);
           // this.pendingActions = [];
         }
+        this.tableService.onTableLoaded().subscribe((newTable: any) => {
+          this.newData(newTable);
+        });
       })
     );
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.tableService.stopConnection();
   }
 
   showButtonsnone: any[] = [];
@@ -100,7 +109,6 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
-
   newData(data: any) {
     const index = this.tables.findIndex(c => c.id === data.id);
     if (index === -1) {
@@ -112,6 +120,7 @@ export class TableComponent implements OnInit, OnDestroy {
       } else {
         this.tables = [data, ...this.tables]; // thêm đầu mảng
       }
+      this.showNotification("Đã thêm bàn thành công!");
     } else {
       const updated = [...this.tables];
       updated[index] = data;
@@ -122,6 +131,15 @@ export class TableComponent implements OnInit, OnDestroy {
       this.evetnbuttons(this.pendingActions);
       // this.pendingActions = [];
     }
+  }
+
+  showNotification(message: string) {
+    this.toastMessage = message;
+    this.showToast = true;
+  
+    setTimeout(() => {
+      this.showToast = false;
+    }, 4000);
   }
 
   showOrderType() {
