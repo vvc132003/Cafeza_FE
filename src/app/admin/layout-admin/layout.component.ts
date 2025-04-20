@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
-import { DrinkService } from '../services/drinkservice';
 import { Subscription } from 'rxjs';
+import { DrinkService } from 'src/app/services/drinkservice';
 
 @Component({
   selector: 'app-layout',
