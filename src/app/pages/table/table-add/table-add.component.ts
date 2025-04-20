@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { NotificationService } from 'src/app/services/notification';
 import { TableService } from 'src/app/services/table.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class TableAddComponent implements OnChanges {
   action: string = "";
 
 
-  constructor(private cdr: ChangeDetectorRef, private tableService: TableService) { }
+  constructor(private cdr: ChangeDetectorRef, private tableService: TableService, private notificationService: NotificationService) { }
 
 
   close() {
@@ -53,10 +54,12 @@ export class TableAddComponent implements OnChanges {
   save(): void {
     if (this.action === 'addkv') {
       this.saveLocation();
+      this.notificationService.showSuccess('1005');
     } else if (this.action === 'addb') {
       this.table.status = 'empty';
       this.table.location = this.listTablesparentId.find((tb: any) => tb.id === this.table.parentId)?.location || null;
       this.saveLocation();
+      this.notificationService.showSuccess('1002');
     }
   }
   saveLocation() {

@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DrinkService } from 'src/app/services/drinkservice';
+import { NotificationService } from 'src/app/services/notification';
 
 @Component({
   selector: 'app-admin-menu',
@@ -24,7 +25,7 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private drinkService: DrinkService, private cdr: ChangeDetectorRef) { }
+  constructor(private drinkService: DrinkService, private cdr: ChangeDetectorRef,private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.loadDrinks();

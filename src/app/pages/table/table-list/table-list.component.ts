@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationService } from 'src/app/services/notification';
 
 @Component({
   selector: 'app-table-list',
@@ -11,15 +12,20 @@ export class TableListComponent {
   @Input() tables: any[] = [];
   @Input() selectTable: any;
   @Output() table = new EventEmitter<void>();
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router, private route: ActivatedRoute, private notificationService: NotificationService) { }
 
   onTableDoubleClick(tableId: number): void {
-    this.funId = this.route.snapshot.paramMap.get('funId') || '';
-    this.router.navigate([`/admin/tables/${this.funId}/orderdetail/${tableId}`]);
+    if (this.selectTable.status != 'empty') {
+      this.funId = this.route.snapshot.paramMap.get('funId') || '';
+      this.router.navigate([`/admin/tables/${this.funId}/orderdetail/${tableId}`]);
+    }else{
+      this.notificationService.showInfo('1004');
+    }
   }
 
   clickTable(table: any) {
     this.selectTable = table;
+    // console.log(table);
     this.table.emit(table);
   }
 

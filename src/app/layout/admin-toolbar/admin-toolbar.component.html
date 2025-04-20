@@ -1,5 +1,7 @@
 <div class="admin-toolbar">
-  <div class="toolbar-title">{{text}} | {{count}}</div>
+  <div class="toolbar-title">
+    {{ text }} <span *ngIf="count > 0">| {{ count }}</span> <span *ngIf="tableName">| {{ tableName }}</span>
+  </div>
   <div class="toolbar-buttons" [class.show]="showButtons">
     <button *ngFor="let button of buttonNone" class="btn" [ngClass]="getButtonClass(button.type) + ' ' + button.class"
       [ngStyle]="{ display: button.display }" (click)="button.action()">

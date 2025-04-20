@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
+import { NotificationService } from 'src/app/services/notification';
 
 @Component({
   selector: 'app-category-add',
@@ -21,7 +22,7 @@ export class CategoryAddComponent implements OnChanges {
     { label: 'Cài đặt', icon: 'bi-gear', tab: 'setting' }
   ];
 
-  constructor(private categoryService: CategoryService) {
+  constructor(private categoryService: CategoryService,private notificationService: NotificationService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {

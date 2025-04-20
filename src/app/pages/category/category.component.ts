@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CategoryService } from 'src/app/services/category.service';
+import { NotificationService } from 'src/app/services/notification';
 
 @Component({
   selector: 'app-category',
@@ -24,7 +25,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private categoryService: CategoryService, private cdr: ChangeDetectorRef) { }
+  constructor(private categoryService: CategoryService, private cdr: ChangeDetectorRef,private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.loadCategorys();

@@ -1,4 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { NotificationService } from 'src/app/services/notification';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-order-add',
@@ -6,9 +8,9 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, S
   styleUrls: ['./order-add.component.scss']
 })
 export class OrderAddComponent implements OnChanges {
-save() {
-throw new Error('Method not implemented.');
-}
+  save() {
+    throw new Error('Method not implemented.');
+  }
   @Input() showoffcanvas = false;
   @Output() closePupAddOrder = new EventEmitter<void>();
   text: string = "";
@@ -20,7 +22,7 @@ throw new Error('Method not implemented.');
     { label: 'Thông tin khách hàng', icon: 'bi-person-vcard', tab: 'category' },
   ];
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef, private orderService: OrderService,private notificationService: NotificationService) { }
 
 
   ngOnChanges(changes: SimpleChanges): void {

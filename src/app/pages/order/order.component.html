@@ -1,5 +1,5 @@
-<app-layout [text]="'Quản lý chi tiết hoá đơn'" (showButtonss)="evetnbuttons($event)" [buttonNone]="showButtonsnone"
-    [tabTemplates]="{tableList}"></app-layout>
+<app-layout tableName="{{order.tableName}}" [text]="'Quản lý chi tiết hoá đơn'" (showButtonss)="evetnbuttons($event)"
+    [buttonNone]="showButtonsnone" [tabTemplates]="{tableList}"></app-layout>
 
 <ng-template #tableList>
     <div class="container-fluid p-2 modern-layout bg-light rounded">
@@ -108,7 +108,7 @@
                             <div class="col-md-6">
                                 <div class="d-flex justify-content-between py-3 border-bottom">
                                     <span><strong>Mã hóa đơn:</strong></span>
-                                    <span>{{ maHoaDon }}</span>
+                                    <span>{{ order.code }}</span>
                                 </div>
                                 <div class="d-flex justify-content-between py-3 border-bottom">
                                     <span><strong>Tổng tiền:</strong></span>
@@ -120,17 +120,21 @@
                                 </div>
                                 <div class="d-flex justify-content-between py-3">
                                     <span><strong>Nhân viên:</strong></span>
-                                    <span>{{ nhanVien }}</span>
+                                    <span>{{ order.fullNameEmployee }}</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="d-flex justify-content-between py-3 border-bottom">
+                                <!-- <div class="d-flex justify-content-between py-3 border-bottom">
                                     <span><strong>Bàn:</strong></span>
                                     <span>{{ tenBan }}</span>
-                                </div>
+                                </div> -->
                                 <div class="d-flex justify-content-between py-3 border-bottom">
                                     <span><strong>Ngày:</strong></span>
-                                    <span>{{ ngayTao | date:'dd/MM/yyyy HH:mm' }}</span>
+                                    <span>{{ order.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between py-3 border-bottom">
+                                    <span><strong>Khách hàng:</strong></span>
+                                    <span>{{ order.fullNameCustomer }}</span>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center py-3">
                                     <span><strong>Tiền khách trả:</strong></span>

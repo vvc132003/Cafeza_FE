@@ -114,8 +114,8 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
       id: '110',
       funId: '1002',
       label: 'Chuyển bàn',
-      icon: 'fa-random',        
-      type: 'primary',          
+      icon: 'fa-random',
+      type: 'primary',
       action: () => this.event('110'),
       display: 'block'
     },
@@ -123,8 +123,8 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
       id: '111',
       funId: '1002',
       label: 'Thanh toán',
-      icon: 'fa-money-bill-wave', 
-      type: 'success',            
+      icon: 'fa-money-bill-wave',
+      type: 'success',
       action: () => this.event('111'),
       display: 'block'
     },
@@ -143,9 +143,28 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
       funId: '1002',
       label: 'In hóa đơn',
       icon: 'fa-print',
-      type: '', 
+      type: '',
       class: 'btn-custom-print',
-      action: () => this.event('113'), 
+      action: () => this.event('113'),
+      display: 'block'
+    },
+    {
+      id: '114',
+      funId: '1002',
+      label: 'Xem thông tin khách hàng',
+      icon: 'fa-eye',
+      type: 'secondary',
+      action: () => this.event('114'),
+      display: 'block'
+    },
+    {
+      id: '115',
+      funId: '1002',
+      label: 'Tách đơn',
+      icon: 'fa-scissors',
+      type: '',
+      class: 'btn btn-warning',
+      action: () => this.event('115'),
       display: 'block'
     },
     // {
@@ -158,8 +177,8 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
     //   action: () => this.event('114'), 
     //   display: 'block'
     // }
-    
-    
+
+
   ];
   constructor(private route: ActivatedRoute) { }
 
@@ -170,6 +189,7 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
   @Input() text: string = "";
   @Input() count: number = 0;
   @Input() buttonNone: any[] = [];
+  @Input() tableName: string = "";
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['buttonNone']) {

@@ -4,7 +4,7 @@
 
 <ng-template #tableList>
     <div class="bottom-card">
-        <app-table-list [tables]="tables" [selectTable]="selectTable"></app-table-list>
+        <app-table-list [tables]="tables" [selectTable]="selectTable" (table)="clickTable($event)"></app-table-list>
     </div>
 </ng-template>
 
@@ -13,7 +13,7 @@
     (closePupAdd)="close()"></app-table-add>
 <!-- </ng-container> -->
 
-<app-select-order-type [isTypeOpen]="isTypeOpen" (showOrder_Type)="showOrderType()"
+<app-select-order-type [isTypeOpen]="isTypeOpen" [tableId]="tableId" (showOrder_Type)="showOrderType()"
     (closeTypeModal)="closeType()"></app-select-order-type>
 
 <app-order-add [showoffcanvas]="showoffOrder" [data]="data" (closePupAddOrder)="close()"></app-order-add>

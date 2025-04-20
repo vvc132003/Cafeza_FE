@@ -11,6 +11,7 @@ export class LayoutComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 
   @Output() showPupAdd = new EventEmitter<void>();
   @Input() text: string = "";
+  @Input() tableName: string = "";
   @Input() count: number = 0;
   // @Input() tabTemplates: TemplateRef<any>[] = [];
   @Input() tabTemplates: { [key: string]: TemplateRef<any> } = {};
@@ -45,7 +46,7 @@ export class LayoutComponent implements AfterViewInit, OnChanges, OnInit, OnDest
 
   @Output() showButtonss = new EventEmitter<any[]>();
   @Input() buttonNone: any[] = [];
-  
+
   evetnbuttons(event: any) {
     this.showButtonss.emit(event);
   }

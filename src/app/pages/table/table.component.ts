@@ -44,7 +44,8 @@ export class TableComponent implements OnInit, OnDestroy {
         this.tables = data;
         // console.log(this.categories);
         this.count = this.tables.length;
-        this.selectTable = this.tables[1];
+        this.selectTable = this.tables[2];
+        // this.selectTableStatus =this.tables[2].status;
         if (this.pendingActions.length > 0) {
           this.evetnbuttons(this.pendingActions);
           // this.pendingActions = [];
@@ -72,13 +73,27 @@ export class TableComponent implements OnInit, OnDestroy {
       this.pendingActions = actions;
       return;
     }
-
-    this.showButtonsnone = actions.map(action => {
-      if (action.id === '110' || action.id === '111' || action.id === '112' || action.id === '113' || action.id === '114') {
-        return { ...action, display: 'none' };
-      }
-      return action;
-    });
+    // console.log(this.pendingActions);
+    switch (this.selectTable.status) {
+      case 'empty':
+        this.showButtonsnone = actions.map(action => {
+          if (action.id === '110' || action.id === '111' || action.id === '112' || action.id === '113' || action.id === '114' || action.id === '115') {
+            return { ...action, display: 'none' };
+          }
+          return action;
+        });
+        break;
+      case 'occupied':
+        this.showButtonsnone = actions.map(action => {
+          if (action.id === '110' || action.id === '102' || action.id === '104' || action.id === '108' || action.id === '111' || action.id === '112' || action.id === '113' || action.id === '114' || action.id === '115') {
+            return { ...action, display: 'none' };
+          }
+          return action;
+        });
+        break;
+      default:
+        break;
+    }
 
     this.cdr.detectChanges();
   }
@@ -127,6 +142,7 @@ export class TableComponent implements OnInit, OnDestroy {
       this.tables = updated;
     }
     this.selectTable = data;
+    // this.selectTableStatus = data.status;
     if (this.pendingActions.length > 0) {
       this.evetnbuttons(this.pendingActions);
       // this.pendingActions = [];
@@ -136,7 +152,7 @@ export class TableComponent implements OnInit, OnDestroy {
   showNotification(message: string) {
     this.toastMessage = message;
     this.showToast = true;
-  
+
     setTimeout(() => {
       this.showToast = false;
     }, 4000);
@@ -158,7 +174,16 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   closeType() {
+    this.evetnbuttons(this.pendingActions);
     this.isTypeOpen = false;
+  }
+  tableId: any = {};
+  // selectTableStatus: string = "";
+  clickTable(table: any) {
+    this.tableId = table.id;
+    this.selectTable = table;
+    this.evetnbuttons(this.pendingActions);
+
   }
 
 }

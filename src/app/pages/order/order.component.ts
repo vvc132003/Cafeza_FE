@@ -1,7 +1,10 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CategoryService } from 'src/app/services/category.service';
 import { DrinkService } from 'src/app/services/drinkservice';
+import { NotificationService } from 'src/app/services/notification';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-order',
@@ -11,15 +14,24 @@ import { DrinkService } from 'src/app/services/drinkservice';
 export class OrderComponent implements OnInit, OnDestroy {
   showButtonsnone: any[] = [];
   pendingActions: any[] = [];
-
-
+  id: string = "";
+  order: any = {};
   private subscription = new Subscription();
 
-  constructor(private cdr: ChangeDetectorRef, private drinkService: DrinkService, private categoryService: CategoryService) { }
+  constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute,
+    private drinkService: DrinkService, private categoryService: CategoryService,
+    private orderService: OrderService,private notificationService: NotificationService
+  ) {
+    this.id = this.route.snapshot.paramMap.get('id') || '';
+    this.orderService.getOrderByTableId(this.id).subscribe((data: any) => {
+      console.log(data);
+      this.order = data[0];
+    })
+  }
 
   evetnbuttons(actions: any[]) {
     this.showButtonsnone = actions.map(action => {
-      if (action.id != '110' && action.id != '111' && action.id != '112' && action.id != '113' && action.id != '114') {
+      if (action.id != '110' && action.id != '111' && action.id != '112' && action.id != '113' && action.id != '114' && action.id != '115') {
         return { ...action, display: 'none' };
       }
       return action;
