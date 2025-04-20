@@ -1,0 +1,25 @@
+.hero-header {
+    height: 100vh;
+    background: linear-gradient(rgba(40, 20, 10, 0.6), rgba(40, 20, 10, 0.6)),
+                url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  
+    .brand {
+      color: #f2c094;
+    }
+  
+    h1 {
+      font-size: 3rem;
+    }
+  
+    .btn {
+      font-weight: 600;
+      transition: all 0.3s ease-in-out;
+    }
+  
+    .btn-outline-light:hover {
+      background-color: #fff;
+      color: #5e3c2f;
+    }
+  }
+  
