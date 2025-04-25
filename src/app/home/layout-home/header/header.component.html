@@ -1,11 +1,47 @@
-<header class="hero-header text-white d-flex align-items-center">
-    <div class="container text-center">
-      <h1 class="display-4 fw-bold">Chào mừng đến với <span class="brand">Cafeza</span></h1>
-      <p class="lead mt-3">Thưởng thức hương vị cà phê tuyệt hảo mỗi ngày</p>
-      <div class="mt-4">
-        <a href="/menu" class="btn btn-light btn-lg rounded-pill me-3 px-4">Xem Menu</a>
-        <a href="/booking" class="btn btn-outline-light btn-lg rounded-pill px-4">Đặt bàn</a>
+<div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
+  <div class="carousel-inner">
+    <div *ngFor="let slide of heroSlides; let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
+      <div class="hero-slide d-flex align-items-center" [ngStyle]="{'background-image': 'url(' + slide.image + ')'}">
+        <div class="container text-center text-white">
+          <h1 class="display-5 fw-bold">{{ slide.title }}</h1>
+          <p class="lead">{{ slide.subtitle }}</p>
+          <div class="mt-3">
+            <a *ngIf="slide.button1" [href]="slide.button1.link" class="btn btn-light btn-sm rounded-pill me-2 px-3">{{
+              slide.button1.text }}</a>
+            <a *ngIf="slide.button2" [href]="slide.button2.link"
+              class="btn btn-outline-light btn-sm rounded-pill px-3">{{ slide.button2.text }}</a>
+          </div>
+        </div>
       </div>
     </div>
-  </header>
-  
+  </div>
+
+  <!-- Controls -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+
+<div class="category-container">
+  <div *ngFor="let category of categoryDrinks" class="category-card">
+    <h2 class="category-title">{{ category.category }}</h2>
+    <div class="drinks-grid">
+      <div *ngFor="let drink of category.drinks" class="drink-card">
+        <div class="drink-image-container">
+          <img *ngIf="drink.imagePath" [src]="drink.imagePath" alt="{{ drink.name }}" class="drink-image" />
+        </div>
+        <div class="drink-details">
+          <h4 class="drink-name">{{ drink.name }}</h4>
+          <p class="drink-price">{{ drink.price | currency: 'VND' }}</p>
+          <button class="add-to-cart-btn">
+            <i class="fas fa-shopping-cart"></i> Đặt mua
+          </button>          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

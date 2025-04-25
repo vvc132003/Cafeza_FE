@@ -15,6 +15,10 @@ export class DrinkService {
         return this.http.get<any[]>(this.apiUrl);
     }
 
+    getDataDrink_list(): Observable<any> {
+        return this.http.get<any[]>(`${this.apiUrl}/drink-list`); 
+    }
+
     // Phương thức POST
     postData(data: any): Observable<any> {
         return this.http.post<any>(this.apiUrl, data);

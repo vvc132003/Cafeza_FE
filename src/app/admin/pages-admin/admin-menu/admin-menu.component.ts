@@ -35,7 +35,7 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.drinkService.getData().subscribe((data: any) => {
         this.drinks = data;
-        console.log(this.drinks);
+        // console.log(this.drinks);
         this.drink = this.drinks[0];
         this.count = this.drinks.length;
         if (this.pendingActions.length > 0) {

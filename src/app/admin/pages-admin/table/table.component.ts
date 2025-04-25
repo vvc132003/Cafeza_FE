@@ -44,10 +44,11 @@ export class TableComponent implements OnInit, OnDestroy {
         this.tables = data;
         // console.log(this.categories);
         this.count = this.tables.length;
-        this.selectTable = this.tables[2];
+        this.selectTable = this.tables[3];
         // this.selectTableStatus =this.tables[2].status;
         if (this.pendingActions.length > 0) {
           this.evetnbuttons(this.pendingActions);
+          console.log(this.pendingActions);
           // this.pendingActions = [];
         }
         this.tableService.onTableLoaded().subscribe((newTable: any) => {
@@ -66,7 +67,7 @@ export class TableComponent implements OnInit, OnDestroy {
   pendingActions: any[] = [];
 
   evetnbuttons(actions: any[]) {
-    this.showButtonsnone = actions.filter(action => action.id === '109');
+    this.showButtonsnone = actions.filter(action => action.id === '109' || action.id === '101');
     this.cdr.detectChanges();
 
     if (!this.selectTable || !this.selectTable.id) {
