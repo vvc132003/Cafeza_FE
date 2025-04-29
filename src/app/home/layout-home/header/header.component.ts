@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DrinkService } from 'src/app/services/drinkservice';
 
@@ -7,7 +8,7 @@ import { DrinkService } from 'src/app/services/drinkservice';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
   heroSlides = [
     {
       title: "Chào mừng đến với Cafeza",
@@ -34,9 +35,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   // category: string = "";
   // drinks: any[] = [];
-  categoryDrinks: any[] = [];  
+  categoryDrinks: any[] = [];
+  originalCategoryDrinks: any[] = [];
   private subscription = new Subscription();
-  constructor(private drinkService: DrinkService) { }
+  constructor(private drinkService: DrinkService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.fetDrink_list();
@@ -44,12 +46,64 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   fetDrink_list() {
     this.subscription.add(
-      this.drinkService.getDataDrink_list().subscribe((response: any) => {  
-        this.categoryDrinks = response; 
+      this.drinkService.getDataDrink_list().subscribe((response: any) => {
+        this.categoryDrinks = response;
+        this.originalCategoryDrinks = response;
+        this.categoryDrinks.forEach(category => {
+          category.visibleDrinks = category.drinks.slice(0, 5);
+        });
       })
     );
   }
-  
+
+  showMore(category: any) {
+    const currentLength = category.visibleDrinks.length;
+    const moreDrinks = category.drinks.slice(currentLength, currentLength + 5);
+    category.visibleDrinks = [...category.visibleDrinks, ...moreDrinks];
+  }
+
+  @Input() keyword: string = '';
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['keyword']) {
+      // console.log(this.keyword);
+      this.onSearch(this.keyword);
+    }
+  }
+
+  onSearch(keyword: string): void {
+    const lowerKeyword = keyword.toLowerCase().trim();
+
+    if (!lowerKeyword) {
+      this.categoryDrinks = this.originalCategoryDrinks;
+      this.categoryDrinks.forEach(category => {
+        category.visibleDrinks = category.drinks.slice(0, 5);
+      });
+      return;
+    }
+
+    this.categoryDrinks = this.originalCategoryDrinks
+      .map(category => {
+        const matchedDrinks = category.drinks.filter((drink: any) =>
+          drink.name.toLowerCase().includes(lowerKeyword)
+        );
+
+        if (matchedDrinks.length > 0) {
+          return {
+            ...category,
+            drinks: matchedDrinks,
+            visibleDrinks: matchedDrinks.slice(0, 5)
+          };
+        }
+        return null;
+      })
+      .filter(category => category !== null);
+  }
+
+  onTableDoubleClick(drink: any): void {
+    this.drinkService.setDrink(drink);
+    this.router.navigate([`/drinks/drink-detail/${drink.slug}-${drink.sku}`]);
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
     // this.tableService.stopConnection();

@@ -148,7 +148,13 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
           return action;
         });
         break;
-      case 'Cleaning':
+      case 'discontinued':
+        this.showButtonsnone = actions.map(action => {
+          if (action.id === '109') {
+            return { ...action, display: 'none' };
+          }
+          return action;
+        });
         break;
       default:
         break;

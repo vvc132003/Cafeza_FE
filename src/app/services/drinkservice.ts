@@ -16,7 +16,7 @@ export class DrinkService {
     }
 
     getDataDrink_list(): Observable<any> {
-        return this.http.get<any[]>(`${this.apiUrl}/drink-list`); 
+        return this.http.get<any[]>(`${this.apiUrl}/drink-list`);
     }
 
     // Phương thức POST
@@ -32,6 +32,27 @@ export class DrinkService {
     // Phương thức DELETE
     deleteData(id: string): Observable<any> {
         return this.http.delete<any>(`${this.apiUrl}/${id}`);
-    }    
+    }
+
+
+    /// chia sẽ dữ liệu
+
+    private selectedDrink: any;
+
+    setDrink(drink: any): void {
+        this.selectedDrink = drink;
+        localStorage.setItem('selectedDrink', JSON.stringify(drink));
+    }
+
+    getDrink(): any {
+        if (!this.selectedDrink) {
+            const stored = localStorage.getItem('selectedDrink');
+            if (stored) {
+                this.selectedDrink = JSON.parse(stored);
+            }
+        }
+        return this.selectedDrink;
+    }
+
 
 }

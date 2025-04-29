@@ -43,19 +43,20 @@
 // }
 
 .category-container {
-  padding: 0 20px;
-  margin-top: 40px;
+  // padding: 0 20px;
+  // margin-top: 40px;
 }
 
 .category-card {
-  margin-top: 40px;
+  // margin-top: 40px;
 }
 
 .category-title {
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 600;
   color: #4b3621;
-  margin-bottom: 30px;
+  // margin-bottom: 10px;
+  padding: 40px 0px;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -76,7 +77,7 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  height: 85%;
+  height: 100%;
 }
 
 .drink-card:hover {
@@ -85,34 +86,38 @@
 }
 
 .drink-image-container {
-  padding: 5px;
+  width: 100%;
+  height: 200px;
   border-radius: 5px;
   text-align: center;
-  margin-bottom: 15px;
   border-bottom: 2px solid #6F4F37;
   border-left: 5px solid #6F4F37;
   position: relative;
   overflow: hidden;
 }
 
-.drink-image-container::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  // background: linear-gradient(to top, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
-  // transform: translate(-100%, 100%);
-  // animation: shimmer 2s ease-in-out infinite; 
-}
 
 .drink-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
+
 }
+
+
+
+// .drink-image-container::before {
+//   content: '';
+//   position: absolute;
+//   bottom: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   // background: linear-gradient(to top, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+//   // transform: translate(-100%, 100%);
+//   // animation: shimmer 2s ease-in-out infinite; 
+// }
 
 /* Diagonal Shimmer Animation */
 @keyframes shimmer {
@@ -145,29 +150,48 @@
 }
 
 .drink-name {
-  font-size: 16px;
+  font-size: 14px;
   // font-weight: 600;
   margin-bottom: 8px;
   color: #4b3621;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: block;
 }
 
 .drink-price {
-  font-size: 16px;
+  font-size: 14px;
   color: #7a5c3e;
   font-weight: 500;
   margin-bottom: 15px;
 }
 
 .add-to-cart-btn {
-  width: 100%;
-  padding: 6px 0;
-  background-color: #7a4c2f;
-  color: #fffdfb;
-  font-size: 15px;
+  height: 36px;
+  transition: 0.35s ease-in-out;
+  border: 1px solid #7a5c3e;
+  cursor: pointer;
+  text-transform: inherit;
   font-weight: 500;
-  border: none;
-  border-radius: 5px;
-  transition: all 0.3s ease;
+  border-radius: 4px;
+  font-size: 14px;
+  -webkit-box-pack: center;
+  justify-content: center;
+  width: 100%;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: #7a5c3e;
+  padding: 0px;
+  color: rgb(255, 255, 255);
+  overflow: hidden;
+}
+.out-of-stock {
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
 }
 
 .add-to-cart-btn i {
@@ -183,20 +207,34 @@
   outline: none;
 }
 
-@media screen and (max-width: 768px) {
-  .category-title {
-    font-size: 24px;
-  }
+.see-more {
+  text-align: center;
+  margin-top: 15px;
+}
 
-  .drink-name {
-    font-size: 16px;
-  }
+.see-more-btn {
+  // background-color: #6F4F37;  
+  border:  1px solid #6F4F37;
+  color: #6F4F37;
+  // color: white;
+  background: transparent;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  // transition: background-color 0.3s ease;
+}
 
-  .drink-price {
-    font-size: 14px;
-  }
+.see-more-btn:hover {
+  // background-color: #8e6b4e;  /* Màu nâu nhạt khi hover */
+}
 
-  .hero-section {
-    height: 200px;
+@media (max-width: 470px) {
+  .drinks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .category-container {
+    // padding: 0 20px;
+    margin-bottom: 80px;
   }
 }

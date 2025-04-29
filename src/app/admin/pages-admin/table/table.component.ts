@@ -48,7 +48,7 @@ export class TableComponent implements OnInit, OnDestroy {
         // this.selectTableStatus =this.tables[2].status;
         if (this.pendingActions.length > 0) {
           this.evetnbuttons(this.pendingActions);
-          console.log(this.pendingActions);
+          // console.log(this.pendingActions);
           // this.pendingActions = [];
         }
         this.tableService.onTableLoaded().subscribe((newTable: any) => {

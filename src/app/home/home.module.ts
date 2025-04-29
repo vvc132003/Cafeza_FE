@@ -10,6 +10,7 @@ import { HomeListComponent } from './pages-home/home-list/home-list.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { DrinksDetailComponent } from './drinks/drinks-detail/drinks-detail.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { ToastrModule } from 'ngx-toastr';
     NavbarComponent,
     HeaderComponent,
     HomeListComponent,
+    DrinksDetailComponent,
   ],
   imports: [
     CommonModule,

@@ -30,18 +30,24 @@
   <div *ngFor="let category of categoryDrinks" class="category-card">
     <h2 class="category-title">{{ category.category }}</h2>
     <div class="drinks-grid">
-      <div *ngFor="let drink of category.drinks" class="drink-card">
+      <div *ngFor="let drink of category.visibleDrinks" (dblclick)="onTableDoubleClick(drink)" class="drink-card"
+        [class.out-of-stock]="drink.status === 'out_of_stock'">
         <div class="drink-image-container">
           <img *ngIf="drink.imagePath" [src]="drink.imagePath" alt="{{ drink.name }}" class="drink-image" />
         </div>
         <div class="drink-details">
           <h4 class="drink-name">{{ drink.name }}</h4>
-          <p class="drink-price">{{ drink.price | currency: 'VND' }}</p>
-          <button class="add-to-cart-btn">
+          <p class="drink-price">{{ drink?.price | number:'1.0-0' }} ₫ </p>
+          <button class="add-to-cart-btn" [disabled]="drink.status === 'out_of_stock'">
             <i class="fas fa-shopping-cart"></i> Đặt mua
-          </button>          
+          </button>
         </div>
       </div>
+    </div>
+    <div *ngIf="category.drinks.length > category.visibleDrinks.length" class="see-more">
+      <button (click)="showMore(category)" class="see-more-btn">
+        Xem thêm 5 sản phẩm <strong>{{category.category}}</strong> <i class="bi bi-chevron-down ms-2"></i>
+      </button>
     </div>
   </div>
 </div>

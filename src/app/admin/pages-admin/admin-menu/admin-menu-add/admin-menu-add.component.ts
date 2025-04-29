@@ -77,6 +77,21 @@ export class AdminMenuAddComponent implements OnInit, OnChanges, OnDestroy {
 
   //#region  event
 
+
+  toSlug(str: string): string {
+    return str
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9 ]/g, '')
+      .replace(/\s+/g, '-');
+  }
+
+  onNameChange() {
+    this.drink.slug = this.toSlug(this.drink.name);
+  }
+
   save(): void {
     if (this.action === 'add') {
       this.saveDrink();

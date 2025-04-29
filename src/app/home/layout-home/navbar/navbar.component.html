@@ -1,8 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-light sticky-top shadow-sm"
-    style="background-color: #6f4f37; z-index: 1030;">
+<div [class.show]="isSearchBarVisible" class="overlay"></div>
+
+<nav class="navbar navbar-expand-lg sticky-top shadow-sm" style="background-color: #ffffff; z-index: 1030;">
     <div class="container">
-        <a class="navbar-brand" href="/">
-            <i class="bi bi-cup-hot text-white"></i> Cafeza
+        <a class="navbar-brand" [routerLink]="'/'">
+            <i class="bi bi-cup-hot" style="color: #6F4F37;"></i>
+            <span style="color: #6F4F37;"> Cafeza</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,27 +13,29 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active text-white" aria-current="page" href="/">Trang chủ</a>
+                    <a class="nav-link active" style="color: #6F4F37;" [routerLink]="'/'">Trang chủ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="/menu">Menu</a>
+                    <a class="nav-link" style="color: #6F4F37;" href="/menu">Menu</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="/about">Giới thiệu</a>
+                    <a class="nav-link" style="color: #6F4F37;" href="/about">Giới thiệu</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="/contact">Liên hệ</a>
+                    <a class="nav-link" style="color: #6F4F37;" href="/contact">Liên hệ</a>
                 </li>
             </ul>
-            <form class="d-flex ms-3" role="search">
-                <input class="form-control me-2" type="search" placeholder="Tìm kiếm..." aria-label="Search">
-                <button class="btn btn-outline-light" type="submit">
+            <div class="d-flex ms-3">
+                <input class="form-control me-2" type="search" [(ngModel)]="keyword" placeholder="Tìm kiếm..."
+                    aria-label="Search">
+                <button class="btn btn-outline-light" (click)="onSearchChange()"
+                    style="color: #6F4F37; border-color: #6F4F37;" type="submit">
                     <i class="bi bi-search"></i>
                 </button>
-            </form>
+            </div>
             <div class="ms-3 position-relative">
                 <a href="/cart" class="text-decoration-none">
-                    <i class="bi bi-cart-fill text-white" style="font-size: 1.6rem;"></i>
+                    <i class="bi bi-cart-fill" style="font-size: 1.6rem; color: #6F4F37;"></i>
                     <span class="badge bg-danger rounded-circle position-absolute top-0 start-100 translate-middle"
                         id="cart-count">{{cartCount}}</span>
                 </a>
@@ -39,3 +43,35 @@
         </div>
     </div>
 </nav>
+
+<div class="navbar-mobile d-lg-none">
+    <ul>
+        <li><a [routerLink]="'/'" class="active"><i class="bi bi-house-door"></i><span>Trang chủ</span></a></li>
+        <li><a href="/menu"><i class="bi bi-cup-straw"></i><span>Menu</span></a></li>
+        <li><a href="/about"><i class="bi bi-info-circle"></i><span>Giới thiệu</span></a></li>
+        <li><a href="/contact"><i class="bi bi-envelope"></i><span>Liên hệ</span></a></li>
+        <li class="nav-item" style="display: flex; justify-content: center; align-items: center;">
+            <button class="btn btn-outline-light" style="color: #fff; border-color: #fff;" type="button"
+                (click)="toggleSearchBar()">
+                <i class="bi bi-search"></i>
+            </button>
+        </li>
+    </ul>
+
+    <div class="cart-container">
+        <a href="/cart">
+            <i class="bi bi-cart-fill" style="color: #fff;"></i>
+            <span id="cart-count">3</span>
+        </a>
+    </div>
+</div>
+<div class="search-card shadow-lg" [class.show]="isSearchBarVisible">
+    <button class="btn-close position-absolute top-0 end-0 m-3" (click)="toggleSearchBar()"></button>
+    <h5 class="mb-3">Tìm kiếm sản phẩm</h5>
+    <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="keyword" placeholder="Nhập từ khóa...">
+        <button class="btn btn-primary" (click)="onSearchChange()" type="button">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
+</div>

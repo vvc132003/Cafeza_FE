@@ -1,5 +1,8 @@
-<app-navbar></app-navbar>
+<app-navbar [cartCount]="2" (searchChanged)="onSearchChange($event)"></app-navbar>
 
 <div class="container">
-    <app-header></app-header>
+    <div *ngIf="showHeader=== false" class="toolbar-title">
+        <strong>Trang chủ</strong> / {{ text }}
+    </div>
+    <app-header *ngIf="showHeader" [keyword]="keywordFromNavbar"></app-header>
 </div>
