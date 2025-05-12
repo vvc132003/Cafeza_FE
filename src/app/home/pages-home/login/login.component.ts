@@ -16,22 +16,27 @@ export class LoginComponent {
   onLogin() {
 
     this.employeeService.login(this.email, this.password).subscribe((res: any) => {
+      const expireDate = new Date();
+      expireDate.setMinutes(expireDate.getMinutes() + 1);
+      this.cookieService.set('access_token', res.token, {
+        path: '/',
+        expires: expireDate,
+        secure: false,
+        sameSite: 'Strict'
+      });
+
       if (res.token) {
         const token = res.token;
         const decoded: any = jwt_decode(token);
         const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-        if (role === 'Admin') {
-          this.router.navigateByUrl('/admin/tables/1002');
-        }
-        const expireDate = new Date();
-        expireDate.setMinutes(expireDate.getMinutes() + 1);
 
-        this.cookieService.set('access_token', res.token, {
-          path: '/',
-          expires: expireDate,
-          secure: false,
-          sameSite: 'Strict'
-        });
+        if (role === 'Admin') {
+          this.router.navigate(['/admin/tables/1002']);
+        } else if (role === 'Staff') {
+          this.router.navigate(['/admin/categories/1001']);
+        } else if (role === 'Customer') {
+          this.router.navigate(['/']);
+        }
       } else {
         console.error('Đăng nhập không thành công: Không có token');
       }
@@ -39,5 +44,5 @@ export class LoginComponent {
 
   }
 
-  
+
 }

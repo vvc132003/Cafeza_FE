@@ -8,9 +8,7 @@ import { OrderService } from 'src/app/services/order.service';
   styleUrls: ['./order-add.component.scss']
 })
 export class OrderAddComponent implements OnChanges {
-  save() {
-    throw new Error('Method not implemented.');
-  }
+
   @Input() showoffcanvas = false;
   @Output() closePupAddOrder = new EventEmitter<void>();
   text: string = "";
@@ -22,7 +20,7 @@ export class OrderAddComponent implements OnChanges {
     { label: 'Thông tin khách hàng', icon: 'bi-person-vcard', tab: 'category' },
   ];
 
-  constructor(private cdr: ChangeDetectorRef, private orderService: OrderService,private notificationService: NotificationService) { }
+  constructor(private cdr: ChangeDetectorRef, private orderService: OrderService, private notificationService: NotificationService) { }
 
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -36,4 +34,9 @@ export class OrderAddComponent implements OnChanges {
   close() {
     this.closePupAddOrder.emit();
   }
+
+  save() {
+    
+  }
+
 }

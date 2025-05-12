@@ -41,21 +41,21 @@ export class DrinkService {
         const token = this.cookieService.get('access_token');
 
         if (!token) {
-            this.router.navigateByUrl('/login');
-            return false; // Không có token, yêu cầu phải đăng nhập lại
+            this.router.navigate(['/login']);
+            return false; 
         }
 
         const decoded: any = jwt_decode(token);
-        const expireTimestamp = decoded.exp * 1000; // exp trong token là thời gian hết hạn, tính bằng giây
+        const expireTimestamp = decoded.exp * 100000; // exp trong token là thời gian hết hạn, tính bằng giây
         const currentTimestamp = new Date().getTime(); // Thời gian hiện tại
 
         // Kiểm tra nếu token đã hết hạn
         if (expireTimestamp < currentTimestamp) {
-            this.router.navigateByUrl('/login'); // Điều hướng về trang login nếu token hết hạn
-            return false; // Token hết hạn
+            this.router.navigate(['/login']); // iều hướng về trang login nếu token hết hạn
+            return false; 
         }
 
-        return true; // Token còn hiệu lực
+        return true;
     }
 
 
