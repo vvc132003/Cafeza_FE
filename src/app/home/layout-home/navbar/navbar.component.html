@@ -12,17 +12,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" style="color: #6F4F37;" [routerLink]="'/'">Trang chủ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color: #6F4F37;" href="/menu">Menu</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color: #6F4F37;" href="/about">Giới thiệu</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color: #6F4F37;" href="/contact">Liên hệ</a>
+                <li class="nav-item" *ngFor="let item of menuItems_desktop">
+                    <a class="nav-link" style="color: #6F4F37;" [routerLink]="item.isRouterLink ? item.path : null"
+                        [href]="!item.isRouterLink ? item.path : null" routerLinkActive="active">
+                        {{ item.label }}
+                    </a>
                 </li>
             </ul>
             <div class="d-flex ms-3">
@@ -46,10 +40,13 @@
 
 <div class="navbar-mobile d-lg-none">
     <ul>
-        <li><a [routerLink]="'/'" class="active"><i class="bi bi-house-door"></i><span>Trang chủ</span></a></li>
-        <li><a href="/menu"><i class="bi bi-cup-straw"></i><span>Menu</span></a></li>
-        <li><a href="/about"><i class="bi bi-info-circle"></i><span>Giới thiệu</span></a></li>
-        <li><a href="/contact"><i class="bi bi-envelope"></i><span>Liên hệ</span></a></li>
+        <li *ngFor="let item of menuItems_moblile">
+            <a [routerLink]="item.isRouterLink ? item.path : null" [href]="!item.isRouterLink ? item.path : null"
+                routerLinkActive="active">
+                <i class="bi" [ngClass]="item.icon"></i>
+                <span>{{ item.label }}</span>
+            </a>
+        </li>
         <li class="nav-item" style="display: flex; justify-content: center; align-items: center;">
             <button class="btn btn-outline-light" style="color: #fff; border-color: #fff;" type="button"
                 (click)="toggleSearchBar()">

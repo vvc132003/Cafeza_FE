@@ -1,0 +1,11 @@
+<app-layout [text]="'Quản lý nhân viên'" (showButtonss)="evetnbuttons($event)" [buttonNone]="showButtonsnone" [count]="count"
+    (showPupAdd)="click($event)" [tabTemplates]="{adminMenuList, employeeAdd}">
+</app-layout>
+
+<ng-template #employeeAdd>
+<app-employee-add [data]="data" [showoffcanvas]="showoffcanvas" (closePupAdd)="close()"></app-employee-add>
+</ng-template>
+
+<ng-template #adminMenuList>
+<app-employee-list></app-employee-list>
+</ng-template>

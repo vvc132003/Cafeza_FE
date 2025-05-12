@@ -26,8 +26,8 @@
     </div>
     <div class="mb-3">
         <label for="displayName" class="form-label small">Tiêu đề quảng bá sản phẩm</label>
-        <input type="text" id="displayName" name="displayName" class="form-control form-control-sm" [(ngModel)]="category.displayName"
-            required="" />
+        <input type="text" id="displayName" name="displayName" class="form-control form-control-sm"
+            [(ngModel)]="category.displayName" required="" />
     </div>
     <div class="mb-3">
         <label for="slug" class="form-label small">Đường dẫn</label>
@@ -82,9 +82,11 @@
         <label for="icon" class="form-label small">Biểu tượng</label>
         <div class="d-flex">
             <div class="furniture-list">
-                <span *ngFor="let item of categoryIcons; let i = index" class="tenant-tag">
-                    <i [class]="item.icon" [style.color]="item.color || 'black'"></i>
-                </span>
+                <ng-container *ngIf="categoryIcons != null">
+                    <span *ngFor="let item of categoryIcons; let i = index" class="tenant-tag">
+                        <i [class]="item.icon" [style.color]="item.color || 'black'"></i>
+                    </span>
+                </ng-container>
                 <input type="text" class="input-box" />
             </div>
             <button class="btn btn-outline-black ms-2" (click)="toggleCard()">

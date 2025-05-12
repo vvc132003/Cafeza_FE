@@ -1,0 +1,120 @@
+<app-form-add [headerDiv]="tables" [text]="text" [showoffcanvas]="showoffcanvas" (closePupAdd)="close()"
+    [tabTemplates]="{ category: category, setting: setting }"></app-form-add>
+
+<ng-template #category>
+    <div class="mb-3">
+        <label for="code" class="form-label small">Mã nhân viên</label>
+        <input type="text" id="code" name="code" class="form-control form-control-sm" [(ngModel)]="employee.code"
+            readonly />
+    </div>
+    <div class="mb-3">
+        <label for="fullName" class="form-label small">Họ tên</label>
+        <input type="text" id="fullName" name="fullName" class="form-control form-control-sm"
+            [(ngModel)]="employee.fullName" />
+    </div>
+
+    <div class="mb-3">
+        <label for="gender" class="form-label small">Giới tính</label>
+        <select id="gender" name="gender" class="form-select form-select-sm" [(ngModel)]="employee.gender">
+            <option value="">-- Chọn giới tính --</option>
+            <option value="Nam">Nam</option>
+            <option value="Nữ">Nữ</option>
+            <option value="Khác">Khác</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="dateOfBirth" class="form-label small">Ngày sinh</label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control form-control-sm"
+            [(ngModel)]="employee.dateOfBirth" />
+    </div>
+
+    <div class="mb-3">
+        <label for="phoneNumber" class="form-label small">Số điện thoại</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" class="form-control form-control-sm"
+            [(ngModel)]="employee.phoneNumber" />
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label small">Email</label>
+        <input type="email" id="email" name="email" class="form-control form-control-sm" [(ngModel)]="employee.email" />
+    </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label small">Mật khẩu</label>
+        <input type="password" id="password" name="password" class="form-control form-control-sm"
+            [(ngModel)]="employee.password" />
+    </div>
+
+    <!-- <div class="mb-3">
+        <label for="startDate" class="form-label small">Ngày bắt đầu</label>
+        <input type="date" id="startDate" name="startDate" class="form-control form-control-sm"
+            [(ngModel)]="employee.startDate" />
+    </div> -->
+
+    <div class="mb-3">
+        <label for="salary" class="form-label small">Lương</label>
+        <input type="number" id="salary" name="salary" class="form-control form-control-sm"
+            [(ngModel)]="employee.salary" />
+    </div>
+
+    <div class="mb-3">
+        <label for="address" class="form-label small">Địa chỉ</label>
+        <input type="text" id="address" name="address" class="form-control form-control-sm"
+            [(ngModel)]="employee.address" />
+    </div>
+
+    <div class="mb-3">
+        <label for="identityNumber" class="form-label small">CMND/CCCD</label>
+        <input type="text" id="identityNumber" name="identityNumber" class="form-control form-control-sm"
+            [(ngModel)]="employee.identityNumber" />
+    </div>
+
+    <div class="offcanvas-footer">
+        <button type="button" class="btn btn-primary px-4" (click)="save()">
+            <i class="fa fa-save"></i>
+            Lưu
+        </button>
+    </div>
+</ng-template>
+
+
+<ng-template #setting>
+    <div class="mb-3">
+        <label for="position" class="form-label small">Vị trí</label>
+        <select id="position" name="position" class="form-select form-select-sm" [(ngModel)]="employee.position">
+            <option value="">-- Chọn vị trí --</option>
+            <option value="Pha chế">Pha chế</option>
+            <option value="Thu ngân">Thu ngân</option>
+            <option value="Phục vụ">Phục vụ</option>
+            <option value="Quản lý">Quản lý</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="shift" class="form-label small">Ca làm</label>
+        <select id="shift" name="shift" class="form-select form-select-sm" [(ngModel)]="employee.shift">
+            <option value="">-- Chọn ca --</option>
+            <option value="Sáng">Sáng</option>
+            <option value="Chiều">Chiều</option>
+            <option value="Tối">Tối</option>
+            <option value="Full">Full</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="roles" class="form-label small">Quyền (phân cách bằng dấu phẩy)</label>
+        <input type="text" id="roles" name="roles" class="form-control form-control-sm" [(ngModel)]="rolesInput" />
+    </div>
+    <div class="mb-3">
+        <label for="avatarUrl" class="form-label small">Ảnh đại diện (URL)</label>
+        <input type="text" id="avatarUrl" name="avatarUrl" class="form-control form-control-sm"
+            [(ngModel)]="employee.avatarUrl" />
+    </div>
+
+    <div class="offcanvas-footer">
+        <button type="button" class="btn btn-primary px-4" (click)="save()">
+            <i class="fa fa-save"></i>
+            Lưu
+        </button>
+    </div>
+</ng-template>

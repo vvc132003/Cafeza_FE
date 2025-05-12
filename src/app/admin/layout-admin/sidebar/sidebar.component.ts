@@ -12,7 +12,7 @@ export class SidebarComponent {
     { icon: '☕', label: 'Quản lý món', route: '/admin/drinks', funId: '1001' },
     { icon: '🧾', label: 'Đơn hàng', route: '/admin/orders' },
     { icon: '🪑', label: 'Bàn', route: '/admin/tables', funId: '1002' },
-    { icon: '👨‍🍳', label: 'Nhân viên', route: '/admin/staff' },
+    { icon: '👨‍🍳', label: 'Nhân viên', route: '/admin/employee', funId: '1005' },
     { icon: '📊', label: 'Doanh thu', route: '/admin/revenue' },
   ];
 }

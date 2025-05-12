@@ -30,6 +30,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { ImgComponent } from 'src/app/core/img/img.component';
 import { ImgsComponent } from 'src/app/core/imgs/imgs.component';
 import { FormAddComponent } from 'src/app/core/form-add/form-add.component';
+import { EmployeeComponent } from './pages-admin/employee/employee.component';
+import { EmployeeListComponent } from './pages-admin/employee/employee-list/employee-list.component';
+import { EmployeeAddComponent } from './pages-admin/employee/employee-add/employee-add.component';
+import { EmployeeDetailComponent } from './pages-admin/employee/employee-detail/employee-detail.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +60,10 @@ import { FormAddComponent } from 'src/app/core/form-add/form-add.component';
     OrderComponent,
     OrderAddComponent,
     SelectOrderTypeComponent,
+    EmployeeComponent,
+    EmployeeListComponent,
+    EmployeeAddComponent,
+    EmployeeDetailComponent,
   ],
   imports: [
     CommonModule,

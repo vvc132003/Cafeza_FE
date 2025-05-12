@@ -177,7 +177,42 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
     //   action: () => this.event('114'), 
     //   display: 'block'
     // }
-
+    {
+      id: '101',
+      funId: '1005',
+      label: 'Thêm',
+      icon: 'fa-plus',
+      type: 'primary',
+      action: () => this.event('101'),
+      display: 'block'
+    },
+    {
+      id: '102',
+      funId: '1005',
+      label: 'Cập nhật',
+      icon: 'fa-refresh',
+      type: 'warning',
+      action: () => this.event('102'),
+      display: 'block'
+    },
+    {
+      id: '103',
+      funId: '1005',
+      label: 'Xem',
+      icon: 'fa-eye',
+      type: 'secondary',
+      action: () => this.event('103'),
+      display: 'block'
+    },
+    {
+      id: '104',
+      funId: '1005',
+      label: 'Xoá',
+      icon: 'fa-trash',
+      type: 'danger',
+      action: () => this.event('104'),
+      display: 'block'
+    },
 
   ];
   constructor(private route: ActivatedRoute) { }

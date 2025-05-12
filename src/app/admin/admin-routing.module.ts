@@ -5,6 +5,7 @@ import { TableComponent } from './pages-admin/table/table.component';
 import { OrderComponent } from './pages-admin/order/order.component';
 import { AdminMenuComponent } from './pages-admin/admin-menu/admin-menu.component';
 import { CategoryComponent } from './pages-admin/category/category.component';
+import { EmployeeComponent } from './pages-admin/employee/employee.component';
 
 const routes: Routes = [
   // { path: '', component: AdminComponent },
@@ -12,6 +13,8 @@ const routes: Routes = [
   { path: 'admin/tables/:funId/orderdetail/:id', component: OrderComponent },
   { path: 'admin/drinks/:funId', component: AdminMenuComponent },
   { path: 'admin/categories/:funId', component: CategoryComponent },
+  { path: 'admin/employee/:funId', component: EmployeeComponent },
+
 ];
 
 @NgModule({

@@ -1,0 +1,22 @@
+<app-layout-home [text]="'Đăng nhập'"></app-layout-home>
+
+<div class="container my-4 d-flex justify-content-center align-items-center">
+    <div class="card p-4" style="width: 100%; max-width: 500px;">
+        <div class="card-body">
+            <form (ngSubmit)="onLogin()">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" [(ngModel)]="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mật khẩu</label>
+                    <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+            </form>
+            <div class="text-center mt-3">
+                <a href="#" class="text-decoration-none">Quên mật khẩu?</a>
+            </div>
+        </div>
+    </div>
+</div>

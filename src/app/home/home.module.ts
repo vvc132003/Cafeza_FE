@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { DrinksDetailComponent } from './drinks/drinks-detail/drinks-detail.component';
+import { LoginComponent } from './pages-home/login/login.component';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -21,6 +23,7 @@ import { DrinksDetailComponent } from './drinks/drinks-detail/drinks-detail.comp
     HeaderComponent,
     HomeListComponent,
     DrinksDetailComponent,
+    LoginComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +31,7 @@ import { DrinksDetailComponent } from './drinks/drinks-detail/drinks-detail.comp
     FormsModule,
     ToastrModule.forRoot(),
     HttpClientModule
-  ]
+  ],
+    // providers: [CookieService],
 })
 export class HomeModule { }
