@@ -180,7 +180,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       })
     )
   }
-
+  
   updateor(data: any) {
     console.log(data);
   }

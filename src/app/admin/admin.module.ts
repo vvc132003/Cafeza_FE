@@ -34,6 +34,7 @@ import { EmployeeComponent } from './pages-admin/employee/employee.component';
 import { EmployeeListComponent } from './pages-admin/employee/employee-list/employee-list.component';
 import { EmployeeAddComponent } from './pages-admin/employee/employee-add/employee-add.component';
 import { EmployeeDetailComponent } from './pages-admin/employee/employee-detail/employee-detail.component';
+import { UpdatequantityDetailComponent } from './pages-admin/order/updatequantity-detail/updatequantity-detail.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { EmployeeDetailComponent } from './pages-admin/employee/employee-detail/
     EmployeeListComponent,
     EmployeeAddComponent,
     EmployeeDetailComponent,
+    UpdatequantityDetailComponent,
   ],
   imports: [
     CommonModule,
