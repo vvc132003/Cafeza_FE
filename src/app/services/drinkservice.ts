@@ -64,13 +64,13 @@ export class DrinkService {
 
     getData(): Observable<any> {
 
-        if (!this.checkTokenExpiration()) {
-            return of(null);  // Nếu token hết hạn, không thực hiện request và dừng lại
-        }
+        // if (!this.checkTokenExpiration()) {
+        //     return of(null);  // Nếu token hết hạn, không thực hiện request và dừng lại
+        // }
 
-        if (!this.token) {
-            // console.error('Token not found');
-        }
+        // if (!this.token) {
+        //     // console.error('Token not found');
+        // }
         const headers = new HttpHeaders({
             'Authorization': `Bearer ${this.token}`,
             'Accept': 'application/json',
