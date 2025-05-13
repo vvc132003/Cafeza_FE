@@ -10,6 +10,8 @@ export class MessageService {
     { code: '1003', text: 'Tạo đơn thành công!' },
     { code: '1004', text: 'Bàn chưa có đơn!' },
     { code: '1005', text: 'Thêm khu vực thành công!' },
+    { code: '1006', text: 'Sản phẩm này đã hết!' },
+
 
   ];
   

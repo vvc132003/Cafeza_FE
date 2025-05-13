@@ -17,6 +17,8 @@ export class OrderComponent implements OnInit, OnDestroy {
   pendingActions: any[] = [];
   id: string = "";
   order: any = {};
+  showoffcanvas = false;
+
   private subscription = new Subscription();
 
   constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute,
@@ -27,7 +29,12 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.paramMap.get('id') || '';
     this.orderService.getOrderByTableId(this.id).subscribe((data: any) => {
       this.order = data[0];
-      this.fetOrderdetail();
+      this.orderdeatilService.startConnection(this.order.orderId).subscribe(() => {
+        this.fetOrderdetail();
+      })
+      this.drinkService.startConnection().subscribe(() => {
+        this.fetDrinks();
+      })
     })
   }
 
@@ -59,13 +66,15 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   categorys: any[] = [{ name: 'Tất cả', id: '0' }];
 
+  //#region  load
   ngOnInit(): void {
     this.fetCategory();
-    this.fetDrinks();
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.orderdeatilService.stopConnection();
+    this.drinkService.stopConnection();
   }
 
   fetDrinks() {
@@ -73,8 +82,21 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.drinkService.getData().subscribe((data: any) => {
         this.drinks = data;
         // console.log(this.drinks);
+        this.drinkService.onLoadDrink().subscribe((data: any) => {
+          this.newDataDrink(data);
+        })
       })
     );
+  }
+
+  newDataDrink(data: any) {
+    console.log(data);
+    const index = this.drinks.findIndex(drink => drink.id === data.id);
+    if (index === -1) {
+      this.drinks.unshift(data);
+    } else {
+      this.drinks[index] = data;
+    }
   }
 
   fetCategory() {
@@ -90,7 +112,13 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.orderdeatilService.getOrderDetailByOrderId(this.order.orderId).subscribe((data: any) => {
         // console.log("ok");
         this.orderdetails = data;
-        console.log(data)
+        this.orderdeatilService.onaddupOrderDetailLoaded().subscribe((newd: any) => {
+          this.newOrderdetail(newd);
+        })
+        this.orderdeatilService.ondeleteOrderDetailLoaded().subscribe((deleted: any) => {
+          // console.log(deleted);
+          this.orderdetails = this.orderdetails.filter(i => i.orderdetailId !== deleted.orderdetailId);
+        })
       })
     )
   }
@@ -129,14 +157,39 @@ export class OrderComponent implements OnInit, OnDestroy {
     return this.tinhTongTien();
   }
 
-  xoaSanPham(item: any) {
-    this.orderdetails = this.orderdetails.filter(i => i !== item);
+  //#region  event
+  data: any = {};
+  drinkUpdate: any = {};
+  click() {
+    this.showoffcanvas = true;
+    this.drinkUpdate = {};
+    this.data = {
+      action: 'add',
+      text: 'Thêm món'
+    };
   }
+
+  close() {
+    this.showoffcanvas = false;
+  }
+
+  deleteor(data: any) {
+    this.subscription.add(
+      this.orderdeatilService.deleteData(data.orderdetailId).subscribe(() => {
+
+      })
+    )
+  }
+
+  updateor(data: any) {
+    console.log(data);
+  }
+
   orderdetail: any = {};
   addOrderDetail(sp: any) {
     // console.log(sp);
     this.orderdetail.quantity = 1;
-    this.orderdetail.note = "No sugar";
+    // this.orderdetail.note = null;
     this.orderdetail.orderId = this.order.orderId;
     this.orderdetail.drinkId = sp.id;
     this.orderdetail.unitPrice = sp.price;
@@ -145,9 +198,15 @@ export class OrderComponent implements OnInit, OnDestroy {
       orderDetailDto: this.orderdetail,
       drinkDTO: sp,
     };
+
+    if (sp != null && sp.quantity == 0) {
+      this.notificationService.showWarning('1006');
+      return;
+    }
+
     this.subscription.add(
       this.orderdeatilService.postData(requestData).subscribe((data: any) => {
-        this.newOrderdetail(data);
+        // this.newOrderdetail(data);
       })
     )
   }

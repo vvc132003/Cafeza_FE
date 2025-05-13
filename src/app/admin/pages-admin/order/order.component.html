@@ -1,5 +1,5 @@
 <app-layout tableName="{{order.tableName}}" [text]="'Quản lý chi tiết hoá đơn'" (showButtonss)="evetnbuttons($event)"
-    [buttonNone]="showButtonsnone" [tabTemplates]="{tableList}"></app-layout>
+    [buttonNone]="showButtonsnone" [tabTemplates]="{tableList,adminMenuAdd}"></app-layout>
 
 <ng-template #tableList>
     <div class="container-fluid p-2 modern-layout bg-light rounded">
@@ -27,7 +27,7 @@
                                     <option *ngFor="let category of categorys" [value]="category.id">{{ category.name }}
                                     </option>
                                 </select>
-                                <button class="btn btn-outline-black ms-2">
+                                <button class="btn btn-outline-black ms-2" (click)="click()">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
@@ -76,17 +76,17 @@
                         <!-- <div class="row g-3 category-list"> -->
 
                         <div class="list-group orderdetail-list">
-                            <div *ngFor="let drink of orderdetails" class="list-group-item d-flex mb-2">
-                                <div class="col-2 p">{{ drink.drinkName }}</div>
-                                <div class="col-2">{{ drink.quantity }}</div>
-                                <div class="col-2">{{ drink.unitPrice | number }} VNĐ</div>
-                                <div class="col-2">{{ drink.quantity * drink.unitPrice | number }} VNĐ</div>
-                                <div class="col-2"></div>
+                            <div *ngFor="let orderdetail of orderdetails" class="list-group-item d-flex mb-2">
+                                <div class="col-2 p">{{ orderdetail.drinkName }}</div>
+                                <div class="col-2">{{ orderdetail.quantity }}</div>
+                                <div class="col-2">{{ orderdetail.unitPrice | number }} VNĐ</div>
+                                <div class="col-2">{{ orderdetail.quantity * orderdetail.unitPrice | number }} VNĐ</div>
+                                <div class="col-2">{{orderdetail.note}}</div>
                                 <div class="col-2">
-                                    <button class="btn btn-warning btn-sm me-1">
+                                    <button class="btn btn-warning btn-sm me-1" (click)="updateor(orderdetail)">
                                         <i class="fas fa-sync-alt"></i>
                                     </button>
-                                    <button class="btn btn-danger btn-sm" (click)="xoaSanPham(drink)">
+                                    <button class="btn btn-danger btn-sm" (click)="deleteor(orderdetail)">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -152,4 +152,9 @@
     </div>
 
 
+</ng-template>
+
+<ng-template #adminMenuAdd>
+    <app-admin-menu-add [showoffcanvas]="showoffcanvas" [drink]="drinkUpdate" [data]="data"
+        (closePupAdd)="close()"></app-admin-menu-add>
 </ng-template>

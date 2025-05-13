@@ -5,16 +5,58 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
+import * as signalR from '@microsoft/signalr';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DrinkService {
     private apiUrl = API_URLS.api + '/Drink';
+    private hubUrl = API_URLS.hub;
+    private hubConnection: signalR.HubConnection;
     private token = this.cookieService.get('access_token');
 
     constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) {
+    this.hubConnection = new signalR.HubConnectionBuilder()
+                .withUrl(this.hubUrl)
+                .build();
     }
+
+      /// mở kết nối đến websoket
+    startConnection(): Observable<void> {
+        return new Observable<void>((observer) => {
+            this.hubConnection
+                .start()
+                .then(() => {
+                    console.log('Connection established with SignalR hub');
+                    observer.next();
+                    observer.complete();
+                })
+                .catch((error) => {
+                    // console.error('Error connecting to SignalR hub:', error);
+                    observer.error(error);
+                });
+        });
+    }
+
+    /// ngắt kết nối websoket 
+    stopConnection(): void {
+        if (this.hubConnection) {
+            this.hubConnection.stop()
+                .catch();
+        }
+    }
+
+    /// lắng nghe sự kiện loadTable từ server
+    onLoadDrink(): Observable<any> {
+        return new Observable((observer) => {
+            this.hubConnection.on('loadDrink', (data) => {
+                observer.next(data);
+                // console.log(data);
+            });
+        });
+    }
+
     // Phương thức GET
     // getData(): Observable<any> {
     // return this.http.get<any[]>(this.apiUrl, { withCredentials: true });
@@ -42,7 +84,7 @@ export class DrinkService {
 
         if (!token) {
             this.router.navigate(['/login']);
-            return false; 
+            return false;
         }
 
         const decoded: any = jwt_decode(token);
@@ -52,7 +94,7 @@ export class DrinkService {
         // Kiểm tra nếu token đã hết hạn
         if (expireTimestamp < currentTimestamp) {
             this.router.navigate(['/login']); // iều hướng về trang login nếu token hết hạn
-            return false; 
+            return false;
         }
 
         return true;
