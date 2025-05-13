@@ -14,15 +14,15 @@ export class DrinkService {
     private apiUrl = API_URLS.api + '/Drink';
     private hubUrl = API_URLS.hub;
     private hubConnection: signalR.HubConnection;
-    private token = this.cookieService.get('access_token');
+    // private token = this.cookieService.get('access_token');
 
     constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) {
-    this.hubConnection = new signalR.HubConnectionBuilder()
-                .withUrl(this.hubUrl)
-                .build();
+        this.hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl(this.hubUrl)
+            .build();
     }
 
-      /// mở kết nối đến websoket
+    /// mở kết nối đến websoket
     startConnection(): Observable<void> {
         return new Observable<void>((observer) => {
             this.hubConnection
@@ -63,16 +63,16 @@ export class DrinkService {
     // }
 
     getData(): Observable<any> {
+        const token = this.cookieService.get('access_token');
+        if (!this.checkTokenExpiration()) {
+            return of(null);  // Nếu token hết hạn, không thực hiện request và dừng lại
+        }
 
-        // if (!this.checkTokenExpiration()) {
-        //     return of(null);  // Nếu token hết hạn, không thực hiện request và dừng lại
-        // }
-
-        // if (!this.token) {
-        //     // console.error('Token not found');
-        // }
+        if (!token) {
+            // console.error('Token not found');
+        }
         const headers = new HttpHeaders({
-            'Authorization': `Bearer ${this.token}`,
+            'Authorization': `Bearer ${token}`,
             'Accept': 'application/json',
         });
         return this.http.get<any[]>(this.apiUrl, { headers });
