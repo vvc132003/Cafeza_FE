@@ -8,8 +8,8 @@ import jwt_decode from 'jwt-decode';
 @Injectable({
     providedIn: 'root'
 })
-export class EmployeeService implements CanActivate {
-    private apiUrl = API_URLS.api + '/Employee';
+export class CustomerService implements CanActivate {
+    private apiUrl = API_URLS.api + '/Customer';
     private token = this.cookieService.get('access_token');
 
     constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {
@@ -20,29 +20,30 @@ export class EmployeeService implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
-        const token = this.cookieService.get('access_token');
-        if (token) {
-            const decoded: any = jwt_decode(token);
-            const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+        const token = this.cookieService.get('access_token'); // lấy token từ cookie
+        const currentRoutePath = route.url.map(segment => segment.path).join('/'); 
 
-            if (role === "Admin") {
-                return true;
+        if (!token) {
+            if (currentRoutePath === 'cart') {
+                return this.router.parseUrl('/login'); 
             }
+            return true; 
+        }
 
-            const currentRoutePath = route.url.map(segment => segment.path).join('/');
+        const decoded: any = jwt_decode(token);
+        const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
 
-            if (role === "Staff") {
-                if (currentRoutePath === 'admin/categories/1001') {
-                    return true;
-                } else {
-                    return this.router.parseUrl(currentRoutePath);
-                }
-            }
+        if (role === "Customer" && currentRoutePath === 'cart') {
+            return true;
+        }
 
+        if (role === "Customer" && currentRoutePath === 'login') {
+            return this.router.parseUrl('/'); 
         }
 
         return this.router.parseUrl('/');
     }
+
 
 
     // Phương thức GET

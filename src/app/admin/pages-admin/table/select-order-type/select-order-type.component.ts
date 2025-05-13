@@ -30,7 +30,7 @@ export class SelectOrderTypeComponent implements OnChanges {
       code += letters[Math.floor(Math.random() * letters.length)];
       code += numbers[Math.floor(Math.random() * numbers.length)];
     }
-    this.order.code = code
+    this.order.code = code;
   }
 
   order: any = {};
@@ -38,7 +38,11 @@ export class SelectOrderTypeComponent implements OnChanges {
     this.order.tableId = this.tableId;
     this.order.totalAmount = "0";
     this.order.status = "Chờ thanh toán";
-    this.orderService.postData(this.order).subscribe((d) => {
+    const requestData = {
+      orderDto: this.order,
+      customerDto: null,
+    };
+    this.orderService.postData(requestData).subscribe((d) => {
       this.closeType();
       this.notificationService.showSuccess('1003');
     })

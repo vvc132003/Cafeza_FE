@@ -5,6 +5,7 @@ import { CategoryService } from 'src/app/services/category.service';
 import { DrinkService } from 'src/app/services/drinkservice';
 import { NotificationService } from 'src/app/services/notification';
 import { OrderService } from 'src/app/services/order.service';
+import { OrderDetailService } from 'src/app/services/orderdetail.service';
 
 @Component({
   selector: 'app-order',
@@ -20,12 +21,13 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute,
     private drinkService: DrinkService, private categoryService: CategoryService,
-    private orderService: OrderService,private notificationService: NotificationService
+    private orderService: OrderService, private notificationService: NotificationService,
+    private orderdeatilService: OrderDetailService
   ) {
     this.id = this.route.snapshot.paramMap.get('id') || '';
     this.orderService.getOrderByTableId(this.id).subscribe((data: any) => {
-      console.log(data);
       this.order = data[0];
+      this.fetOrderdetail();
     })
   }
 
@@ -39,16 +41,16 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.cdr.detectChanges();
   }
 
-  maHoaDon = 'HD00123';
-  ngayTao = new Date();
-  nhanVien = 'Nguyễn Văn A';
-  tenBan = 'Bàn 05';
+  // maHoaDon = 'HD00123';
+  // ngayTao = new Date();
+  // nhanVien = 'Nguyễn Văn A';
+  // tenBan = 'Bàn 05';
 
-  chiTietHoaDon = [
-    { tenSanPham: 'Cà phê sữa', soLuong: 2, donGia: 25000 },
-    { tenSanPham: 'Trà đào', soLuong: 1, donGia: 30000 }
+  orderdetails: any[] = [
+    // { tenSanPham: 'Cà phê sữa', soLuong: 2, donGia: 25000 },
+    // { tenSanPham: 'Trà đào', soLuong: 1, donGia: 30000 }
   ];
-  // chiTietHoaDon: any[] = [];
+  // orderdetail: any[] = [];
   drinks: any[] = [
     // { ten: 'Cà phê sữa', gia: 25000, loai: 'Cà phê', hinhAnh: 'assets/images/caphe-sua.jpg' },
     // { ten: 'Trà đào', gia: 30000, loai: 'Trà', hinhAnh: 'assets/images/tra-dao.jpg' },
@@ -83,6 +85,16 @@ export class OrderComponent implements OnInit, OnDestroy {
     );
   }
 
+  fetOrderdetail() {
+    this.subscription.add(
+      this.orderdeatilService.getOrderDetailByOrderId(this.order.orderId).subscribe((data: any) => {
+        // console.log("ok");
+        this.orderdetails = data;
+        console.log(data)
+      })
+    )
+  }
+
   timKiemTen: string = '';
   loaiDuocChon: string = '0';
 
@@ -103,27 +115,52 @@ export class OrderComponent implements OnInit, OnDestroy {
   giamGia = 10000;
   thue = 5000;
 
+
+  formatCurrency(amount: number) {
+    return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  }
+
+
   tinhTongTien() {
-    return this.chiTietHoaDon.reduce((sum, item) => sum + item.soLuong * item.donGia, 0);
+    return this.orderdetails.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
   }
 
   tongThanhToan() {
-    return this.tinhTongTien() - this.giamGia + this.thue;
+    return this.tinhTongTien();
   }
 
   xoaSanPham(item: any) {
-    this.chiTietHoaDon = this.chiTietHoaDon.filter(i => i !== item);
+    this.orderdetails = this.orderdetails.filter(i => i !== item);
+  }
+  orderdetail: any = {};
+  addOrderDetail(sp: any) {
+    // console.log(sp);
+    this.orderdetail.quantity = 1;
+    this.orderdetail.note = "No sugar";
+    this.orderdetail.orderId = this.order.orderId;
+    this.orderdetail.drinkId = sp.id;
+    this.orderdetail.unitPrice = sp.price;
+    this.orderdetail.total = sp.price * this.orderdetail.quantity;
+    const requestData = {
+      orderDetailDto: this.orderdetail,
+      drinkDTO: sp,
+    };
+    this.subscription.add(
+      this.orderdeatilService.postData(requestData).subscribe((data: any) => {
+        this.newOrderdetail(data);
+      })
+    )
   }
 
-  themVaoHoaDon(sp: any) {
-    const found = this.chiTietHoaDon.find(i => i.tenSanPham === sp.name);
-    if (found) {
-      found.soLuong += 1;
+  newOrderdetail(data: any) {
+    const index = this.orderdetails.findIndex(c => c.orderdetailId === data.orderdetailId);
+    if (index === -1) {
+      this.orderdetails.unshift(data);
     } else {
-      // this.chiTietHoaDon.push({ tenSanPham: sp.name, soLuong: 1, donGia: sp.price });
-      this.chiTietHoaDon.unshift({ tenSanPham: sp.name, soLuong: 1, donGia: sp.price });
+      this.orderdetails[index] = data;
     }
   }
+
 
   thanhToan() {
     alert('Đã thanh toán thành công!');

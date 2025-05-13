@@ -13,6 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { DrinksDetailComponent } from './drinks/drinks-detail/drinks-detail.component';
 import { LoginComponent } from './pages-home/login/login.component';
 import { CookieService } from 'ngx-cookie-service';
+import { CartComponent } from './cart/cart.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { CookieService } from 'ngx-cookie-service';
     HomeListComponent,
     DrinksDetailComponent,
     LoginComponent,
+    CartComponent,
   ],
   imports: [
     CommonModule,

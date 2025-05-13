@@ -8,8 +8,8 @@ import jwt_decode from 'jwt-decode';
 @Injectable({
     providedIn: 'root'
 })
-export class OrderService {
-    private apiUrl = API_URLS.api + '/Order';
+export class OrderDetailService {
+    private apiUrl = API_URLS.api + '/OrderDetail';
 
     constructor(private http: HttpClient, private cookieService: CookieService) {
     }
@@ -18,18 +18,18 @@ export class OrderService {
         return this.http.get<any[]>(this.apiUrl);
     }
 
-    getOrderByTableId(tableId: string): Observable<any> {
-        return this.http.get<any>(`${this.apiUrl}/table/${tableId}`);
+    getOrderDetailByOrderId(orderId: string): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/orderId/${orderId}`);
     }
 
 
     // Phương thức POST
     postData(data: any): Observable<any> {
-        const token = this.cookieService.get('access_token');
-        if (token) {
-            const decoded: any = jwt_decode(token);
-            data.orderDto.employeeId = decoded.id;
-        }
+        // const token = this.cookieService.get('access_token');
+        // if (token) {
+        //     const decoded: any = jwt_decode(token);
+        //     data.orderDto.employeeId = decoded.id;
+        // }
         return this.http.post<any>(this.apiUrl, data);
     }
 

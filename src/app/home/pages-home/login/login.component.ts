@@ -17,7 +17,7 @@ export class LoginComponent {
 
     this.employeeService.login(this.email, this.password).subscribe((res: any) => {
       const expireDate = new Date();
-      expireDate.setMinutes(expireDate.getMinutes() + 1);
+      expireDate.setMinutes(expireDate.getMinutes() + 1000000);
       this.cookieService.set('access_token', res.token, {
         path: '/',
         expires: expireDate,

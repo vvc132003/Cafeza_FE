@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { CustomerService } from 'src/app/services/customer.service';
 import { NotificationService } from 'src/app/services/notification';
 import { OrderService } from 'src/app/services/order.service';
 
@@ -15,12 +16,16 @@ export class OrderAddComponent implements OnChanges {
   @Input() data: any;
   action: string = "";
   @Input() customer: any = {};
+  order: any = {};
+  @Input() tableId: number = 0;
+
+
 
   tables = [
     { label: 'Thông tin khách hàng', icon: 'bi-person-vcard', tab: 'category' },
   ];
 
-  constructor(private cdr: ChangeDetectorRef, private orderService: OrderService, private notificationService: NotificationService) { }
+  constructor(private cdr: ChangeDetectorRef, private customerService: CustomerService, private orderService: OrderService, private notificationService: NotificationService) { }
 
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -29,6 +34,15 @@ export class OrderAddComponent implements OnChanges {
       this.text = this.data.text;
       this.action = this.data.action;
     }
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+    let code = 'HD-';
+
+    for (let i = 0; i < 3; i++) {
+      code += letters[Math.floor(Math.random() * letters.length)];
+      code += numbers[Math.floor(Math.random() * numbers.length)];
+    }
+    this.order.code = code;
   }
 
   close() {
@@ -36,7 +50,17 @@ export class OrderAddComponent implements OnChanges {
   }
 
   save() {
-    
+    this.order.tableId = this.tableId;
+    this.order.totalAmount = "0";
+    this.order.status = "Chờ thanh toán";
+    const requestData = {
+      orderDto: this.order,
+      customerDto: this.customer,
+    };
+    // console.log(requestData);
+    this.orderService.postData(requestData).subscribe((res: any) => {
+      this.close();
+    })
   }
 
 }

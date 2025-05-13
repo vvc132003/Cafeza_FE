@@ -44,7 +44,7 @@
                                         <p class="fw-bold text-dark mb-1">{{ drink.name }}</p>
                                         <p class="text-muted small mb-2">{{ drink.price | number }} VNĐ</p>
                                         <button class="btn btn-sm btn-outline-primary w-100"
-                                            (click)="themVaoHoaDon(drink)">
+                                            (click)="addOrderDetail(drink)">
                                             <i class="fas fa-plus me-1"></i>
                                         </button>
                                     </div>
@@ -76,11 +76,11 @@
                         <!-- <div class="row g-3 category-list"> -->
 
                         <div class="list-group orderdetail-list">
-                            <div *ngFor="let drink of chiTietHoaDon" class="list-group-item d-flex mb-2">
-                                <div class="col-2 p">{{ drink.tenSanPham }}</div>
-                                <div class="col-2">{{ drink.soLuong }}</div>
-                                <div class="col-2">{{ drink.donGia | number }} VNĐ</div>
-                                <div class="col-2">{{ drink.soLuong * drink.donGia | currency:'VND' }}</div>
+                            <div *ngFor="let drink of orderdetails" class="list-group-item d-flex mb-2">
+                                <div class="col-2 p">{{ drink.drinkName }}</div>
+                                <div class="col-2">{{ drink.quantity }}</div>
+                                <div class="col-2">{{ drink.unitPrice | number }} VNĐ</div>
+                                <div class="col-2">{{ drink.quantity * drink.unitPrice | number }} VNĐ</div>
                                 <div class="col-2"></div>
                                 <div class="col-2">
                                     <button class="btn btn-warning btn-sm me-1">
@@ -112,11 +112,11 @@
                                 </div>
                                 <div class="d-flex justify-content-between py-3 border-bottom">
                                     <span><strong>Tổng tiền:</strong></span>
-                                    <span>{{ tinhTongTien() | currency:'VND' }}</span>
+                                    <span>{{ tinhTongTien() | number }} VNĐ</span>
                                 </div>
                                 <div class="d-flex justify-content-between py-3 border-bottom">
                                     <span><strong>Tiền thối:</strong></span>
-                                    <span>{{ tinhTienThoi() | currency:'VND' }}</span>
+                                    <span>{{ tinhTienThoi() | number }} VNĐ</span>
                                 </div>
                                 <div class="d-flex justify-content-between py-3">
                                     <span><strong>Nhân viên:</strong></span>
