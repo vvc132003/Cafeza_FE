@@ -42,7 +42,7 @@ export class TableComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.tableService.getData().subscribe((data: any) => {
         this.tables = data;
-        // console.log(this.categories);
+        // console.log(this.tables);
         this.count = this.tables.length;
         this.selectTable = this.tables[3];
         // this.selectTableStatus =this.tables[2].status;

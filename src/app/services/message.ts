@@ -14,6 +14,8 @@ export class MessageService {
     { code: '1007', text: 'Hãy nhập số lượng lớn hoặc bé hơn số lượng hiện tại !' },
     { code: '1008', text: 'Cập nhật số lượng thành công !' },
     { code: '1009', text: 'Đã thêm vào hoá đơn !' },
+    { code: '1010', text: 'Huỷ đơn thành công !' },
+
 
 
 

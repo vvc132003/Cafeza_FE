@@ -18,7 +18,7 @@ export class TableListComponent {
     if (this.selectTable.status != 'empty') {
       this.funId = this.route.snapshot.paramMap.get('funId') || '';
       this.router.navigate([`/admin/tables/${this.funId}/orderdetail/${tableId}`]);
-    }else{
+    } else {
       this.notificationService.showInfo('1004');
     }
   }
@@ -54,6 +54,15 @@ export class TableListComponent {
       case 'occupied': return 'status-occupied';
       default: return '';
     }
+  }
+  hoveredTable: any = null;
+
+  onMouseEnter(table: any) {
+    this.hoveredTable = table;
+  }
+
+  onMouseLeave() {
+    this.hoveredTable = null;
   }
 
 }

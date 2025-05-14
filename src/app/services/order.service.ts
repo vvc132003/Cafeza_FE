@@ -22,6 +22,11 @@ export class OrderService {
         return this.http.get<any>(`${this.apiUrl}/table/${tableId}`);
     }
 
+    updateCancelOrder(orderId: string): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/updateCancelOrder/${orderId}`);
+    }
+
+
 
     // Phương thức POST
     postData(data: any): Observable<any> {

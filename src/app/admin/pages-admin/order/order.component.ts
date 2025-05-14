@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CategoryService } from 'src/app/services/category.service';
 import { DrinkService } from 'src/app/services/drinkservice';
@@ -22,7 +22,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute,
+  constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router,
     private drinkService: DrinkService, private categoryService: CategoryService,
     private orderService: OrderService, private notificationService: NotificationService,
     private orderdeatilService: OrderDetailService
@@ -162,13 +162,32 @@ export class OrderComponent implements OnInit, OnDestroy {
   //#region  event
   data: any = {};
   drinkUpdate: any = {};
-  click() {
+  clickAdd() {
     this.showoffcanvas = true;
     this.drinkUpdate = {};
     this.data = {
       action: 'add',
       text: 'Thêm món'
     };
+  }
+  showModal = false;
+
+  click(data: any) {
+    switch (data) {
+      case '112':
+        this.showModal = true;
+        break;
+      default:
+        break;
+    }
+  }
+
+  confirmCancel() {
+    this.orderService.updateCancelOrder(this.order.orderId).subscribe((data) => {
+      this.showModal = false;
+      this.router.navigate(['/admin/tables/1002']);
+      this.notificationService.showSuccess('1010');
+    })
   }
 
   close() {

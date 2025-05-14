@@ -1,5 +1,5 @@
 <app-layout tableName="{{order.tableName}}" [text]="'Quản lý chi tiết hoá đơn'" (showButtonss)="evetnbuttons($event)"
-    [buttonNone]="showButtonsnone" [tabTemplates]="{tableList,adminMenuAdd}"></app-layout>
+    [buttonNone]="showButtonsnone" [tabTemplates]="{tableList,adminMenuAdd}" (showPupAdd)="click($event)"></app-layout>
 
 <ng-template #tableList>
     <div class="container-fluid p-2 modern-layout bg-light rounded">
@@ -27,7 +27,7 @@
                                     <option *ngFor="let category of categorys" [value]="category.id">{{ category.name }}
                                     </option>
                                 </select>
-                                <button class="btn btn-outline-black ms-2" (click)="click()">
+                                <button class="btn btn-outline-black ms-2" (click)="clickAdd()">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
@@ -161,3 +161,16 @@
 
 <app-updatequantity-detail [isorderdetailOpen]="isorderdetailOpen" (closenModal)="close()"
     (categoryIconSelected)="updateQuantity($event)"></app-updatequantity-detail>
+
+
+
+<div class="modal-overlay" [class.show]="showModal">
+    <div class="modal-box" [class.show]="showModal">
+        <h3>Xác nhận hủy đơn</h3>
+        <p>Bạn có chắc chắn muốn hủy đơn này không?</p>
+        <div class="modal-actions">
+            <button (click)="showModal = false" class="btn-cancel">Không</button>
+            <button (click)="confirmCancel()" class="btn-confirm">Có, hủy đơn</button>
+        </div>
+    </div>
+</div>
