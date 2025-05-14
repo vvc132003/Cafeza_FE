@@ -11,6 +11,12 @@ export class MessageService {
     { code: '1004', text: 'Bàn chưa có đơn!' },
     { code: '1005', text: 'Thêm khu vực thành công!' },
     { code: '1006', text: 'Sản phẩm này đã hết!' },
+    { code: '1007', text: 'Hãy nhập số lượng lớn hoặc bé hơn số lượng hiện tại !' },
+    { code: '1008', text: 'Cập nhật số lượng thành công !' },
+    { code: '1009', text: 'Đã thêm vào hoá đơn !' },
+
+
+
 
 
   ];

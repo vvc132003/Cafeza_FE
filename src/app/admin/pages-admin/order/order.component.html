@@ -9,7 +9,7 @@
                 <div class="card border-0 fixed-height-no-scroll-drinks">
                     <div class="card-body">
                         <h5 class="section-header mb-4">
-                            <i class="fas fa-coffee me-2 icon-brown"></i> Sản phẩm
+                            <i class="fas fa-coffee me-2 icon-brown"></i> Món
                         </h5>
                         <!-- Thanh tìm kiếm và lọc -->
                         <div class="row g-2 align-items-center text-center mb-4">
@@ -80,7 +80,7 @@
                                 <div class="col-2 p">{{ orderdetail.drinkName }}</div>
                                 <div class="col-2">{{ orderdetail.quantity }}</div>
                                 <div class="col-2">{{ orderdetail.unitPrice | number }} VNĐ</div>
-                                <div class="col-2">{{ orderdetail.quantity * orderdetail.unitPrice | number }} VNĐ</div>
+                                <div class="col-2">{{ orderdetail.total | number }} VNĐ</div>
                                 <div class="col-2">{{orderdetail.note}}</div>
                                 <div class="col-2">
                                     <button class="btn btn-warning btn-sm me-1" (click)="updateor(orderdetail)">
@@ -158,3 +158,6 @@
     <app-admin-menu-add [showoffcanvas]="showoffcanvas" [drink]="drinkUpdate" [data]="data"
         (closePupAdd)="close()"></app-admin-menu-add>
 </ng-template>
+
+<app-updatequantity-detail [isorderdetailOpen]="isorderdetailOpen" (closenModal)="close()"
+    (categoryIconSelected)="updateQuantity($event)"></app-updatequantity-detail>

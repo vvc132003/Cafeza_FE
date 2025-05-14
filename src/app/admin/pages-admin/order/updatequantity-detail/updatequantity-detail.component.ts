@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-updatequantity-detail',
@@ -7,7 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdatequantityDetailComponent implements OnInit {
 
+  @Input() isorderdetailOpen = false;
+  @Output() categoryIconSelected = new EventEmitter<any>();
+  @Output() closenModal = new EventEmitter<void>();
+  data: any = {};
   ngOnInit(): void {
 
   }
+
+  selectQuantity() {
+    this.categoryIconSelected.emit(this.data);
+    // this.close();
+  }
+
+  close() {
+    this.isorderdetailOpen = false;
+    this.closenModal.emit();
+  }
+
 }

@@ -18,6 +18,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   id: string = "";
   order: any = {};
   showoffcanvas = false;
+  isorderdetailOpen = false;
 
   private subscription = new Subscription();
 
@@ -112,6 +113,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.orderdeatilService.getOrderDetailByOrderId(this.order.orderId).subscribe((data: any) => {
         // console.log("ok");
         this.orderdetails = data;
+        // console.log(data);
         this.orderdeatilService.onaddupOrderDetailLoaded().subscribe((newd: any) => {
           this.newOrderdetail(newd);
         })
@@ -171,19 +173,44 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   close() {
     this.showoffcanvas = false;
+    this.isorderdetailOpen = false;
   }
 
   deleteor(data: any) {
     this.subscription.add(
       this.orderdeatilService.deleteData(data.orderdetailId).subscribe(() => {
-
+        // thông báo nhé
       })
     )
   }
-  
+  dataupdateorderdetail: any = {};
   updateor(data: any) {
-    console.log(data);
+    this.dataupdateorderdetail = data;
+    this.isorderdetailOpen = true;
   }
+
+  updateQuantity(data: any) {
+    // console.log(data);
+    // console.log(this.dataupdateorderdetail);
+    const requestData = {
+      quantity: data.quantity,
+      note: data.note ?? "",
+      extenOrderDetail: this.dataupdateorderdetail
+    };
+    if (data.quantity === this.dataupdateorderdetail.quantity) {
+      this.notificationService.showWarning('1007');
+      return;
+    }
+    this.subscription.add(
+      this.orderdeatilService.updateData(requestData).subscribe((data) => {
+        // console.log('ok');
+        this.notificationService.showSuccess('1008');
+        this.close();
+      })
+    )
+
+  }
+
 
   orderdetail: any = {};
   addOrderDetail(sp: any) {
@@ -207,6 +234,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.orderdeatilService.postData(requestData).subscribe((data: any) => {
         // this.newOrderdetail(data);
+        this.notificationService.showSuccess('1009');
       })
     )
   }
