@@ -177,6 +177,13 @@ export class OrderComponent implements OnInit, OnDestroy {
       case '112':
         this.showModal = true;
         break;
+      case '113':
+        this.subscription.add(
+          this.orderdeatilService.getExportInvoice(this.order.orderId).subscribe((data) => {
+            // console.log('ok');
+          })
+        )
+        break;
       default:
         break;
     }

@@ -76,6 +76,10 @@ export class OrderDetailService {
         return this.http.get<any>(`${this.apiUrl}/orderId/${orderId}`);
     }
 
+    getExportInvoice(orderId: string): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/exportInvoice/${orderId}`);
+    }
+
 
     // Phương thức POST
     postData(data: any): Observable<any> {
