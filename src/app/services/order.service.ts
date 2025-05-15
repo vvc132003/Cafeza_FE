@@ -26,6 +26,11 @@ export class OrderService {
         return this.http.get<any>(`${this.apiUrl}/updateCancelOrder/${orderId}`);
     }
 
+    changeTable(data: any): Observable<any> {
+        return this.http.post<any>(`${this.apiUrl}/changeTable`, data);
+    }
+
+
 
 
     // Phương thức POST
@@ -35,7 +40,7 @@ export class OrderService {
             const decoded: any = jwt_decode(token);
             data.orderDto.employeeId = decoded.id;
         }
-        return this.http.post<any>(this.apiUrl, data);
+        return this.http.post<any>(`${this.apiUrl}/createOrder`, data);
     }
 
     // Phương thức PUT

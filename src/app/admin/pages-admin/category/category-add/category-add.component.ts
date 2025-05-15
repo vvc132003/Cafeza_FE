@@ -16,13 +16,14 @@ export class CategoryAddComponent implements OnChanges {
   @Input() listcategoryparentId: any[] = [];
   @Output() newData = new EventEmitter<void>();
   @Input() showoffcanvas = false;
+  @Input() isModalVisible = false;
 
   tables = [
     { label: 'Thông tin loại món', icon: 'bi-cup-straw', tab: 'category' },
     { label: 'Cài đặt', icon: 'bi-gear', tab: 'setting' }
   ];
 
-  constructor(private categoryService: CategoryService,private notificationService: NotificationService) {
+  constructor(private categoryService: CategoryService, private notificationService: NotificationService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -78,7 +79,7 @@ export class CategoryAddComponent implements OnChanges {
   save(): void {
     if (this.action === 'add') {
       this.saveCategory();
-    }else{
+    } else {
       this.updateCategory();
     }
   }

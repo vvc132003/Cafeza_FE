@@ -162,15 +162,23 @@
 <app-updatequantity-detail [isorderdetailOpen]="isorderdetailOpen" (closenModal)="close()"
     (categoryIconSelected)="updateQuantity($event)"></app-updatequantity-detail>
 
+<ng-container *ngIf="isModalVisible">
+    <app-confirm-modal [show]="showModal" title="Xác nhận hủy đơn" message="Bạn có chắc chắn muốn hủy đơn này không?"
+        confirmText="Có, hủy đơn" cancelText="Không" (onCancel)="close()" [action]="action"
+        (onConfirm)="confirmCancel($event)">
+    </app-confirm-modal>
+</ng-container>
 
+<ng-container *ngIf="isModalVisible">
+    <app-confirm-modal [show]="showModalInvoice" title="Xác nhận in hoá đơn" message="Bạn có muốn in hoá đơn không?"
+        confirmText="Có, in hoá đơn" cancelText="Không" (onCancel)="close()" [action]="action"
+        (onConfirm)="confirmCancel($event)">
+    </app-confirm-modal>
+</ng-container>
 
-<div class="modal-overlay" [class.show]="showModal">
-    <div class="modal-box" [class.show]="showModal">
-        <h3>Xác nhận hủy đơn</h3>
-        <p>Bạn có chắc chắn muốn hủy đơn này không?</p>
-        <div class="modal-actions">
-            <button (click)="showModal = false" class="btn-cancel">Không</button>
-            <button (click)="confirmCancel()" class="btn-confirm">Có, hủy đơn</button>
-        </div>
-    </div>
-</div>
+<ng-container *ngIf="isModalVisible">
+    <app-confirm-modal [show]="showModalChangeTable" title="Chuyển bàn" confirmText="Có, chuyển bàn" cancelText="Không"
+        (onCancel)="close()" [action]="action" [fromTableId]="order.tableId" [tableName]="order.tableName" [height]="'40vh'"
+        (onConfirm)="confirmCancel($event)">
+    </app-confirm-modal>
+</ng-container>

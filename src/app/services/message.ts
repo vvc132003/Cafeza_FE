@@ -15,6 +15,12 @@ export class MessageService {
     { code: '1008', text: 'Cập nhật số lượng thành công !' },
     { code: '1009', text: 'Đã thêm vào hoá đơn !' },
     { code: '1010', text: 'Huỷ đơn thành công !' },
+    { code: '1011', text: 'In hoá đơn thành công !' },
+    { code: '1012', text: 'Chuyển bàn thành công !' },
+    { code: '1013', text: 'Bạn chưa nhập số lượng !' },
+
+
+
 
 
 

@@ -4,7 +4,7 @@
 
 
 <ng-template #categoryAdd>
-    <app-category-add [listcategoryparentId]="categories" [showoffcanvas]="showoffcanvas" [data]="data" (newData)="newData($event)" (closePupAdd)="close()"
+    <app-category-add [isModalVisible]="isModalVisible" [listcategoryparentId]="categories" [showoffcanvas]="showoffcanvas" [data]="data" (newData)="newData($event)" (closePupAdd)="close()"
         [category]="newcategory"></app-category-add>
 </ng-template>
 

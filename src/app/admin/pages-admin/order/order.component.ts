@@ -171,36 +171,67 @@ export class OrderComponent implements OnInit, OnDestroy {
     };
   }
   showModal = false;
+  showModalInvoice = false;
+  showModalChangeTable = false;
 
+  action: string = '';
   click(data: any) {
+    // console.log(data);
+    this.action = data;
+    // console.log(this.action);
+    this.action = data;
+    this.isModalVisible = true;
+
+    const modalMap: { [key: string]: () => void } = {
+      '110': () => setTimeout(() => this.showModalChangeTable = true, 0),
+      '112': () => setTimeout(() => this.showModal = true, 0),
+      '113': () => setTimeout(() => this.showModalInvoice = true, 0),
+    };
+
+    const openModal = modalMap[data];
+    if (openModal) {
+      openModal();
+    }
+  }
+
+  confirmCancel(data: any) {
     switch (data) {
-      case '112':
-        this.showModal = true;
-        break;
       case '113':
         this.subscription.add(
           this.orderdeatilService.getExportInvoice(this.order.orderId).subscribe((data) => {
             // console.log('ok');
+            this.showModalInvoice = false;
+            this.notificationService.showSuccess('1011');
           })
         )
         break;
+      case '112':
+        this.orderService.updateCancelOrder(this.order.orderId).subscribe((data) => {
+          this.showModal = false;
+          this.router.navigate(['/admin/tables/1002']);
+          this.notificationService.showSuccess('1010');
+        })
+        break;
+
       default:
         break;
     }
   }
-
-  confirmCancel() {
-    this.orderService.updateCancelOrder(this.order.orderId).subscribe((data) => {
-      this.showModal = false;
-      this.router.navigate(['/admin/tables/1002']);
-      this.notificationService.showSuccess('1010');
-    })
-  }
+  isModalVisible = false;
 
   close() {
     this.showoffcanvas = false;
     this.isorderdetailOpen = false;
+
+    this.showModalChangeTable = false;
+    this.showModal = false;
+    this.showModalInvoice = false;
+
+    setTimeout(() => {
+      this.isModalVisible = false;
+    }, 400);
   }
+
 
   deleteor(data: any) {
     this.subscription.add(
@@ -216,8 +247,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   updateQuantity(data: any) {
-    // console.log(data);
-    // console.log(this.dataupdateorderdetail);
+
     const requestData = {
       quantity: data.quantity,
       note: data.note ?? "",

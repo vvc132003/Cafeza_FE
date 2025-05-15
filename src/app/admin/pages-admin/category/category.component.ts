@@ -15,7 +15,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   categories: any[] = [];
   category: any = {};
   newcategory: any = {};
-
+  isModalVisible = false;
   categoryUpcate: any = {};
 
   showoffcanvas = false;
@@ -25,7 +25,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private categoryService: CategoryService, private cdr: ChangeDetectorRef,private notificationService: NotificationService) { }
+  constructor(private categoryService: CategoryService, private cdr: ChangeDetectorRef, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.loadCategorys();
@@ -84,9 +84,20 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   data: any = {};
   click(event: any) {
+    this.isModalVisible = true;
+
+    const modalMap: { [key: string]: () => void } = {
+      '101': () => setTimeout(() => this.showoffcanvas = true, 0),
+      '102': () => setTimeout(() => this.showoffcanvas = true, 0)
+    };
+
+    const openModal = modalMap[event];
+    if (openModal) {
+      openModal();
+    }
     switch (event) {
       case '101':
-        this.showoffcanvas = true;
+        // this.showoffcanvas = true;
         this.newcategory = {};
         this.data = {
           action: 'add',
@@ -94,7 +105,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
         };
         break;
       case '102':
-        this.showoffcanvas = true;
+        // this.showoffcanvas = true;
         this.newcategory = this.categories.find(dr => dr.id == this.category.id);
         this.data = {
           action: 'update',
@@ -135,6 +146,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
   close() {
     // this.showDetail = false;
     this.showoffcanvas = false;
+    setTimeout(() => {
+      this.isModalVisible = false;
+    }, 400);
   }
 
 

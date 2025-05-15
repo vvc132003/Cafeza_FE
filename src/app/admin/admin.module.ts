@@ -35,6 +35,7 @@ import { EmployeeListComponent } from './pages-admin/employee/employee-list/empl
 import { EmployeeAddComponent } from './pages-admin/employee/employee-add/employee-add.component';
 import { EmployeeDetailComponent } from './pages-admin/employee/employee-detail/employee-detail.component';
 import { UpdatequantityDetailComponent } from './pages-admin/order/updatequantity-detail/updatequantity-detail.component';
+import { ConfirmModalComponent } from '../core/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { UpdatequantityDetailComponent } from './pages-admin/order/updatequantit
     EmployeeAddComponent,
     EmployeeDetailComponent,
     UpdatequantityDetailComponent,
+    ConfirmModalComponent
   ],
   imports: [
     CommonModule,

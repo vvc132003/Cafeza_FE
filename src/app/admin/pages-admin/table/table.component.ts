@@ -45,6 +45,8 @@ export class TableComponent implements OnInit, OnDestroy {
         // console.log(this.tables);
         this.count = this.tables.length;
         this.selectTable = this.tables[3];
+        this.tableId = this.selectTable.id;
+        // console.log(this.selectTable);
         // this.selectTableStatus =this.tables[2].status;
         if (this.pendingActions.length > 0) {
           this.evetnbuttons(this.pendingActions);
