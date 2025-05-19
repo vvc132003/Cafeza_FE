@@ -22,11 +22,25 @@ export class OrderService {
         return this.http.get<any>(`${this.apiUrl}/table/${tableId}`);
     }
 
-    updateCancelOrder(orderId: string): Observable<any> {
-        return this.http.get<any>(`${this.apiUrl}/updateCancelOrder/${orderId}`);
+    updateCancelOrder(data: any): Observable<any> {
+        // return this.http.get<any>(`${this.apiUrl}/updateCancelOrder/${orderId}`);
+        const token = this.cookieService.get('access_token');
+        if (token) {
+            const decoded: any = jwt_decode(token);
+            data.employeeId = decoded.id;
+        }
+        // console.log(data);
+        return this.http.post<any>(`${this.apiUrl}/updateCancelOrder`, data);
+
     }
 
     changeTable(data: any): Observable<any> {
+        const token = this.cookieService.get('access_token');
+        if (token) {
+            const decoded: any = jwt_decode(token);
+            data.employeeId = decoded.id;
+        }
+        // console.log(data);
         return this.http.post<any>(`${this.apiUrl}/changeTable`, data);
     }
 

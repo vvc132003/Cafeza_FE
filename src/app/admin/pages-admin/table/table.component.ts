@@ -44,8 +44,11 @@ export class TableComponent implements OnInit, OnDestroy {
         this.tables = data;
         // console.log(this.tables);
         this.count = this.tables.length;
-        this.selectTable = this.tables[3];
-        this.tableId = this.selectTable.id;
+        if (this.tables.length > 2) {
+          this.selectTable = this.tables[3];
+          this.tableId = this.selectTable.id;
+          // console.log(this.tableId);
+        }
         // console.log(this.selectTable);
         // this.selectTableStatus =this.tables[2].status;
         if (this.pendingActions.length > 0) {

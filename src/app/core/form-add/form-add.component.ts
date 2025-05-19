@@ -32,7 +32,6 @@ export class FormAddComponent implements AfterViewInit {
 
 
   //#region  event
-
   selectedTab: string = 'category';
   selectTab(tab: string) {
     this.selectedTab = tab;

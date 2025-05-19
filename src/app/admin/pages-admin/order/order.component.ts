@@ -193,7 +193,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       openModal();
     }
   }
-
+  isorderCancellation = false;
   confirmCancel(data: any) {
     switch (data) {
       case '113':
@@ -206,29 +206,46 @@ export class OrderComponent implements OnInit, OnDestroy {
         )
         break;
       case '112':
-        this.orderService.updateCancelOrder(this.order.orderId).subscribe((data) => {
-          this.showModal = false;
-          this.router.navigate(['/admin/tables/1002']);
-          this.notificationService.showSuccess('1010');
-        })
+        // this.isModalVisible = false;
+        // this.close();
+        this.isorderCancellationVisible = true;
+        this.isModalVisible = false;
+        setTimeout(() => {
+          this.isorderCancellation = true;
+        }, 0);
         break;
 
       default:
         break;
     }
   }
-  isModalVisible = false;
+  orderCancellation: any = {};
+  cancelOrder() {
+    // const requestData = {
+    //   orderId: this.order.orderId,
+    //   reason: "",
+    // };
+    this.orderCancellation.orderId = this.order.orderId
+    this.orderService.updateCancelOrder(this.orderCancellation).subscribe((data) => {
+      // this.showModal = false;
+      this.close();
+      this.router.navigate(['/admin/tables/1002']);
+      this.notificationService.showSuccess('1010');
+    })
+  }
 
+  isModalVisible = false;
+  isorderCancellationVisible = false;
   close() {
     this.showoffcanvas = false;
     this.isorderdetailOpen = false;
-
     this.showModalChangeTable = false;
     this.showModal = false;
     this.showModalInvoice = false;
-
+    this.isorderCancellation = false;
     setTimeout(() => {
       this.isModalVisible = false;
+      this.isorderCancellationVisible = false;
     }, 400);
   }
 

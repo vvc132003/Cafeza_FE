@@ -73,7 +73,7 @@ export class ConfirmModalComponent implements OnChanges, OnDestroy {
       case '110':
         const data = {
           fromTableId: this.fromTableId,
-          toTableId: this.toTableId
+          toTableId: this.toTableId,
         }
         // console.log(data);
         this.orderService.changeTable(data).subscribe((data) => {
