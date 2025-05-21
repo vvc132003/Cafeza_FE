@@ -103,9 +103,18 @@ export class TableComponent implements OnInit, OnDestroy {
 
     this.cdr.detectChanges();
   }
+
   data: any = {};
   click(event: any) {
     switch (event) {
+      case '105':
+        this.showoffcanvas = true;
+        this.table = this.tables.find(t => t.id === this.tableId);
+        this.data = {
+          action: 'copy',
+          text: 'Thêm bàn'
+        };
+        break
       case '101':
         this.showoffcanvas = true;
         this.table = {};
@@ -128,6 +137,7 @@ export class TableComponent implements OnInit, OnDestroy {
       default:
         break;
     }
+    this.cdr.detectChanges();
   }
 
   newData(data: any) {

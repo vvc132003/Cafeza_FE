@@ -18,6 +18,8 @@ export class MessageService {
     { code: '1011', text: 'In hoá đơn thành công !' },
     { code: '1012', text: 'Chuyển bàn thành công !' },
     { code: '1013', text: 'Bạn chưa nhập số lượng !' },
+    { code: '1014', text: 'Bạn chưa nhập số tiền khách hàng đưa !' },
+
 
 
 

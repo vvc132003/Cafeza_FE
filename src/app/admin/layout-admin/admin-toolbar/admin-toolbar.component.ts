@@ -75,6 +75,16 @@ export class AdminToolbarComponent implements OnInit, OnChanges {
       display: 'block'
     },
     {
+      id: '105',
+      funId: '1002',
+      label: 'Sao chép',
+      icon: 'fa-copy',      
+      class: 'btn-custom-copy',
+      type: '',
+      action: () => this.event('105'),
+      display: 'block'
+    },
+    {
       id: '102',
       funId: '1002',
       label: 'Cập nhật',

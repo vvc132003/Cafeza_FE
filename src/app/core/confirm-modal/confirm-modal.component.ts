@@ -81,6 +81,7 @@ export class ConfirmModalComponent implements OnChanges, OnDestroy {
           this.router.navigate(['/admin/tables/1002']);
         })
         break;
+      case '111':
       case '112':
       case '113':
         this.onConfirm.emit(this.action);

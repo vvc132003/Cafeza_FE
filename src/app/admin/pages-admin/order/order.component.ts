@@ -135,10 +135,10 @@ export class OrderComponent implements OnInit, OnDestroy {
     });
   }
 
-  tienKhachTra: number = 0;
+  amountPaid: number = 0;
   tinhTienThoi(): number {
     const tong = this.tinhTongTien();
-    return this.tienKhachTra > tong ? this.tienKhachTra - tong : 0;
+    return this.amountPaid > tong ? this.amountPaid - tong : 0;
   }
 
 
@@ -173,29 +173,52 @@ export class OrderComponent implements OnInit, OnDestroy {
   showModal = false;
   showModalInvoice = false;
   showModalChangeTable = false;
+  showModalpaymen = false;
+
 
   action: string = '';
   click(data: any) {
     // console.log(data);
     this.action = data;
     // console.log(this.action);
-    this.action = data;
+    // this.action = data;
     this.isModalVisible = true;
 
     const modalMap: { [key: string]: () => void } = {
       '110': () => setTimeout(() => this.showModalChangeTable = true, 0),
+      '111': () => setTimeout(() => this.showModalpaymen = true, 0),
       '112': () => setTimeout(() => this.showModal = true, 0),
       '113': () => setTimeout(() => this.showModalInvoice = true, 0),
     };
-
     const openModal = modalMap[data];
     if (openModal) {
       openModal();
     }
   }
   isorderCancellation = false;
-  confirmCancel(data: any) {
+  confirm(data: any) {
     switch (data) {
+      case '111':
+        const pay = {
+          totalAmount: this.tinhTongTien(),
+          amountPaid: this.amountPaid,
+          changeAmount: this.tinhTienThoi(),
+          paymentMethod: "tiền mặt",
+          orderId: this.order.orderId,
+
+        }
+        // console.log(pay);
+        if (!this.amountPaid) {
+          this.notificationService.showWarning("1014")
+          return;
+        }
+
+        this.orderService.pay(pay).subscribe(() => {
+          this.close();
+          this.router.navigate(['/admin/tables/1002']);
+        })
+        // this.close();
+        break;
       case '113':
         this.subscription.add(
           this.orderdeatilService.getExportInvoice(this.order.orderId).subscribe((data) => {
@@ -243,6 +266,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.showModal = false;
     this.showModalInvoice = false;
     this.isorderCancellation = false;
+    this.showModalpaymen = false;
     setTimeout(() => {
       this.isModalVisible = false;
       this.isorderCancellationVisible = false;

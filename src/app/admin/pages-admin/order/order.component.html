@@ -139,7 +139,7 @@
                                 <div class="d-flex justify-content-between align-items-center py-3">
                                     <span><strong>Tiền khách trả:</strong></span>
                                     <input type="number" class="form-control form-control-sm w-50"
-                                        [(ngModel)]="tienKhachTra" (input)="tinhTienThoi()"
+                                        [(ngModel)]="amountPaid" (input)="tinhTienThoi()"
                                         placeholder="Nhập số tiền..." />
                                 </div>
                             </div>
@@ -163,21 +163,30 @@
 <ng-container *ngIf="isModalVisible">
     <app-confirm-modal [show]="showModal" title="Xác nhận hủy đơn" message="Bạn có chắc chắn muốn hủy đơn này không?"
         confirmText="Có, hủy đơn" cancelText="Không" (onCancel)="close()" [action]="action"
-        (onConfirm)="confirmCancel($event)">
+        (onConfirm)="confirm($event)">
     </app-confirm-modal>
 </ng-container>
 
 <ng-container *ngIf="isModalVisible">
     <app-confirm-modal [show]="showModalInvoice" title="Xác nhận in hoá đơn" message="Bạn có muốn in hoá đơn không?"
         confirmText="Có, in hoá đơn" cancelText="Không" (onCancel)="close()" [action]="action"
-        (onConfirm)="confirmCancel($event)">
+        (onConfirm)="confirm($event)">
     </app-confirm-modal>
 </ng-container>
 
 <ng-container *ngIf="isModalVisible">
     <app-confirm-modal [show]="showModalChangeTable" title="Chuyển bàn" confirmText="Có, chuyển bàn" cancelText="Không"
         (onCancel)="close()" [action]="action" [fromTableId]="order.tableId" [tableName]="order.tableName"
-        [height]="'40vh'" (onConfirm)="confirmCancel($event)">
+        [height]="'40vh'" (onConfirm)="confirm($event)">
+    </app-confirm-modal>
+</ng-container>
+
+
+<!-- thanh toán -->
+ <ng-container *ngIf="isModalVisible">
+    <app-confirm-modal [show]="showModalpaymen" title="Thanh toán" message="Bạn có muốn thanh toán bàn này không?" confirmText="Có, thanh toán" cancelText="Không"
+        (onCancel)="close()" [action]="action"
+        (onConfirm)="confirm($event)">
     </app-confirm-modal>
 </ng-container>
 

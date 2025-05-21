@@ -46,11 +46,29 @@
   color: white;
   border: none;
 }
+
 .btn-custom-update {
   background-color: #FF5722;
   color: white;
   border: none;
 }
+
+.btn-custom-copy {
+  background-color: #6c5ce7;
+  /* tím đẹp */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-custom-copy:hover {
+  background-color: #5a4bcf;
+  cursor: pointer;
+}
+
 
 @media (max-width: 470px) {
   .admin-toolbar {

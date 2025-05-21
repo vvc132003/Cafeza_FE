@@ -44,6 +44,15 @@ export class OrderService {
         return this.http.post<any>(`${this.apiUrl}/changeTable`, data);
     }
 
+    pay(data: any): Observable<any> {
+        // const token = this.cookieService.get('access_token');
+        // if (token) {
+        //     const decoded: any = jwt_decode(token);
+        //     data.employeeId = decoded.id;
+        // }
+        // // console.log(data);
+        return this.http.post<any>(`${this.apiUrl}/pay`, data);
+    }
 
 
 

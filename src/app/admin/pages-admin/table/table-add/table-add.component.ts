@@ -49,25 +49,36 @@ export class TableAddComponent implements OnChanges {
       const list = Array.isArray(raw) ? raw : Object.values(raw);
       this.listTablesparentId = list.filter(item => item.parentId == null);
     }
+    /// tạo bản sao khi bị dính đến compent cha của chức năng copy
+    if (this.action === 'copy')
+      this.table = { ...this.table };
   }
 
   save(): void {
     if (this.action === 'addkv') {
       this.saveLocation();
       this.notificationService.showSuccess('1005');
-    } else if (this.action === 'addb') {
+    } else if (this.action === 'addb' || this.action === 'copy') {
       this.table.status = 'empty';
       this.table.location = this.listTablesparentId.find((tb: any) => tb.id === this.table.parentId)?.location || null;
       this.saveLocation();
       this.notificationService.showSuccess('1002');
     }
+    else if (this.action === 'update') {
+      this.updateLocation();
+    }
   }
+
   saveLocation() {
     if (!this.table.location) return;
     this.tableService.postData(this.table).subscribe((data) => {
       this.close();
       // this.newPupAdd.emit(data);
     })
+  }
+
+  updateLocation() {
+
   }
 
 }

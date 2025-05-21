@@ -12,7 +12,7 @@
     </div>
   </div>
 
-  <div *ngIf="action === 'addb'">
+  <div *ngIf="action === 'addb' || action === 'copy'">
     <div class="mb-3">
       <label for="parentId" class="form-label small">Khu vực (nếu có)</label>
       <select class="form-select form-select-sm" id="parentId" name="parentId" [(ngModel)]="table.parentId">
