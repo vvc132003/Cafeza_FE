@@ -13,7 +13,9 @@ export class EmployeeAddComponent implements OnChanges {
   @Input() data: any;
   text: string = "";
   action: string = "";
+  @Input() user: any = {};
   @Input() employee: any = {};
+
 
 
   constructor(private employeeService: EmployeeService) { }
@@ -47,13 +49,18 @@ export class EmployeeAddComponent implements OnChanges {
   }
 
   rolesInput: string = '';
-  
+
   save() {
     this.employee.roles = this.rolesInput.split(',').map(role => role.trim());
     this.employee.status = 'đang làm';
-    this.employee.isDeleted = true;
-    console.log(this.employee);
-    this.employeeService.postData(this.employee).subscribe((res: any) => {
+    this.user.isDeleted = true;
+    this.user.role = 'employee';
+    const data = {
+      employeeDetailsDTO: this.employee,
+      userDTO: this.user,
+    }
+    // console.log(data);
+    this.employeeService.postData(data).subscribe((res: any) => {
       console.log('thành công !');
     })
   }

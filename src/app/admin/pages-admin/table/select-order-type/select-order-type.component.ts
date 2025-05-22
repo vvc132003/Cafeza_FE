@@ -40,9 +40,10 @@ export class SelectOrderTypeComponent implements OnChanges {
     this.order.status = "Chờ thanh toán";
     const requestData = {
       orderDto: this.order,
-      customerDto: null,
+      customerDetailsDTO: null,
+      userDTO: null
     };
-    // console.log(this.order);
+    console.log(requestData);
     this.orderService.postData(requestData).subscribe((d) => {
       this.closeType();
       this.notificationService.showSuccess('1003');

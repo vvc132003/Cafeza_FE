@@ -36,6 +36,7 @@ import { EmployeeAddComponent } from './pages-admin/employee/employee-add/employ
 import { EmployeeDetailComponent } from './pages-admin/employee/employee-detail/employee-detail.component';
 import { UpdatequantityDetailComponent } from './pages-admin/order/updatequantity-detail/updatequantity-detail.component';
 import { ConfirmModalComponent } from '../core/confirm-modal/confirm-modal.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { ConfirmModalComponent } from '../core/confirm-modal/confirm-modal.compo
     AdminRoutingModule,
     FormsModule,
     ToastrModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ]
 })
 export class AdminModule { }

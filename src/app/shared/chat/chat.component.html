@@ -1,0 +1,49 @@
+<button *ngIf="showButton" class="btn btn-primary chat-toggle-btn" (click)="toggleChat()">
+  {{ isShowChat ? 'Đóng Chat' : 'Mở Chat' }}
+</button>
+
+<ng-container *ngIf="isShowChat">
+  <div class="chat-widget shadow" [class.show]="showChat">
+    <div class="chat-sidebar">
+      <!-- <div class="chat-header p-3 fw-bold text-white bg-primary">Tin nhắn</div> -->
+      <div class="chat-header p-3 bg-primary d-flex align-items-center">
+        <input type="text" class="form-control me-2" placeholder="Tìm kiếm cuộc trò chuyện..." [(ngModel)]="searchTerm"
+          (input)="onSearchChange()" />
+        <button class="btn btn-light">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+
+      <div class="conversation-list">
+        <div *ngFor="let convo of conversations" class="conversation" [class.active]="convo === selectedConversation"
+          (click)="selectConversation(convo)">
+          <img [src]="convo.avatar" alt="avatar" class="avatar">
+          <div class="info">
+            <div class="name">{{ convo.name }}</div>
+            <div class="last-message">{{ convo.lastMessage }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-main" *ngIf="selectedConversation">
+      <div class="chat-main-header">
+        <img [src]="selectedConversation.avatar" class="avatar-sm" />
+        <span>{{ selectedConversation.name }}</span>
+        <button class="btn-close ms-auto" aria-label="Close" (click)="closeChat()"></button>
+
+      </div>
+
+      <div class="chat-messages" id="messageList">
+        <div *ngFor="let msg of selectedConversation.messages" class="message" [class.self]="msg.fromSelf">
+          <div class="bubble">{{ msg.text }}</div>
+        </div>
+      </div>
+
+      <div class="chat-input">
+        <input [(ngModel)]="newMessage" type="text" placeholder="Nhập tin nhắn..." />
+        <button class="btn btn-primary" (click)="sendMessage()">Gửi</button>
+      </div>
+    </div>
+  </div>
+</ng-container>

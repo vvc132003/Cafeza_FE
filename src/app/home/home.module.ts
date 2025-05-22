@@ -14,6 +14,7 @@ import { DrinksDetailComponent } from './drinks/drinks-detail/drinks-detail.comp
 import { LoginComponent } from './pages-home/login/login.component';
 import { CookieService } from 'ngx-cookie-service';
 import { CartComponent } from './cart/cart.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -32,8 +33,9 @@ import { CartComponent } from './cart/cart.component';
     HomeRoutingModule,
     FormsModule,
     ToastrModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
-    // providers: [CookieService],
+  // providers: [CookieService],
 })
 export class HomeModule { }

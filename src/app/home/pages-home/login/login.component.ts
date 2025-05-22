@@ -34,7 +34,7 @@ export class LoginComponent {
           this.router.navigate(['/admin/tables/1002']);
         } else if (role === 'Staff') {
           this.router.navigate(['/admin/categories/1001']);
-        } else if (role === 'Customer') {
+        } else if (role === 'customer') {
           this.router.navigate(['/']);
         }
       } else {

@@ -1,6 +1,7 @@
 <div class="admin-layout">
   <app-header></app-header>
-  <app-admin-toolbar [tableName]="tableName" [count]="count" [text]="text" [buttonNone]="buttonNone" (showButtonss)="evetnbuttons($event)" (showPupAdd)="onChildClick($event)"></app-admin-toolbar>
+  <app-admin-toolbar [tableName]="tableName" [count]="count" [text]="text" [buttonNone]="buttonNone"
+    (showButtonss)="evetnbuttons($event)" (showPupAdd)="onChildClick($event)"></app-admin-toolbar>
   <div class="admin-body">
     <app-sidebar></app-sidebar>
     <div class="admin-content">
@@ -10,4 +11,5 @@
       </ng-container>
     </div>
   </div>
+  <app-chat></app-chat>
 </div>

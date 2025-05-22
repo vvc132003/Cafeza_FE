@@ -33,11 +33,11 @@ export class CustomerService implements CanActivate {
         const decoded: any = jwt_decode(token);
         const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
 
-        if (role === "Customer" && currentRoutePath === 'cart') {
+        if (role === "customer" && currentRoutePath === 'cart') {
             return true;
         }
 
-        if (role === "Customer" && currentRoutePath === 'login') {
+        if (role === "customer" && currentRoutePath === 'login') {
             return this.router.parseUrl('/'); 
         }
 
