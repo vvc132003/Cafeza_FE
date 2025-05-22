@@ -35,8 +35,10 @@
       </div>
 
       <div class="chat-messages" id="messageList">
-        <div *ngFor="let msg of selectedConversation.messages" class="message" [class.self]="msg.fromSelf">
+        <div *ngFor="let msg of selectedConversation.messages" class="message"
+          [class.self]="msg.senderMemberId === currentUserId">
           <div class="bubble">{{ msg.text }}</div>
+          <!-- <p>{{msg.senderMemberId}}</p> -->
         </div>
       </div>
 

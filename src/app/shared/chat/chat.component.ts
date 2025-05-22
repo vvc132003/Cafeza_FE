@@ -1,12 +1,15 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { ConversationService } from 'src/app/services/conversation.service';
+import jwt_decode from 'jwt-decode';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
 
   isShowChat: boolean = false;
   showChat: boolean = false;
@@ -39,23 +42,66 @@ export class ChatComponent implements OnInit {
     //   ]
     // }
   ];
-  constructor(private conversationService: ConversationService, private cdr: ChangeDetectorRef) { }
+  currentUserId: string = "";
+  private subscription: Subscription = new Subscription();
+
+  constructor(private conversationService: ConversationService, private cookieService: CookieService, private cdr: ChangeDetectorRef) {
+    const token = this.cookieService.get('access_token');
+    if (token) {
+      const decoded: any = jwt_decode(token);
+      this.currentUserId = decoded.id;
+    }
+    // console.log(this.currentUserId);
+  }
   ngOnInit(): void {
     this.fetChat();
   }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    this.conversationService.stopConnection();
+  }
 
   fetChat() {
-    this.conversationService.postData().subscribe((data: any) => {
-      // this.conversations = data;
-      // this.selectedConversation = this.conversations[0];
-      if (data === true) {
-        this.conversationService.getConversations().subscribe((data: any) => {
-          this.conversations = data;
-          this.selectedConversation = this.conversations[0];
-          this.cdr.detectChanges();
-        })
-      }
-    })
+    this.subscription.add(
+      this.conversationService.postData().subscribe((data: any) => {
+        // this.conversations = data;
+        // this.selectedConversation = this.conversations[0];
+        if (data === true) {
+          this.conversationService.getConversations().subscribe((data: any) => {
+            this.conversations = data;
+            // console.log(data);
+            this.selectedConversation = this.conversations[0];
+            this.subscription.add(
+              this.conversationService.startConnection(this.selectedConversation.conversationId).subscribe(() => {
+                if (this.subscription) {
+                  this.subscription.unsubscribe();
+                }
+                this.conversationService.onaddupChat().subscribe((newMes: any) => {
+                  this.newMess(newMes);
+                });
+              })
+            )
+            // this.cdr.detectChanges();
+          })
+        }
+      })
+    )
+  }
+
+  newMess(data: any) {
+    // console.log("ok");
+    // console.log(data);
+    // this.conversations.unshift(data);
+    // if (this.newMessage.trim()) {
+    const conversation = this.conversations.find(c => c.conversationId === data.conversationId);
+    if (conversation) {
+      conversation.lastMessage = data.lastMessage;
+    }
+    this.selectedConversation.messages.push({ text: data.content, senderMemberId: data.senderMemberId });
+    this.newMessage = '';
+   
+    this.scrollToBottom();
+    // }
   }
 
   selectedConversation = this.conversations[0];
@@ -64,8 +110,35 @@ export class ChatComponent implements OnInit {
   showSidebar: boolean = true;
 
   selectConversation(convo: any) {
-    this.selectedConversation = convo;
+    this.stopAndStartConnection(convo);
   }
+
+  async stopAndStartConnection(convo: any) {
+    await this.conversationService.stopConnection();
+    this.selectedConversation = convo;
+
+    this.subscription.add(
+      this.conversationService.startConnection(convo.conversationId).subscribe(() => {
+        if (this.subscription) {
+          this.subscription.unsubscribe();
+        }
+        this.conversationService.onaddupChat().subscribe((newMes: any) => {
+          this.newMess(newMes);
+        });
+      })
+    );
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      const list = document.getElementById('messageList');
+      if (list) {
+        list.scrollTo({ top: list.scrollHeight, behavior: 'smooth' });
+      }
+    }, 100); // delay một chút để chờ DOM render
+  }
+
   searchTerm: string = '';
 
   onSearchChange() {
@@ -76,14 +149,24 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage() {
-    if (this.newMessage.trim()) {
-      this.selectedConversation.messages.push({ text: this.newMessage, fromSelf: true });
-      this.newMessage = '';
-      setTimeout(() => {
-        const list = document.getElementById('messageList');
-        list?.scrollTo({ top: list.scrollHeight, behavior: 'smooth' });
-      });
+    // if (this.newMessage.trim()) {
+    //   this.selectedConversation.messages.push({ text: this.newMessage, fromSelf: true });
+    //   this.newMessage = '';
+    //   setTimeout(() => {
+    //     const list = document.getElementById('messageList');
+    //     list?.scrollTo({ top: list.scrollHeight, behavior: 'smooth' });
+    //   });
+    // }
+    const data = {
+      content: this.newMessage,
+      conversationId: this.selectedConversation.conversationId,
+      senderMemberId: this.currentUserId
     }
+
+    this.conversationService.postChat(data).subscribe((data) => {
+      // console.log();
+    })
+
   }
 
   closeChat() {

@@ -48,7 +48,7 @@ export class OrderDetailService {
     }
 
 
-    /// lắng nghe sự kiện loadTable từ server
+    /// lắng nghe sự kiện LoadOrderId từ server
     onaddupOrderDetailLoaded(): Observable<any> {
         return new Observable((observer) => {
             this.hubConnection.on('LoadOrderId', (data) => {
