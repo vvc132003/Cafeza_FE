@@ -38,7 +38,7 @@
         <div class="drink-details">
           <h4 class="drink-name">{{ drink.name }}</h4>
           <p class="drink-price">{{ drink?.price | number:'1.0-0' }} ₫ </p>
-          <button class="add-to-cart-btn" [disabled]="drink.status === 'out_of_stock'">
+          <button class="add-to-cart-btn" [disabled]="drink.status === 'out_of_stock'" (click)="addToCart(drink)">
             <i class="fas fa-shopping-cart"></i> Đặt mua
           </button>
         </div>

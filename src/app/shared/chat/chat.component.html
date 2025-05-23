@@ -2,7 +2,7 @@
   <i [class]="isShowChat ? 'fas fa-times' : 'fas fa-comment'"></i>
 </button>
 
-<button class="btn btn-success zalo-toggle-btn" (click)="openZaloAppChat()">
+<button *ngIf="showButton" class="btn btn-success zalo-toggle-btn" (click)="openZaloAppChat()">
   Zalo
 </button>
 

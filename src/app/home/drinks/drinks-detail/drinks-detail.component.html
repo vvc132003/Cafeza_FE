@@ -1,4 +1,4 @@
-<app-layout-home [text]="drink.name"></app-layout-home>
+<app-layout-home [cartCount]="cartCount" [text]="drink.name"></app-layout-home>
 
 <div class="container my-3">
   <div class="row g-4">
@@ -19,7 +19,7 @@
       <p class="mt-4">{{ drink?.description }}</p>
 
       <div class="d-flex align-items-center mt-4">
-        <button class="btn btn-outline-primary me-3 py-2 px-4">
+        <button class="btn btn-outline-primary me-3 py-2 px-4" (click)="addToCart(drink)">
           <i class="bi bi-cart-plus"></i> Thêm vào giỏ
         </button>
         <button class="btn btn-secondary py-2 px-4">

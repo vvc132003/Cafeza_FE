@@ -1,9 +1,9 @@
-<app-navbar [cartCount]="2" (searchChanged)="onSearchChange($event)"></app-navbar>
+<app-navbar [cartCount]="cartCount" (searchChanged)="onSearchChange($event)"></app-navbar>
 
 <div class="container">
     <div *ngIf="showHeader=== false" class="toolbar-title">
         <strong>Trang chủ</strong> / {{ text }}
     </div>
-    <app-header *ngIf="showHeader" [keyword]="keywordFromNavbar"></app-header>
+    <app-header *ngIf="showHeader" (quantityChanged)="updatecartCount()" [keyword]="keywordFromNavbar"></app-header>
 </div>
 <app-chat></app-chat>

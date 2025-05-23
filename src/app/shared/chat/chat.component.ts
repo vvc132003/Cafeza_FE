@@ -13,7 +13,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   isShowChat: boolean = false;
   showChat: boolean = false;
-  showButton: boolean = true
+  showButton: boolean = false
   toggleChat() {
     this.isShowChat = true;
     setTimeout(() => {
@@ -56,6 +56,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     if (token) {
       const decoded: any = jwt_decode(token);
       this.currentUserId = decoded.id;
+      this.showButton = true;
     }
     // console.log(this.currentUserId);
   }

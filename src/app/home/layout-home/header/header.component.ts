@@ -1,7 +1,9 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { CartService } from 'src/app/services/cart.service';
 import { DrinkService } from 'src/app/services/drinkservice';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-header',
@@ -38,7 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
   categoryDrinks: any[] = [];
   originalCategoryDrinks: any[] = [];
   private subscription = new Subscription();
-  constructor(private drinkService: DrinkService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private drinkService: DrinkService, private notificationService: NotificationService, private router: Router, private route: ActivatedRoute, private cartService: CartService) { }
 
   ngOnInit(): void {
     this.fetDrink_list();
@@ -107,6 +109,24 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
     // this.tableService.stopConnection();
+  }
+
+  cartCount: number = 0;
+  @Output() quantityChanged = new EventEmitter<number>();
+
+  addToCart(data: any) {
+    const res = {
+      drink: data,
+      userId: null
+    }
+
+    this.cartService.postData(res).subscribe((data: any[]) => {
+      // this.cartCount = data.reduce((sum, item) => sum + item.quantity, 0);
+      // this.cartCount += 1;
+      this.quantityChanged.emit();
+      this.notificationService.showSuccess('1015');
+    })
+
   }
 
 
