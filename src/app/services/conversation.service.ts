@@ -160,6 +160,18 @@ export class ConversationService {
         return this.http.post<any>(`${this.apiUrl}/createChat`, data);
     }
 
+      postChatReply(data: any): Observable<any> {
+        const token = this.cookieService.get('access_token');
+        const decoded: any = jwt_decode(token);
+        const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+        // const data = {
+        //     userId2: decoded.id,
+        //     role: role
+        // };
+
+        return this.http.post<any>(`${this.apiUrl}/replyMessage`, data);
+    }
+
 
 
     getConversations(): Observable<any> {

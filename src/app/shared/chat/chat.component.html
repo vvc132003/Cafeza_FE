@@ -1,6 +1,11 @@
 <button *ngIf="showButton" class="btn btn-primary chat-toggle-btn" (click)="toggleChat()">
-  {{ isShowChat ? 'Đóng Chat' : 'Mở Chat' }}
+  <i [class]="isShowChat ? 'fas fa-times' : 'fas fa-comment'"></i>
 </button>
+
+<button class="btn btn-success zalo-toggle-btn" (click)="openZaloAppChat()">
+  Zalo
+</button>
+
 
 <ng-container *ngIf="isShowChat">
   <div class="chat-widget shadow" [class.show]="showChat">
@@ -20,7 +25,14 @@
           <img [src]="convo.avatar" alt="avatar" class="avatar">
           <div class="info">
             <div class="name">{{ convo.name }}</div>
-            <div class="last-message">{{ convo.lastMessage }}</div>
+            <div class="last-message">
+              <ng-container *ngIf="convo.messageType === 'image'; else textMessage">
+                Đã gửi 1 ảnh
+              </ng-container>
+              <ng-template #textMessage>
+                {{ convo.lastMessage }}
+              </ng-template>
+            </div>
           </div>
         </div>
       </div>
@@ -35,34 +47,20 @@
       </div>
 
       <div class="chat-messages" id="messageList" #chatContent>
-        <div *ngFor="let msg of listmessage.messages" class="message"
-          [class.self]="msg.senderMemberId === currentUserId">
-          <div class="bubble">{{ msg.text }}</div>
-          <!-- <p>{{msg.senderMemberId}}</p> -->
-        </div>
+        <app-message-tree [listmessage]="listmessage.messages" [currentUserId]="currentUserId"></app-message-tree>
       </div>
       <div *ngIf="isTyping" class="typing-indicator">
         Người kia đang nhập tin nhắn<span class="dots">...</span>
       </div>
-      <!-- ảnh -->
-      <div *ngIf="previewImageUrls.length > 0" class="image-preview-scrollable">
-        <div class="image-wrapper" *ngFor="let img of previewImageUrls; let i = index">
-          <img [src]="img" alt="Preview" />
-          <button (click)="removeImage(i)">×</button>
-        </div>
-      </div>
 
-      <!-- <div class="chat-input">
-        <input #messageInput [(ngModel)]="newMessage" (keydown.enter)="sendMessage()" (input)="onTyping()" type="text"
-          placeholder="Nhập tin nhắn..." />
-        <button class="btn-send" (click)="sendMessage()">
-          <i class="fa fa-paper-plane"></i>
-        </button>
-      </div> -->
       <div class="chat-input">
         <button class="btn-icon" (click)="toggleEmojiPicker()">
           <i class="fa fa-smile"></i>
         </button>
+        <label class="btn-icon">
+          <i class="fa fa-video-camera"></i>
+          <input type="file" accept="video/*" (change)="onVideosSelected($event)" hidden />
+        </label>
 
         <label class="btn-icon">
           <i class="fa fa-image"></i>
@@ -76,7 +74,7 @@
           <i class="fa fa-paper-plane"></i>
         </button>
       </div>
-      
+
       <div *ngIf="showEmojiPicker" class="emoji-picker">
         <span class="emoji" (click)="addEmoji('😀')">😀</span>
         <span class="emoji" (click)="addEmoji('❤️')">❤️</span>

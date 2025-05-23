@@ -104,7 +104,11 @@ export class ChatComponent implements OnInit, OnDestroy {
     //   this.conversations.unshift(conversation);
     // }
 
-    this.listmessage.messages.push({ text: data.content, senderMemberId: data.senderMemberId });
+    this.listmessage.messages = [
+      ...this.listmessage.messages,
+      { id: data.id, text: data.content, senderMemberId: data.senderMemberId, messageType: data.messageType, parentId: data.parentId, children: [] }
+    ];
+
     /// người gửi thì mới laod newmessage
     if (data.senderMemberId === this.currentUserId) {
       this.newMessage = '';
@@ -124,6 +128,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       const conversation = this.conversations[index];
       conversation.lastMessage = data.lastMessage;
       conversation.updatedAt = new Date();
+      conversation.messageType = data.messageType;
 
       this.conversations.splice(index, 1);
       this.conversations.unshift(conversation);
@@ -239,7 +244,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     //   });
     // }
     const data = {
-      content: this.newMessage,
+      content: this.newMessage || this.iamge,
       conversationId: this.selectedConversation.conversationId,
       senderMemberId: this.currentUserId,
     }
@@ -247,6 +252,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.conversationService.postChat(data).subscribe((data) => {
       // console.log();
       this.onTyping();
+      this.previewImageUrls = [];
     })
 
   }
@@ -307,31 +313,100 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.showEmojiPicker = false;
   }
 
- previewImageUrls: string[] = [];
-selectedImageFiles: File[] = [];
+  previewImageUrls: string[] = [];
+  selectedImageFiles: File[] = [];
+  iamge: string = '';
+  onImagesSelected(event: any): void {
+    const files: FileList = event.target.files;
+    this.previewImageUrls = [];
+    this.selectedImageFiles = [];
 
-onImagesSelected(event: any) {
-  const files: FileList = event.target.files;
-  this.previewImageUrls = [];
-  this.selectedImageFiles = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
 
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    if (file.type.startsWith('image/')) {
-      this.selectedImageFiles.push(file);
+      if (file.type.startsWith('image/')) {
+        this.selectedImageFiles.push(file);
 
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.previewImageUrls.push(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          const base64 = reader.result as string;
+          this.previewImageUrls.push(base64);
+          this.iamge = base64;
+          this.sendMessage();
+        };
+
+        reader.readAsDataURL(file);
+      }
     }
   }
-}
 
-removeImage(index: number) {
-  this.previewImageUrls.splice(index, 1);
-  this.selectedImageFiles.splice(index, 1);
-}
+  onVideosSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.iamge = URL.createObjectURL(file);
+      this.sendMessage();
+    }
+  }
+
+
+
+  removeImage(index: number) {
+    this.previewImageUrls.splice(index, 1);
+    this.selectedImageFiles.splice(index, 1);
+  }
+
+  //#region evetn gỡ tn
+  showMenu: boolean = false;
+  menuMessage: any = null;
+
+  toggleMenu(msg: any): void {
+    if (this.menuMessage === msg) {
+      this.showMenu = !this.showMenu;
+    } else {
+      this.menuMessage = msg;
+      this.showMenu = true;
+    }
+  }
+
+  closeMenu(): void {
+    this.showMenu = false;
+    this.menuMessage = null;
+  }
+
+
+  deleteMessage(msg: any) {
+    console.log("Gỡ tin nhắn:", msg);
+    msg.showMenu = false;
+  }
+
+  replyMessage(msg: any) {
+    const data = {
+      content: this.newMessage || this.iamge || "trả lời",
+      conversationId: this.selectedConversation.conversationId,
+      senderMemberId: this.currentUserId,
+      parentId: msg.id
+    }
+
+    this.conversationService.postChatReply(data).subscribe((data) => {
+      this.onTyping();
+      this.previewImageUrls = [];
+    })
+
+  }
+
+  openZaloAppChat() {
+    const zaloNumber = '84373449865';
+    const zaloAppUrl = `zalo://chat?phone=${zaloNumber}`;
+    const zaloWebUrl = `https://zalo.me/${zaloNumber}`;
+
+    // Mở zalo app
+    window.location.href = zaloAppUrl;
+
+    // Có thể set timeout kiểm tra nếu không mở được app thì mở web
+    setTimeout(() => {
+      window.open(zaloWebUrl, '_blank');
+    }, 2000);
+  }
 
 }
