@@ -15,6 +15,7 @@ export class TableService {
     constructor(private http: HttpClient) {
         this.hubConnection = new signalR.HubConnectionBuilder()
             .withUrl(this.hubUrl)
+            .configureLogging(signalR.LogLevel.Error)
             .build();
     }
 

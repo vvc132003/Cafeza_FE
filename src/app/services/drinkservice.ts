@@ -19,6 +19,7 @@ export class DrinkService {
     constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) {
         this.hubConnection = new signalR.HubConnectionBuilder()
             .withUrl(this.hubUrl)
+            .configureLogging(signalR.LogLevel.Error)
             .build();
     }
 

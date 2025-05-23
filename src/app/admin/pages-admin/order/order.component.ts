@@ -91,7 +91,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   newDataDrink(data: any) {
-    console.log(data);
+    // console.log(data);
     const index = this.drinks.findIndex(drink => drink.id === data.id);
     if (index === -1) {
       this.drinks.unshift(data);
