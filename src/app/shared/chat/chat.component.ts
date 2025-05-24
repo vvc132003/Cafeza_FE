@@ -19,13 +19,22 @@ export class ChatComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.showChat = true;
       this.showButton = false;
+      if (window.innerWidth <= 470) {
+        this.isChatSidebarVisible = true;
+        this.isChatMainVisible = false;
+      } else {
+        this.isChatSidebarVisible = true;
+        this.isChatMainVisible = true;
+      }
 
     }, 0);
     // if (this.showChat == true) {
     this.scrollToBottom();
     setTimeout(() => {
-      this.messageInput.nativeElement.focus();
-    }, 0);
+      if (this.messageInput) {
+        this.messageInput.nativeElement.focus();
+      }
+    }, 200);
     // }
   }
   conversations: any[] = [
@@ -60,6 +69,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
     // console.log(this.currentUserId);
   }
+
+  //#region  load
+
   ngOnInit(): void {
     this.fetChat();
   }
@@ -80,6 +92,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (data === true) {
           this.conversationService.getConversations().subscribe((data: any) => {
             this.conversations = data;
+            this.allConversations = data;
             // console.log(data);
             this.selectedConversation = this.conversations[0];
             this.getMess(data[0]);
@@ -90,6 +103,8 @@ export class ChatComponent implements OnInit, OnDestroy {
       })
     )
   }
+
+  //#region add tin nhắn và cuộc hội thoại
 
   newMess(data: any) {
     // console.log("ok");
@@ -147,6 +162,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
 
+  //#region  load tin nhắn
+
   selectedConversation = this.conversations[0];
   newMessage = '';
 
@@ -170,17 +187,70 @@ export class ChatComponent implements OnInit, OnDestroy {
     await this.conversationService.stopConnection2();
 
     this.selectedConversation = convo;
+    this.currentPage = 1;
     this.getMess(convo);
     this.loadsoket(convo);
-    this.scrollToBottom();
+    // this.scrollToBottom();
+    if (window.innerWidth <= 470) {
+      this.isChatSidebarVisible = false;
+      this.isChatMainVisible = true;
+    } else {
+      // Màn rộng thì hiển thị cả 2
+      this.isChatSidebarVisible = true;
+      this.isChatMainVisible = true;
+    }
   }
 
-  getMess(convo: any) {
-    this.conversationService.getMessages(convo.conversationId).subscribe((res: any) => {
-      this.listmessage = res[0];
-      // console.log(res);
-    })
+  // getMess(convo: any) {
+  //   this.conversationService.getMessages(convo.conversationId).subscribe((res: any) => {
+  //     this.listmessage = res[0];
+  //     // console.log(res);
+  //   })
+  // }
+  // listmessage: any[] = [];
+
+  currentPage: number = 1;
+  pageSize: number = 10;
+  isLoading: boolean = false;
+
+  getMess(convo: any, loadMore: boolean = false) {
+    if (this.isLoading) return;
+    this.isLoading = true;
+
+    this.conversationService.getMessages(convo.conversationId, this.currentPage, this.pageSize).subscribe((res: any) => {
+      const newMessages = res[0].messages;
+
+      if (loadMore) {
+        const chatElement = this.chatContent.nativeElement;
+        const oldScrollHeight = chatElement.scrollHeight;
+        this.listmessage.messages = [...newMessages, ...this.listmessage.messages];
+        setTimeout(() => {
+          const newScrollHeight = chatElement.scrollHeight;
+          chatElement.scrollTop = newScrollHeight - oldScrollHeight;
+          this.isLoading = false;
+        }, 0);
+      } else {
+        this.listmessage.messages = newMessages;
+        this.isLoading = false;
+        this.scrollToBottom();
+      }
+    });
   }
+
+  onScroll() {
+    if (!this.chatContent) return;
+    const chatElement = this.chatContent.nativeElement;
+    if (chatElement.scrollTop === 0 && !this.isLoading) {
+      this.loadMoreMessages(this.selectedConversation);
+    }
+  }
+
+  loadMoreMessages(convo: any) {
+    this.currentPage++;
+    this.pageSize = 5;
+    this.getMess(convo, true);
+  }
+
 
   loadsoket(data: any) {
     // console.log(this.currentUserId);
@@ -226,14 +296,20 @@ export class ChatComponent implements OnInit, OnDestroy {
   //   }, 100); // delay một chút để chờ DOM render
   // }
 
-  searchTerm: string = '';
 
+  //#region  search cuộc trò chuyện
+
+  searchTerm: string = '';
+  allConversations: any[] = [];
   onSearchChange() {
-    // code lọc conversations dựa vào searchTerm
-    this.conversations = this.conversations.filter(c =>
-      c.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    const term = this.searchTerm.toLowerCase();
+    this.conversations = this.allConversations.filter(c =>
+      c.name.toLowerCase().includes(term)
     );
   }
+
+
+  //#region  send tn
 
   sendMessage() {
     // if (this.newMessage.trim()) {
@@ -257,6 +333,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     })
 
   }
+
+  //#region  nhận biết người nào đang nhập tin nhắn
+
   isTyping: boolean = false;
 
   typingTimer: any;
@@ -294,6 +373,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
 
+  //#region event
 
   closeChat() {
     this.showChat = false;
@@ -350,7 +430,14 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
   }
 
+  isChatMainVisible: boolean = false;
+  isChatSidebarVisible: boolean = false;
 
+
+  backToSidebar() {
+    this.isChatSidebarVisible = true;
+    this.isChatMainVisible = false;
+  }
 
   removeImage(index: number) {
     this.previewImageUrls.splice(index, 1);
@@ -395,6 +482,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     })
 
   }
+
+  //#region  nt zalo
 
   openZaloAppChat() {
     const zaloNumber = '84373449865';

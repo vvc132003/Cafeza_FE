@@ -1,6 +1,6 @@
 import { Injectable, TemplateRef } from '@angular/core';
 import { API_URLS } from '../config/api-urls';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import jwt_decode from 'jwt-decode';
@@ -20,9 +20,13 @@ export class CartService {
 
     getCurrentCartByUserIdAsync(): Observable<any> {
         const token = this.cookieService.get('access_token');
+        if (!token) {
+            return of(null);
+        }
         const decoded: any = jwt_decode(token);
         return this.http.get<any>(`${this.apiUrl}/getCurrentCartByUserIdAsync/${decoded.id}`);
     }
+
 
     updateCancelOrder(data: any): Observable<any> {
         // return this.http.get<any>(`${this.apiUrl}/updateCancelOrder/${orderId}`);
@@ -77,5 +81,17 @@ export class CartService {
     deleteData(id: string): Observable<any> {
         return this.http.delete<any>(`${this.apiUrl}/${id}`);
     }
+
+
+    private cartCountSubject = new BehaviorSubject<number>(0);
+    cartCount$ = this.cartCountSubject.asObservable();
+
+    updateCartCount(count: number) {
+        this.cartCountSubject.next(count);
+    }
+
+    // getCartCount(): number {
+    //     return this.cartCountSubject.value;
+    // }
 
 }

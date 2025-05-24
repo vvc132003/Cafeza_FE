@@ -89,11 +89,12 @@ export class DrinkService {
         }
 
         const decoded: any = jwt_decode(token);
-        const expireTimestamp = decoded.exp * 100000; // exp trong token là thời gian hết hạn, tính bằng giây
+        const expireTimestamp = decoded.exp * 10000; // exp trong token là thời gian hết hạn, tính bằng giây
         const currentTimestamp = new Date().getTime(); // Thời gian hiện tại
 
         // Kiểm tra nếu token đã hết hạn
         if (expireTimestamp < currentTimestamp) {
+            this.cookieService.delete('access_token');
             this.router.navigate(['/login']); // iều hướng về trang login nếu token hết hạn
             return false;
         }

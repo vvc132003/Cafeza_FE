@@ -9,8 +9,7 @@
 
 <ng-container *ngIf="isShowChat">
   <div class="chat-widget shadow" [class.show]="showChat">
-    <div class="chat-sidebar">
-      <!-- <div class="chat-header p-3 fw-bold text-white bg-primary">Tin nhắn</div> -->
+    <div class="chat-sidebar" *ngIf="isChatSidebarVisible">
       <div class="chat-header p-3 bg-primary d-flex align-items-center">
         <input type="text" class="form-control me-2" placeholder="Tìm kiếm cuộc trò chuyện..." [(ngModel)]="searchTerm"
           (input)="onSearchChange()" />
@@ -38,15 +37,18 @@
       </div>
     </div>
 
-    <div class="chat-main" *ngIf="selectedConversation">
+    <div class="chat-main" *ngIf="selectedConversation && isChatMainVisible">
       <div class="chat-main-header">
+        <button class="btn-back d-block d-sm-none me-2" (click)="backToSidebar()">
+          <i class="bi bi-arrow-left"></i>
+        </button>
         <img [src]="selectedConversation.avatar" class="avatar-sm" />
         <span>{{ selectedConversation.name }}</span>
         <button class="btn-close ms-auto" aria-label="Close" (click)="closeChat()"></button>
 
       </div>
 
-      <div class="chat-messages" id="messageList" #chatContent>
+      <div class="chat-messages" id="messageList" (scroll)="onScroll()" #chatContent>
         <app-message-tree [listmessage]="listmessage.messages" [currentUserId]="currentUserId"></app-message-tree>
       </div>
       <div *ngIf="isTyping" class="typing-indicator">

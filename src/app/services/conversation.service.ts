@@ -180,11 +180,17 @@ export class ConversationService {
         return this.http.get<any>(`${this.apiUrl}/getConversations/${decoded.id}`);
     }
 
-    getMessages(conversationId: string): Observable<any> {
-        const token = this.cookieService.get('access_token');
-        const decoded: any = jwt_decode(token);
-        return this.http.get<any>(`${this.apiUrl}/getMessages/${conversationId}/${decoded.id}`);
-    }
+    // getMessages(conversationId: string): Observable<any> {
+    //     const token = this.cookieService.get('access_token');
+    //     const decoded: any = jwt_decode(token);
+    //     return this.http.get<any>(`${this.apiUrl}/getMessages/${conversationId}/${decoded.id}`);
+    // }
+    getMessages(conversationId: string, page: number, pageSize: number): Observable<any> {
+    const token = this.cookieService.get('access_token');
+    const decoded: any = jwt_decode(token);
+    return this.http.get<any>(`${this.apiUrl}/getMessages/${conversationId}/${decoded.id}?page=${page}&pageSize=${pageSize}`);
+}
+
 
     // Phương thức PUT
     updateData(data: any): Observable<any> {

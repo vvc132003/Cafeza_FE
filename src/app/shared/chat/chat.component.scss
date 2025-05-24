@@ -399,5 +399,20 @@
 }
 
 
+@media (max-width: 470px) {
+  .chat-sidebar {
+    width: 400px;
+  }
 
-@media (max-width: 470px) {}
+  .chat-widget.show .chat-sidebar {
+    display: block !important;
+  }
+
+  .chat-main-header {
+    width: 100%;
+  }
+
+  .chat-widget {
+    width: auto;
+  }
+}

@@ -7,7 +7,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 })
 export class MessageTreeComponent implements OnChanges {
   @Input() listmessage: any[] = [];
-  @Input() currentUserId: string = ""
+  @Input() currentUserId: string = "";
   tree: any[] = [];
 
   showMenu: boolean = false;

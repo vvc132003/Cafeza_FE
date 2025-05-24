@@ -26,17 +26,11 @@ export class DrinksDetailComponent implements OnInit, OnDestroy {
       drink: data,
       userId: null
     }
-    
+
     this.cartService.postData(res).subscribe((data: any) => {
-      if (Array.isArray(data)) {
-        this.cartCount = data.reduce((sum: number, item: any) => sum + item.quantity, 0);
-      } else {
-        this.cartCount = 0;
-      }
       this.notificationService.showSuccess('1015');
+      this.cartService.updateCartCount(1);
     });
-
-
   }
 
 }

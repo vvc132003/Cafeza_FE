@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
 
   menuItems_desktop = [
     { label: 'Trang chủ', path: '/', isRouterLink: true },
@@ -27,6 +28,15 @@ export class NavbarComponent {
   isSearchBarVisible: boolean = false;
   keyword: string = '';
   @Output() searchChanged = new EventEmitter<string>();
+
+
+  constructor(private cartService: CartService) { }
+
+  ngOnInit(): void {
+    this.cartService.cartCount$.subscribe(count => {
+      this.cartCount += count;
+    });
+  }
 
   // Method to toggle the search bar visibility
   toggleSearchBar(): void {
