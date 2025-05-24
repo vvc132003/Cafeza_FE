@@ -58,6 +58,4 @@ export class CategoryTreeComponent implements OnInit, OnChanges {
         children: this.buildTree(categories, cat.id)
       }));
   }
-
-
 }

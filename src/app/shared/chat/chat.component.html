@@ -49,7 +49,23 @@
       </div>
 
       <div class="chat-messages" id="messageList" (scroll)="onScroll()" #chatContent>
-        <app-message-tree [listmessage]="listmessage.messages" [currentUserId]="currentUserId"></app-message-tree>
+        <app-message-tree (replyToMessage)="replyMessage($event)" [listmessage]="listmessage.messages"
+          [currentUserId]="currentUserId"></app-message-tree>
+      </div>
+
+      <div *ngIf="replyToMessage" class="reply-preview-box">
+        <div>Trả lời tin nhắn:</div>
+        <div *ngIf="replyToMessage.messageType === 'text'">{{ replyToMessage.text }}</div>
+
+        <div *ngIf="replyToMessage.messageType === 'image'">
+          <img [src]="replyToMessage.text" alt="Ảnh" style="max-width: 100px; border-radius: 4px;" />
+        </div>
+
+        <div *ngIf="replyToMessage.messageType === 'link'">
+          <a [href]="replyToMessage.text" target="_blank">{{ replyToMessage.text }}</a>
+        </div>
+
+        <button>Hủy trả lời</button>
       </div>
       <div *ngIf="isTyping" class="typing-indicator">
         Người kia đang nhập tin nhắn<span class="dots">...</span>

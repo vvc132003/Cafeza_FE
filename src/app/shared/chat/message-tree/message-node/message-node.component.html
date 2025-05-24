@@ -1,29 +1,57 @@
 <div class="message" [class.self]="message.senderMemberId === currentUserId">
-
-    <div class="bubble" *ngIf="message.messageType === 'text'">
-        {{ message.text }}
-    </div>
-
-    <div class="bubble" *ngIf="message.messageType === 'link'">
-        <a class="text-white" [href]="message.text" target="_blank">{{ message.text }}</a>
-    </div>
-
-    <div class="" *ngIf="message.messageType === 'image'">
+    <div *ngIf="message.messageType === 'image'">
         <img [src]="message.text" alt="Ảnh" style="max-width: 200px; border-radius: 8px;" />
     </div>
-    <!-- Nếu là video và là YouTube -->
-    <div *ngIf="message.messageType === 'video' && message.text.includes('youtube.com/watch')">
-        <iframe width="300" height="180" [src]="getYoutubeEmbedUrl(message.text)" frameborder="0" allowfullscreen
-            style="border-radius: 8px;">
-        </iframe>
-    </div>
+    <div class="bubble" *ngIf="message.messageType !== 'image'">
+        <div *ngIf="message.parentId != null" class="reply-preview">
+            <ng-container *ngIf="getParentMessage(message.parentId) as parent">
+                <div *ngIf="parent.messageType === 'text'">
+                    Trả lời: {{ parent.text }}
+                </div>
 
-    <!-- Nếu là video nhưng không phải YouTube (ví dụ file .mp4) -->
-    <div *ngIf="message.messageType === 'video' && !message.text.includes('youtube.com/watch')">
-        <video width="300" controls style="border-radius: 8px;">
-            <source [src]="message.text" type="video/mp4" />
-            Trình duyệt không hỗ trợ video.
-        </video>
+                <div *ngIf="parent.messageType === 'image'">
+                    Trả lời:
+                    <img [src]="parent.text" alt="Ảnh" style="max-width: 100px; border-radius: 4px;" />
+                </div>
+
+                <div *ngIf="parent.messageType === 'link'">
+                    Trả lời: <a [href]="parent.text" target="_blank">{{ parent.text }}</a>
+                </div>
+
+            </ng-container>
+        </div>
+
+
+        <ng-container [ngSwitch]="message.messageType">
+
+            <div *ngSwitchCase="'text'">
+                {{ message.text }}
+            </div>
+
+            <div *ngSwitchCase="'link'">
+                <a class="text-white" [href]="message.text" target="_blank">{{ message.text }}</a>
+            </div>
+            <!-- 
+            <div *ngSwitchCase="'image'">
+                <img [src]="message.text" alt="Ảnh" style="max-width: 200px; border-radius: 8px;" />
+            </div> -->
+
+            <ng-container *ngSwitchCase="'video'">
+                <div *ngIf="!message.text.includes('youtube.com/watch')">
+                    <video width="300" controls style="border-radius: 8px;">
+                        <source [src]="message.text" type="video/mp4" />
+                        Trình duyệt không hỗ trợ video.
+                    </video>
+                </div>
+
+                <div *ngIf="message.text.includes('youtube.com/watch')">
+                    <iframe width="300" height="180" [src]="getYoutubeEmbedUrl(message.text)" frameborder="0"
+                        allowfullscreen style="border-radius: 8px;"></iframe>
+                </div>
+            </ng-container>
+
+        </ng-container>
+
     </div>
 
     <div class="menu-wrapper" (click)="toggleMenu(message); $event.stopPropagation()">
@@ -33,10 +61,5 @@
             <button (click)="deleteMessage(message)">Gỡ tin nhắn</button>
             <button (click)="replyMessage(message)">Trả lời tin nhắn</button>
         </div>
-    </div>
-
-    <div *ngIf="message.children?.length > 0">
-        <app-message-node *ngFor="let child of message.children" [message]="child" [currentUserId]="currentUserId">
-        </app-message-node>
     </div>
 </div>

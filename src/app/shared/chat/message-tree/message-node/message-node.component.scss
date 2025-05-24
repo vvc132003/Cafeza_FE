@@ -17,6 +17,7 @@
     border-radius: 20px;
     max-width: 70%;
     word-wrap: break-word;
+    position: relative;
     white-space: pre-wrap;
 }
 
@@ -24,6 +25,19 @@
 .message.self .bubble {
     background: #007bff;
     color: white;
+    align-self: flex-end;
+
+}
+
+.reply-preview {
+    background-color: #e8e8e8;
+    padding: 6px 10px;
+    border-left: 4px solid #999;
+    margin-bottom: 8px;
+    font-style: italic;
+    font-size: 13px;
+    color: #333;
+    border-radius: 4px;
 }
 
 .menu-wrapper {
@@ -96,29 +110,29 @@
 }
 
 .quoted-message {
-  background-color: #f1f1f1;
-  border-left: 4px solid #007bff;
-  padding: 8px 12px;
-  margin-bottom: 6px;
-  border-radius: 8px;
-  max-width: 65%;
-  font-size: 14px;
+    background-color: #f1f1f1;
+    border-left: 4px solid #007bff;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    max-width: 65%;
+    font-size: 14px;
 
-  .quoted-author {
-    font-weight: bold;
-    color: #007bff;
-    margin-bottom: 2px;
-  }
+    .quoted-author {
+        font-weight: bold;
+        color: #007bff;
+        margin-bottom: 2px;
+    }
 
-  .quoted-text {
-    color: #444;
-    font-style: italic;
-  }
+    .quoted-text {
+        color: #444;
+        font-style: italic;
+    }
 }
 
 .message.self .quoted-message {
-  background-color: #cce5ff;
-  border-left-color: #0056b3;
+    background-color: #cce5ff;
+    border-left-color: #0056b3;
 }
 
 // @keyframes fadeIn {

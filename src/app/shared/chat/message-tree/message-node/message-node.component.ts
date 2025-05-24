@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
@@ -8,7 +8,10 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class MessageNodeComponent {
   @Input() message: any;
+  @Input() allMessages: any[] = [];
   @Input() currentUserId: string = "";
+  @Output() replyToMessage = new EventEmitter<any>();
+
   constructor(private sanitizer: DomSanitizer) { }
 
   showMenu: boolean = false;
@@ -24,23 +27,18 @@ export class MessageNodeComponent {
     }
   }
   deleteMessage(msg: any) {
-    console.log("Gỡ tin nhắn:", msg);
+    // console.log("Gỡ tin nhắn:", msg);
     msg.showMenu = false;
   }
   replyMessage(msg: any) {
-    // const data = {
-    //   content: this.newMessage || this.iamge || "trả lời",
-    //   conversationId: this.selectedConversation.conversationId,
-    //   senderMemberId: this.currentUserId,
-    //   parentId: msg.id
-    // }
-
-    // this.conversationService.postChatReply(data).subscribe((data) => {
-    //   this.onTyping();
-    //   this.previewImageUrls = [];
-    // })
-
+    this.replyToMessage.emit(msg);
   }
+
+  getParentMessage(parentId: string): any {
+    return this.allMessages?.find((m: any) => m.id === parentId);
+  }
+
+
 
   getYoutubeEmbedUrl(url: string): SafeResourceUrl {
     const videoId = this.extractYoutubeVideoId(url);

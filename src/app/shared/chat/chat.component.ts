@@ -122,7 +122,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     this.listmessage.messages = [
       ...this.listmessage.messages,
-      { id: data.id, text: data.content, senderMemberId: data.senderMemberId, messageType: data.messageType, parentId: data.parentId, children: [] }
+      { id: data.id, text: data.content, senderMemberId: data.senderMemberId, messageType: data.messageType, parentId: data.parentId }
     ];
 
     /// người gửi thì mới laod newmessage
@@ -320,17 +320,31 @@ export class ChatComponent implements OnInit, OnDestroy {
     //     list?.scrollTo({ top: list.scrollHeight, behavior: 'smooth' });
     //   });
     // }
-    const data = {
-      content: this.newMessage || this.iamge,
-      conversationId: this.selectedConversation.conversationId,
-      senderMemberId: this.currentUserId,
+    if (!this.replyToMessage || !this.replyToMessage.id) {
+      const data = {
+        content: this.newMessage || this.iamge,
+        conversationId: this.selectedConversation.conversationId,
+        senderMemberId: this.currentUserId,
+      }
+      this.conversationService.postChat(data).subscribe((data) => {
+        // console.log();
+        this.onTyping();
+        this.previewImageUrls = [];
+      })
+    } else {
+      const data = {
+        content: this.newMessage || this.iamge || "trả lời",
+        conversationId: this.selectedConversation.conversationId,
+        senderMemberId: this.currentUserId,
+        parentId: this.replyToMessage.id,
+      }
+      console.log(data);
+      this.conversationService.postChatReply(data).subscribe((data) => {
+        this.onTyping();
+        this.previewImageUrls = [];
+        this.replyToMessage = null;
+      })
     }
-
-    this.conversationService.postChat(data).subscribe((data) => {
-      // console.log();
-      this.onTyping();
-      this.previewImageUrls = [];
-    })
 
   }
 
@@ -468,18 +482,27 @@ export class ChatComponent implements OnInit, OnDestroy {
     msg.showMenu = false;
   }
 
-  replyMessage(msg: any) {
-    const data = {
-      content: this.newMessage || this.iamge || "trả lời",
-      conversationId: this.selectedConversation.conversationId,
-      senderMemberId: this.currentUserId,
-      parentId: msg.id
-    }
 
-    this.conversationService.postChatReply(data).subscribe((data) => {
-      this.onTyping();
-      this.previewImageUrls = [];
-    })
+  replyToMessage: any = null;
+
+  replyMessage(msg: any) {
+
+    this.replyToMessage = msg;
+    // console.log(this.replyToMessage.id);
+    setTimeout(() => {
+      this.messageInput.nativeElement.focus();
+    }, 0);
+    // const data = {
+    //   content: this.newMessage || this.iamge || "trả lời",
+    //   conversationId: this.selectedConversation.conversationId,
+    //   senderMemberId: this.currentUserId,
+    //   parentId: msg.id
+    // }
+
+    // this.conversationService.postChatReply(data).subscribe((data) => {
+    //   this.onTyping();
+    //   this.previewImageUrls = [];
+    // })
 
   }
 
@@ -499,4 +522,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     }, 2000);
   }
 
+
 }
+

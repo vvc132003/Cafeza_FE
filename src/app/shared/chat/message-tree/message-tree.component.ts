@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-message-tree',
@@ -8,6 +8,8 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 export class MessageTreeComponent implements OnChanges {
   @Input() listmessage: any[] = [];
   @Input() currentUserId: string = "";
+  @Output() replyToMessage = new EventEmitter<any>();
+
   tree: any[] = [];
 
   showMenu: boolean = false;
@@ -17,12 +19,13 @@ export class MessageTreeComponent implements OnChanges {
       // console.log(this.listmessage);
       const raw = changes['listmessage'].currentValue;
       this.listmessage = Array.isArray(raw) ? raw : Object.values(raw);
-      this.tree = this.buildMessageTree(this.listmessage, null);
-      // console.log(this.tree);
+      // this.tree = this.buildMessageTree(this.listmessage, null);
+      // console.log(this.listmessage);
 
     }
   }
   buildMessageTree(messages: any[], parentId: string | null): any[] {
+    // console.log(messages);
     return messages
       .filter(msg => msg.parentId === parentId)
       .map(msg => ({
@@ -30,7 +33,7 @@ export class MessageTreeComponent implements OnChanges {
         children: this.buildMessageTree(messages, msg.id)
       }));
   }
-  
+
   toggleMenu(msg: any): void {
     if (this.menuMessage === msg) {
       this.showMenu = !this.showMenu;
@@ -52,6 +55,7 @@ export class MessageTreeComponent implements OnChanges {
   }
 
   replyMessage(msg: any) {
+    this.replyToMessage.emit(msg);
     // const data = {
     //   content: this.newMessage || this.iamge || "trả lời",
     //   conversationId: this.selectedConversation.conversationId,
