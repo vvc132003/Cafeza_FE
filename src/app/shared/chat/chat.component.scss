@@ -71,6 +71,22 @@
   cursor: pointer;
   border-bottom: 1px solid #eee;
   transition: background 0.3s;
+  justify-content: space-between;
+}
+
+.info {
+  flex: 1;
+  margin-left: 0px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+small.text-muted {
+  white-space: nowrap;
+  margin-left: 0px;
+  flex-shrink: 0;
+  margin-bottom: 18px;
 }
 
 .conversation.active,
@@ -85,13 +101,13 @@
   margin-right: 10px;
 }
 
-.info {
-  flex: 1;
-}
-
 .name {
   font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
 
 .last-message {
   width: 150px;
@@ -131,6 +147,45 @@
   overflow-y: auto;
   background-color: #fafafa;
 }
+
+
+.reply-preview-box {
+  position: relative;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f9f9f9;
+}
+
+.reply-preview-box img {
+  max-width: 100px;
+  border-radius: 4px;
+}
+
+.btn-cancel-reply {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  color: #888;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+.btn-cancel-reply:hover {
+  color: #000;
+}
+
+
+
 
 // .message {
 //   display: flex;
@@ -398,6 +453,23 @@
   }
 }
 
+.custom-close-button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+}
+
+.custom-close-button:hover {
+  color: #ff4d4f;
+  transform: scale(1.2);
+}
+
 
 @media (max-width: 470px) {
   .chat-sidebar {
@@ -408,11 +480,18 @@
     display: block !important;
   }
 
-  .chat-main-header {
+  .chat-main {
     width: 100%;
   }
 
   .chat-widget {
-    width: auto;
+    width: 100vw;
+    height: 80vh;
+    bottom: 0;
+    right: 0;
+    border-radius: 0;
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
   }
 }

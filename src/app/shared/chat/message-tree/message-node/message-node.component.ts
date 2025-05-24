@@ -35,8 +35,10 @@ export class MessageNodeComponent {
   }
 
   getParentMessage(parentId: string): any {
-    return this.allMessages?.find((m: any) => m.id === parentId);
+    if (!parentId) return null;
+    return this.allMessages?.find(m => m.id === parentId) ?? null;
   }
+
 
 
 

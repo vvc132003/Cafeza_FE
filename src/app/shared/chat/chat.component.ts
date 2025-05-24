@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { ConversationService } from 'src/app/services/conversation.service';
 import jwt_decode from 'jwt-decode';
 import { Subscription } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-chat',
@@ -60,7 +61,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   currentUserId: string = "";
   private subscription: Subscription = new Subscription();
 
-  constructor(private conversationService: ConversationService, private cookieService: CookieService, private cdr: ChangeDetectorRef) {
+  constructor(private datePipe: DatePipe, private conversationService: ConversationService, private cookieService: CookieService, private cdr: ChangeDetectorRef) {
     const token = this.cookieService.get('access_token');
     if (token) {
       const decoded: any = jwt_decode(token);
@@ -122,8 +123,9 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     this.listmessage.messages = [
       ...this.listmessage.messages,
-      { id: data.id, text: data.content, senderMemberId: data.senderMemberId, messageType: data.messageType, parentId: data.parentId }
+      { id: data.id, text: data.content, senderMemberId: data.senderMemberId, messageType: data.messageType, parentId: data.parentId, createdAt: data.createdAt, fullename: data.fullename }
     ];
+    // console.log(this.listmessage.messages);
 
     /// người gửi thì mới laod newmessage
     if (data.senderMemberId === this.currentUserId) {
@@ -145,6 +147,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       conversation.lastMessage = data.lastMessage;
       conversation.updatedAt = new Date();
       conversation.messageType = data.messageType;
+      conversation.createdAt = data.createdAt;
 
       this.conversations.splice(index, 1);
       this.conversations.unshift(conversation);
@@ -210,7 +213,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   // listmessage: any[] = [];
 
   currentPage: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 15;
   isLoading: boolean = false;
 
   getMess(convo: any, loadMore: boolean = false) {
@@ -229,10 +232,12 @@ export class ChatComponent implements OnInit, OnDestroy {
           chatElement.scrollTop = newScrollHeight - oldScrollHeight;
           this.isLoading = false;
         }, 0);
+        // console.log("1");
       } else {
         this.listmessage.messages = newMessages;
         this.isLoading = false;
         this.scrollToBottom();
+        // console.log("2", this.listmessage.messages);
       }
     });
   }
@@ -247,7 +252,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   loadMoreMessages(convo: any) {
     this.currentPage++;
-    this.pageSize = 5;
+    this.pageSize = 10;
     this.getMess(convo, true);
   }
 
@@ -320,32 +325,40 @@ export class ChatComponent implements OnInit, OnDestroy {
     //     list?.scrollTo({ top: list.scrollHeight, behavior: 'smooth' });
     //   });
     // }
-    if (!this.replyToMessage || !this.replyToMessage.id) {
-      const data = {
-        content: this.newMessage || this.iamge,
-        conversationId: this.selectedConversation.conversationId,
-        senderMemberId: this.currentUserId,
-      }
-      this.conversationService.postChat(data).subscribe((data) => {
-        // console.log();
-        this.onTyping();
-        this.previewImageUrls = [];
-      })
+    if (!this.replyaddToMessage || !this.replyaddToMessage.id) {
+      this.createChat();
     } else {
-      const data = {
-        content: this.newMessage || this.iamge || "trả lời",
-        conversationId: this.selectedConversation.conversationId,
-        senderMemberId: this.currentUserId,
-        parentId: this.replyToMessage.id,
-      }
-      console.log(data);
-      this.conversationService.postChatReply(data).subscribe((data) => {
-        this.onTyping();
-        this.previewImageUrls = [];
-        this.replyToMessage = null;
-      })
+      this.createreplyMessage();
     }
 
+  }
+
+
+  createChat() {
+    const data = {
+      content: this.newMessage || this.iamge,
+      conversationId: this.selectedConversation.conversationId,
+      senderMemberId: this.currentUserId,
+    }
+    this.conversationService.postChat(data).subscribe((data) => {
+      // console.log();
+      this.onTyping();
+      this.previewImageUrls = [];
+    })
+  }
+
+  createreplyMessage() {
+    const data = {
+      content: this.newMessage || this.iamge || "trả lời",
+      conversationId: this.selectedConversation.conversationId,
+      senderMemberId: this.currentUserId,
+      parentId: this.replyaddToMessage.id,
+    }
+    this.conversationService.postChatReply(data).subscribe((data) => {
+      this.replyaddToMessage = null;
+      this.onTyping();
+      this.previewImageUrls = [];
+    })
   }
 
   //#region  nhận biết người nào đang nhập tin nhắn
@@ -476,18 +489,21 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.menuMessage = null;
   }
 
+  cancelReply(){
+    this.replyaddToMessage = null;
+  }
 
   deleteMessage(msg: any) {
-    console.log("Gỡ tin nhắn:", msg);
+    // console.log("Gỡ tin nhắn:", msg);
     msg.showMenu = false;
   }
 
 
-  replyToMessage: any = null;
+  replyaddToMessage: any = null;
 
   replyMessage(msg: any) {
 
-    this.replyToMessage = msg;
+    this.replyaddToMessage = msg;
     // console.log(this.replyToMessage.id);
     setTimeout(() => {
       this.messageInput.nativeElement.focus();
@@ -522,6 +538,47 @@ export class ChatComponent implements OnInit, OnDestroy {
     }, 2000);
   }
 
+
+  /// tính thời gian
+
+  getFormattedTime(dateStr: string | Date): string | null {
+    const date = new Date(dateStr);
+    const now = new Date();
+
+    if (isNaN(date.getTime())) {
+      return null;
+    }
+    const diffMs = now.getTime() - date.getTime();
+    const diffMinutes = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+
+    const isToday =
+      date.getDate() === now.getDate() &&
+      date.getMonth() === now.getMonth() &&
+      date.getFullYear() === now.getFullYear();
+
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+
+    const isYesterday =
+      date.getDate() === yesterday.getDate() &&
+      date.getMonth() === yesterday.getMonth() &&
+      date.getFullYear() === yesterday.getFullYear();
+
+    if (diffMinutes < 1) {
+      return 'Vừa xong';
+    } else if (diffMinutes < 60 && isToday) {
+      return `${diffMinutes} phút trước`;
+    } else if (isToday) {
+      return this.datePipe.transform(date, 'HH:mm') ?? 'ngày';
+    } else if (isYesterday) {
+      return `Hôm qua ${this.datePipe.transform(date, 'HH:mm') ?? ''}`;
+    } else if (date.getFullYear() === now.getFullYear()) {
+      return this.datePipe.transform(date, 'dd/MM HH:mm') ?? '';
+    } else {
+      return this.datePipe.transform(date, 'dd/MM/yyyy HH:mm') ?? '';
+    }
+  }
 
 }
 

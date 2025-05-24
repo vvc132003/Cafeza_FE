@@ -2,20 +2,29 @@
     <div *ngIf="message.messageType === 'image'">
         <img [src]="message.text" alt="Ảnh" style="max-width: 200px; border-radius: 8px;" />
     </div>
-    <div class="bubble" *ngIf="message.messageType !== 'image'">
+    <div *ngIf="message.messageType === 'like'">
+        <span style="font-size: 35px;">👍</span>
+    </div>
+    <div class="bubble" *ngIf="message.messageType !== 'image' && message.messageType !== 'like'">
         <div *ngIf="message.parentId != null" class="reply-preview">
             <ng-container *ngIf="getParentMessage(message.parentId) as parent">
+                <p class="mb-1 text-muted" style="font-size: 0.875rem;">
+                    <strong>{{ parent.fullename }}</strong>
+                </p>
                 <div *ngIf="parent.messageType === 'text'">
-                    Trả lời: {{ parent.text }}
+                    {{ parent.text }}
+                </div>
+
+                <div *ngIf="parent.messageType === 'like'">
+                    {{ parent.text }}
                 </div>
 
                 <div *ngIf="parent.messageType === 'image'">
-                    Trả lời:
                     <img [src]="parent.text" alt="Ảnh" style="max-width: 100px; border-radius: 4px;" />
                 </div>
 
                 <div *ngIf="parent.messageType === 'link'">
-                    Trả lời: <a [href]="parent.text" target="_blank">{{ parent.text }}</a>
+                    <a [href]="parent.text" target="_blank">{{ parent.text }}</a>
                 </div>
 
             </ng-container>
@@ -27,6 +36,10 @@
             <div *ngSwitchCase="'text'">
                 {{ message.text }}
             </div>
+
+            <!-- <div *ngSwitchCase="'like'">
+                {{ message.text }}
+            </div> -->
 
             <div *ngSwitchCase="'link'">
                 <a class="text-white" [href]="message.text" target="_blank">{{ message.text }}</a>
@@ -51,6 +64,13 @@
             </ng-container>
 
         </ng-container>
+        <small class="text-white d-block mt-1" [ngClass]="{
+                                'text-start': message.senderMemberId !== currentUserId,
+                                'text-end': message.senderMemberId === currentUserId
+                            }" style="font-size: 0.75rem;">
+            {{ message.createdAt | date: 'HH:mm' }}
+        </small>
+
 
     </div>
 

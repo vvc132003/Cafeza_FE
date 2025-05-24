@@ -33,13 +33,16 @@
               </ng-template>
             </div>
           </div>
+          <small *ngIf="convo.createdAt!=null" class="text-muted d-block mt-1" style="font-size: 0.75rem;">
+            {{ getFormattedTime(convo.createdAt) }}
+          </small>
         </div>
       </div>
     </div>
 
     <div class="chat-main" *ngIf="selectedConversation && isChatMainVisible">
       <div class="chat-main-header">
-        <button class="btn-back d-block d-sm-none me-2" (click)="backToSidebar()">
+        <button class="btn-back d-block d-sm-none me-2 custom-close-button" (click)="backToSidebar()">
           <i class="bi bi-arrow-left"></i>
         </button>
         <img [src]="selectedConversation.avatar" class="avatar-sm" />
@@ -53,19 +56,17 @@
           [currentUserId]="currentUserId"></app-message-tree>
       </div>
 
-      <div *ngIf="replyToMessage" class="reply-preview-box">
+      <div *ngIf="replyaddToMessage" class="reply-preview-box">
         <div>Trả lời tin nhắn:</div>
-        <div *ngIf="replyToMessage.messageType === 'text'">{{ replyToMessage.text }}</div>
-
-        <div *ngIf="replyToMessage.messageType === 'image'">
-          <img [src]="replyToMessage.text" alt="Ảnh" style="max-width: 100px; border-radius: 4px;" />
+        <div *ngIf="replyaddToMessage.messageType === 'text'">{{ replyaddToMessage.text }}</div>
+        <div *ngIf="replyaddToMessage.messageType === 'like'">{{ replyaddToMessage.text }}</div>
+        <div *ngIf="replyaddToMessage.messageType === 'image'">
+          <img [src]="replyaddToMessage.text" alt="Ảnh" />
         </div>
-
-        <div *ngIf="replyToMessage.messageType === 'link'">
-          <a [href]="replyToMessage.text" target="_blank">{{ replyToMessage.text }}</a>
+        <div *ngIf="replyaddToMessage.messageType === 'link'">
+          <a [href]="replyaddToMessage.text" target="_blank">{{ replyaddToMessage.text }}</a>
         </div>
-
-        <button>Hủy trả lời</button>
+        <button class="btn-cancel-reply" (click)="cancelReply()" aria-label="Hủy trả lời">&times;</button>
       </div>
       <div *ngIf="isTyping" class="typing-indicator">
         Người kia đang nhập tin nhắn<span class="dots">...</span>
@@ -89,8 +90,10 @@
           placeholder="Nhập tin nhắn..." />
 
         <button class="btn-send" (click)="sendMessage()">
-          <i class="fa fa-paper-plane"></i>
+          <i *ngIf="newMessage.trim().length > 0" class="fa fa-paper-plane"></i>
+          <i *ngIf="newMessage.trim().length === 0" class="fa fa-thumbs-up"></i>
         </button>
+
       </div>
 
       <div *ngIf="showEmojiPicker" class="emoji-picker">
