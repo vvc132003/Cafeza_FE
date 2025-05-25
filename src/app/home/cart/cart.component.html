@@ -1,1 +1,143 @@
-<p>cart works!</p>
+<app-layout-home [cartCount]="cartCount" [text]="'🛒 Giỏ hàng'"></app-layout-home>
+
+<div class="container mt-4">
+    <div *ngIf="carts && carts.length > 0">
+
+        <div class="list-group-item d-flex fw-bold shadow-sm mb-2 sticky-header">
+            <div class="col-1 p text-center">
+                <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" class="custom-checkbox" />
+            </div>
+            <div class="col-3 p drinkName">Thức uống</div>
+            <div class="col-2">Giá bán</div>
+            <div class="col-3">Số lượng</div>
+            <div class="col-2">Thành tiền</div>
+            <div class="col-1 p">Thao tác</div>
+        </div>
+
+        <div *ngFor="let cart of carts" class="border-top pt-3 pb-2 phone">
+            <div class="d-flex align-items-start">
+                <div class="form-check me-2 mt-1">
+                    <input type="checkbox" [(ngModel)]="cart.selected" class="custom-checkbox"
+                        id="checkbox-{{cart.id}}" />
+                </div>
+                <div class="flex-shrink-0 me-2">
+                    <img [src]="cart?.image || 'https://via.placeholder.com/80'" width="80" height="80"
+                        class="img-fluid" alt="Ảnh sản phẩm" />
+                </div>
+
+                <div class="flex-grow-1">
+                    <div class="fw-semibold small text-truncate">{{ cart.drinkName }}</div>
+                    <div class="text-danger fw-bold">{{ cart.unitPrice | number }} VNĐ</div>
+
+                    <div class="d-flex align-items-center mt-2">
+                        <button class="btn btn-sm btn-outline-secondary px-2 py-1"
+                            (click)="decreaseQuantity(cart)">−</button>
+                        <span class="mx-2">{{ cart.quantity }}</span>
+                        <button class="btn btn-sm btn-outline-secondary px-2 py-1"
+                            (click)="increaseQuantity(cart)">+</button>
+                    </div>
+                </div>
+
+                <div class="ms-2">
+                    <button class="btn btn-sm text-danger p-0" (click)="removeCartItem(cart)">
+                        <i class="bi bi-trash fs-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group orderdetail-list desktop">
+            <div *ngFor="let cart of carts" class="py-3 px-0 list-group-item d-flex mb-2">
+                <div class="col-1 text-center">
+                    <input type="checkbox" [(ngModel)]="cart.selected" class="custom-checkbox" />
+                </div>
+                <div class="col-1">
+                    <img [src]="cart?.image || 'https://via.placeholder.com/80'" alt="Ảnh thức uống"
+                        style="width: 60px; height: 60px; object-fit: cover; border-radius: 6px;" class="me-3" />
+                </div>
+                <div class="col-2 d-flex align-items-center drinkName">
+                    <!-- <img [src]="cart?.image || 'https://via.placeholder.com/80'" alt="Ảnh thức uống"
+                        style="width: 60px; height: 60px; object-fit: cover; border-radius: 6px;" class="me-3" /> -->
+                    <div class="text-truncate">{{ cart.drinkName }}</div>
+                </div>
+
+
+                <div class="col-2 text-danger fw-bold">
+                    {{ cart.unitPrice | number }} VNĐ
+                </div>
+
+                <div class="col-3 d-flex align-items-center">
+                    <button class="btn btn-sm btn-outline-secondary me-2" (click)="decreaseQuantity(cart)">−</button>
+                    <span class="me-2">{{ cart.quantity }}</span>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="increaseQuantity(cart)">+</button>
+                </div>
+
+                <div class="col-2 text-danger fw-bold">
+                    {{ (cart.quantity * cart.unitPrice) | number }} VNĐ
+                </div>
+
+                <div class="col-1">
+                    <button class="btn btn-sm text-danger p-0" (click)="removeCartItem(cart)">
+                        <i class="bi bi-trash fs-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="list-group-item d-flex justify-content-between align-items-center sticky-footer mt-auto desktop border-top py-3 px-4 shadow-sm">
+            <div class="form-check d-flex align-items-center">
+                <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" class="custom-checkbox me-2"
+                    id="selectAll" />
+                <label class="form-check-label mb-0" for="selectAll">Chọn tất cả</label>
+            </div>
+
+            <div class="d-flex align-items-center">
+                <div class="text-end me-3">
+                    <div class="small text-muted">Số lượng: {{ getTotalQuantity() }}</div>
+                    <div class="fw-bold text-danger">Tổng tiền: {{ getTotalPrice() | number }} VNĐ</div>
+                </div>
+                <button class="btn btn-danger btn-sm">Mua hàng</button>
+            </div>
+        </div>
+
+
+        <div class="cart-summary-mobile bg-white border-top p-2 fixed-bottom d-flex justify-content-between align-items-center"
+            style="z-index: 1030;">
+            <div class="form-check d-flex align-items-center">
+                <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" class="custom-checkbox me-2"
+                    id="selectAll" />
+                <label class="form-check-label mb-0" for="selectAll">Chọn tất cả</label>
+            </div>
+            <div class="px-2 small">
+                <span>Số lượng: {{ getTotalQuantity() }}</span><br>
+                <span>Tổng tiền: <span class="fw-bold text-danger">{{ getTotalPrice() | number }}</span> VNĐ</span>
+            </div>
+            <button class="btn btn-danger btn-sm px-3">Mua hàng</button>
+        </div>
+    </div>
+    <div *ngIf="!carts || carts.length === 0" class="text-center p-4 text-muted">
+        <p class="mb-3 fs-5">Không có thức uống trong giỏ hàng.</p>
+        <button class="btn btn-danger btn-lg px-4" [routerLink]="['/']">
+            Mua ngay
+        </button>
+    </div>
+
+
+    <h3 class="section-title">Các loại nước khác</h3>
+
+    <div class="drinks-grid">
+        <div *ngFor="let drink of drinks" class="drink-card" [class.out-of-stock]="drink.status === 'out_of_stock'">
+            <div class="drink-image-container">
+                <img *ngIf="drink.imagePath" [src]="drink.imagePath" alt="{{ drink.name }}" class="drink-image" />
+            </div>
+            <div class="drink-details">
+                <h4 class="drink-name">{{ drink.name }}</h4>
+                <p class="drink-price">{{ drink?.price | number:'1.0-0' }} ₫ </p>
+                <button class="add-to-cart-btn" [disabled]="drink.status === 'out_of_stock'" (click)="addToCart(drink)">
+                    <i class="fas fa-shopping-cart"></i> Đặt mua
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

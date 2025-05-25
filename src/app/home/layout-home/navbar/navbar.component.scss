@@ -152,6 +152,10 @@ textarea:focus {
         border-bottom: 4px solid #ffffff;
     }
 
+    .cart-container.active a {
+        border-bottom: 4px solid #ffffff;
+    }
+
     .navbar-mobile ul li a:hover {
         background: rgba(255, 255, 255, 0.1);
     }
@@ -188,14 +192,22 @@ textarea:focus {
         font-size: 1.6rem;
     }
 
-    .cart-container span {
+    .cartcontainer .icon-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    #cart-count {
         background-color: red;
         border-radius: 50%;
         color: white;
         font-size: 10px;
         position: absolute;
-        top: -5px;
-        right: -1px;
-        padding: 2px 5px;
+        top: -8px;
+        right: 80px;
+        padding: 2px 6px;
+        z-index: 9999;
     }
+
+
 }

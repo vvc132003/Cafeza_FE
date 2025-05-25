@@ -473,7 +473,7 @@ small.text-muted {
 
 @media (max-width: 470px) {
   .chat-sidebar {
-    width: 400px;
+    width: 100%;
   }
 
   .chat-widget.show .chat-sidebar {
@@ -493,5 +493,14 @@ small.text-muted {
     transform: translateY(0);
     opacity: 1;
     pointer-events: auto;
+  }
+
+  .chat-toggle-btn {
+    bottom: 210px;
+  }
+
+  .zalo-toggle-btn {
+    bottom: 150px;
+
   }
 }

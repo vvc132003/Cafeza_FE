@@ -41,10 +41,11 @@
 <div class="navbar-mobile d-lg-none">
     <ul>
         <li *ngFor="let item of menuItems_moblile">
-            <a [routerLink]="item.isRouterLink ? item.path : null" [href]="!item.isRouterLink ? item.path : null"
-                routerLinkActive="active">
+            <a class="cartcontainer" *ngIf="item.isRouterLink" [routerLink]="item.path" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">
                 <i class="bi" [ngClass]="item.icon"></i>
                 <span>{{ item.label }}</span>
+                <span *ngIf="item.label === 'Giỏ hàng' && cartCount > 0" id="cart-count">{{ cartCount }}</span>
             </a>
         </li>
         <li class="nav-item" style="display: flex; justify-content: center; align-items: center;">
@@ -55,12 +56,12 @@
         </li>
     </ul>
 
-    <div class="cart-container">
+    <!-- <div class="cart-container">
         <a href="/cart">
             <i class="bi bi-cart-fill" style="color: #fff;"></i>
             <span id="cart-count">{{cartCount}}</span>
         </a>
-    </div>
+    </div> -->
 </div>
 <div class="search-card shadow-lg" [class.show]="isSearchBarVisible">
     <button class="btn-close position-absolute top-0 end-0 m-3" (click)="toggleSearchBar()"></button>

@@ -107,6 +107,10 @@ export class DrinkService {
         return this.http.get<any[]>(`${this.apiUrl}/drink-list`);
     }
 
+     getDataDrink_random(): Observable<any> {
+        return this.http.get<any[]>(`${this.apiUrl}/random`);
+    }
+
     // Phương thức POST
     postData(data: any): Observable<any> {
         return this.http.post<any>(this.apiUrl, data);

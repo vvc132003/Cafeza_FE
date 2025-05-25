@@ -18,11 +18,14 @@ export class NavbarComponent implements OnInit {
 
   menuItems_moblile = [
     { label: 'Trang chủ', path: '/', icon: 'bi-house-door', isRouterLink: true },
-    { label: 'Menu', path: '/menu', icon: 'bi-cup-straw', isRouterLink: false },
-    { label: 'Giới thiệu', path: '/about', icon: 'bi-info-circle', isRouterLink: false },
-    { label: 'Liên hệ', path: '/contact', icon: 'bi-envelope', isRouterLink: false },
-    { label: 'Đăng nhập', path: '/login', icon: 'bi-box-arrow-in-right', isRouterLink: true } // Thêm nếu muốn
+    { label: 'Menu', path: '/menu', icon: 'bi-cup-straw', isRouterLink: true },
+    { label: 'Giới thiệu', path: '/about', icon: 'bi-info-circle', isRouterLink: true },
+    { label: 'Liên hệ', path: '/contact', icon: 'bi-envelope', isRouterLink: true },
+    { label: 'Đăng nhập', path: '/login', icon: 'bi-box-arrow-in-right', isRouterLink: true },
+    { label: 'Giỏ hàng', path: '/cart', icon: 'bi-cart-fill', isRouterLink: true }
+
   ];
+
 
   @Input() cartCount: number = 0;
   isSearchBarVisible: boolean = false;

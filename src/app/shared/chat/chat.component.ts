@@ -213,7 +213,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   // listmessage: any[] = [];
 
   currentPage: number = 1;
-  pageSize: number = 15;
+  pageSize: number = 100;
   isLoading: boolean = false;
 
   getMess(convo: any, loadMore: boolean = false) {
