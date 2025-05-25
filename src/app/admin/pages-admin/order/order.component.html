@@ -80,7 +80,7 @@
                                 <div class="col-2 p">{{ orderdetail.drinkName }}</div>
                                 <div class="col-2">{{ orderdetail.quantity }}</div>
                                 <div class="col-2">{{ orderdetail.unitPrice | number }} VNĐ</div>
-                                <div class="col-2">{{ orderdetail.total | number }} VNĐ</div>
+                                <div class="col-2">{{ orderdetail.unitPrice *  orderdetail.quantity| number }} VNĐ</div>
                                 <div class="col-2">{{orderdetail.note}}</div>
                                 <div class="col-2">
                                     <button class="btn btn-warning btn-sm me-1" (click)="updateor(orderdetail)">

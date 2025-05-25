@@ -31,6 +31,7 @@ export class CartComponent implements OnInit, OnDestroy {
       this.cartService.getCurrentCartByUserIdAsync().subscribe((data: any) => {
         // console.log(data);
         this.carts = data;
+        this.statusAll = this.carts.every(cart => cart.status === '10');
       })
     )
   }
@@ -47,31 +48,60 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   getTotalQuantity() {
-    return this.carts?.filter(c => c.selected).reduce((sum, item) => sum + item.quantity, 0) || 0;
+    return this.carts?.filter(c => c.status == "10").reduce((sum, item) => sum + item.quantity, 0) || 0;
   }
 
   getTotalPrice() {
-    return this.carts?.filter(c => c.selected)
+    return this.carts?.filter(c => c.status == "10")
       .reduce((sum, item) => sum + item.unitPrice * item.quantity, 0) || 0;
   }
 
 
-  selectAll: boolean = false;
+  statusAll: boolean = false;
+  togglestatusAll() {
+    const newStatus = this.statusAll ? '10' : '90';
+    const ids = this.carts.map(c => c.id);
 
-  toggleSelectAll() {
-    this.carts.forEach(item => item.selected = this.selectAll);
+    this.carts.forEach(cart => {
+      cart.status = newStatus;
+    });
+
+    this.subscription.add(
+      this.cartService.updateStatusMultiple(ids, newStatus).subscribe()
+    );
   }
 
+
+  toggleSingleStatus(cart: any) {
+    cart.status = cart.status === '10' ? '90' : '10';
+    this.statusAll = this.carts.every(c => c.status === '10');
+    this.subscription.add(
+      this.cartService.updateStatus(cart.id, cart.status).subscribe(() => {
+
+      })
+    )
+  }
+
+
+
   increaseQuantity(item: any) {
-    item.quantity++;
-    this.cartService.updateCartCount(1);
+    this.subscription.add(
+      this.cartService.changeQuantity(item.drinkId, item.cartId, 1).subscribe((data: any) => {
+        item.quantity++;
+        this.cartService.updateCartCount(1);
+      })
+    )
   }
 
   decreaseQuantity(item: any) {
-    this.cartService.updateCartCount(-1);
-    if (item.quantity > 1) {
-      item.quantity--;
-    }
+    this.subscription.add(
+      this.cartService.changeQuantity(item.drinkId, item.cartId, -1).subscribe((data: any) => {
+        this.cartService.updateCartCount(-1);
+        if (item.quantity > 1) {
+          item.quantity--;
+        }
+      })
+    )
   }
 
   updateCart(item: any) {

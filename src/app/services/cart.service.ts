@@ -40,6 +40,31 @@ export class CartService {
 
     }
 
+    decreaseQuantity(id: string): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/decreaseQuantity/${id}`);
+    }
+
+    increaseQuantity(id: string): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/increaseQuantity/${id}`);
+    }
+    /// hàm decreaseQuantity và increaseQuantity gộp thành hàm changeQuantity
+
+    changeQuantity(drinkId: string, cartId: string, change: number): Observable<any> {
+        // console.log(drinkId, cartId, change);
+        return this.http.get<any>(`${this.apiUrl}/changeQuantity/${drinkId}/${cartId}?change=${change}`);
+    }
+
+
+    ///
+    updateStatus(id: string, status: string): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/updateStatus/${id}/${status}`);
+    }
+
+    updateStatusMultiple(ids: string[], status: string): Observable<any> {
+        return this.http.post<any>(`${this.apiUrl}/updateStatusMultiple`, { ids, status });
+    }
+
+
     changeTable(data: any): Observable<any> {
         const token = this.cookieService.get('access_token');
         if (token) {

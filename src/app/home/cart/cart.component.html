@@ -5,7 +5,7 @@
 
         <div class="list-group-item d-flex fw-bold shadow-sm mb-2 sticky-header">
             <div class="col-1 p text-center">
-                <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" class="custom-checkbox" />
+                <input type="checkbox" [(ngModel)]="statusAll" (change)="togglestatusAll()" class="custom-checkbox" />
             </div>
             <div class="col-3 p drinkName">Thức uống</div>
             <div class="col-2">Giá bán</div>
@@ -17,8 +17,7 @@
         <div *ngFor="let cart of carts" class="border-top pt-3 pb-2 phone">
             <div class="d-flex align-items-start">
                 <div class="form-check me-2 mt-1">
-                    <input type="checkbox" [(ngModel)]="cart.selected" class="custom-checkbox"
-                        id="checkbox-{{cart.id}}" />
+                    <input type="checkbox" [checked]="cart.status === '10'" (change)="toggleSingleStatus(cart)" class="custom-checkbox" />
                 </div>
                 <div class="flex-shrink-0 me-2">
                     <img [src]="cart?.image || 'https://via.placeholder.com/80'" width="80" height="80"
@@ -49,7 +48,8 @@
         <div class="list-group orderdetail-list desktop">
             <div *ngFor="let cart of carts" class="py-3 px-0 list-group-item d-flex mb-2">
                 <div class="col-1 text-center">
-                    <input type="checkbox" [(ngModel)]="cart.selected" class="custom-checkbox" />
+                    <input type="checkbox" [checked]="cart.status === '10'" (change)="toggleSingleStatus(cart)"
+                        class="custom-checkbox" />
                 </div>
                 <div class="col-1">
                     <img [src]="cart?.image || 'https://via.placeholder.com/80'" alt="Ảnh thức uống"
@@ -87,9 +87,9 @@
         <div
             class="list-group-item d-flex justify-content-between align-items-center sticky-footer mt-auto desktop border-top py-3 px-4 shadow-sm">
             <div class="form-check d-flex align-items-center">
-                <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" class="custom-checkbox me-2"
-                    id="selectAll" />
-                <label class="form-check-label mb-0" for="selectAll">Chọn tất cả</label>
+                <input type="checkbox" [(ngModel)]="statusAll" (change)="togglestatusAll()"
+                    class="custom-checkbox me-2" />
+                <label class="form-check-label mb-0" for="statusAll">Chọn tất cả</label>
             </div>
 
             <div class="d-flex align-items-center">
@@ -105,9 +105,9 @@
         <div class="cart-summary-mobile bg-white border-top p-2 fixed-bottom d-flex justify-content-between align-items-center"
             style="z-index: 1030;">
             <div class="form-check d-flex align-items-center">
-                <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" class="custom-checkbox me-2"
-                    id="selectAll" />
-                <label class="form-check-label mb-0" for="selectAll">Chọn tất cả</label>
+                <input type="checkbox" [(ngModel)]="statusAll" (change)="togglestatusAll()" class="custom-checkbox me-2"
+                    id="statusAll" />
+                <label class="form-check-label mb-0" for="statusAll">Chọn tất cả</label>
             </div>
             <div class="px-2 small">
                 <span>Số lượng: {{ getTotalQuantity() }}</span><br>

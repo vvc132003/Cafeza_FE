@@ -28,7 +28,7 @@
                 </button>
             </div>
             <div class="ms-3 position-relative">
-                <a href="/cart" class="text-decoration-none">
+                <a [routerLink]="'/cart'" class="text-decoration-none">
                     <i class="bi bi-cart-fill" style="font-size: 1.6rem; color: #6F4F37;"></i>
                     <span class="badge bg-danger rounded-circle position-absolute top-0 start-100 translate-middle"
                         id="cart-count">{{cartCount}}</span>

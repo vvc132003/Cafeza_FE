@@ -278,6 +278,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.orderdeatilService.deleteData(data.orderdetailId).subscribe(() => {
         // thông báo nhé
+        // data.quantity--;
       })
     )
   }
