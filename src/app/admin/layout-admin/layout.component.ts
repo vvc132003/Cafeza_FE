@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
+import { ConversationService } from 'src/app/services/conversation.service';
 import { DrinkService } from 'src/app/services/drinkservice';
 
 @Component({
@@ -15,10 +16,11 @@ export class LayoutComponent implements AfterViewInit, OnChanges, OnInit, OnDest
   @Input() count: number = 0;
   // @Input() tabTemplates: TemplateRef<any>[] = [];
   @Input() tabTemplates: { [key: string]: TemplateRef<any> } = {};
+  private subscription: Subscription = new Subscription();
 
   private tabTemplatesSubscription!: Subscription;
 
-  constructor(private cdr: ChangeDetectorRef, private drinkService: DrinkService) { }
+  constructor(private cdr: ChangeDetectorRef, private drinkService: DrinkService, private conversationService: ConversationService) { }
 
   ngAfterViewInit() {
   }
@@ -30,11 +32,30 @@ export class LayoutComponent implements AfterViewInit, OnChanges, OnInit, OnDest
     //   }
     // );
     // this.cdr.detectChanges();
+    this.loadInitialChat();
   }
+
+  conversations: any[] = [];
+
+  loadInitialChat() {
+    this.subscription.add(
+      forkJoin([
+        this.conversationService.postData_Chat()]).subscribe(([resChat]) => {
+          if (resChat === true) {
+            this.conversationService.getConversations().subscribe((data: any) => {
+              this.conversations = data;
+              // console.log(data);
+            });
+          }
+        })
+    );
+  }
+
   ngOnDestroy() {
     // if (this.tabTemplatesSubscription) {
     //   this.tabTemplatesSubscription.unsubscribe();
     // }
+    this.subscription.unsubscribe();
   }
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tabTemplates']) {

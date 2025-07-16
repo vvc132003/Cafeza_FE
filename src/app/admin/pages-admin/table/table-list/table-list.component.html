@@ -5,7 +5,7 @@
 
   <div class="row g-4 ">
     <div class="col-12 col-sm-6 col-md-4 col-lg-3 custom-col-2" *ngFor="let table of getTablesByArea(khu.id)"
-      (click)="clickTable(table)" (dblclick)="onTableDoubleClick(table.id)" (mouseenter)="onMouseEnter(table)"
+      (click)="clickTable(table)" (dblclick)="onTableDoubleClick(table)" (mouseenter)="onMouseEnter(table)"
       (mouseleave)="onMouseLeave()">
       <div class="card h-100 border-0 table-card-custom position-relative">
         <div class="card-body" [ngClass]="{'table-card-custom-body': selectTable?.id === table.id}">

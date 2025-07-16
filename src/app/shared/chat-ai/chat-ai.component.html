@@ -1,0 +1,62 @@
+<button *ngIf="showButton" class="btn-glow-ai chat-toggle-btn blinking shaking" (click)="toggleChat()">
+  <i [class]="isShowChat ? 'fas fa-times' : 'fas fa-robot'"></i>
+</button>
+
+<ng-container *ngIf="isShowChat">
+  <div class="chat-widget shadow" [class.show]="showChat">
+    <div class="chat-sidebar" *ngIf="true">
+      <div class="chat-header p-3 bg-primary d-flex align-items-center">
+        <input type="text" class="form-control me-2" placeholder="Tìm kiếm cuộc trò chuyện..." />
+        <!-- <button class="btn btn-light">
+          <i class="bi bi-search"></i>
+        </button> -->
+      </div>
+      <div class="conversation-list">
+        <div *ngFor="let convo of conversations" class="conversation" [class.active]="convo === selectedConversation"
+          (click)="selectConversation(convo)">
+          <img [src]="convo.avatar" alt="avatar" class="avatar">
+          <div class="info">
+            <div class="name">{{ convo.name }}</div>
+            <div class="last-message">
+              <ng-container *ngIf="convo.messageType === 'image'; else textMessage">
+                Đã gửi 1 ảnh
+              </ng-container>
+              <ng-template #textMessage>
+                {{ convo.lastMessage }}
+              </ng-template>
+            </div>
+          </div>
+          <small *ngIf="convo.createdAt!=null" class="text-muted d-block mt-1" style="font-size: 0.75rem;">
+            {{ getFormattedTime(convo.createdAt) }}
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="chat-main" *ngIf="selectedConversation && isChatMainVisible">
+      <div class="chat-main-header">
+        <button class="btn-back d-block d-sm-none me-2 custom-close-button" (click)="backToSidebar()">
+          <i class="bi bi-arrow-left"></i>
+        </button>
+        <img [src]="selectedConversation.avatar" class="avatar-sm" />
+        <span>{{ selectedConversation.name }}</span>
+        <button class="btn-close ms-auto" aria-label="Close" (click)="closeChat()"></button>
+
+      </div>
+
+      <div class="chat-messages" id="messageList" (scroll)="onScroll()" #chatContent>
+        <app-message-tree [listmessage]="listmessage.messages" [currentUserId]="currentUserId"></app-message-tree>
+      </div>
+
+      <div class="chat-input">
+        <input #messageInput [(ngModel)]="newMessage" (keydown.enter)="sendMessage()" type="text"
+          placeholder="Nhập tin nhắn..." />
+
+        <button class="btn-send" (click)="sendMessage()">
+          <i *ngIf="newMessage.trim().length > 0" class="fa fa-paper-plane"></i>
+          <i *ngIf="newMessage.trim().length === 0" class="fa fa-thumbs-up"></i>
+        </button>
+
+      </div>
+    </div>
+  </div>
+</ng-container>

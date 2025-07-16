@@ -12,15 +12,19 @@ export class TableListComponent {
   @Input() tables: any[] = [];
   @Input() selectTable: any;
   @Output() table = new EventEmitter<void>();
+  @Output() doubleClick: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(private router: Router, private route: ActivatedRoute, private notificationService: NotificationService) { }
 
-  onTableDoubleClick(tableId: number): void {
-    if (this.selectTable.status != 'empty') {
-      this.funId = this.route.snapshot.paramMap.get('funId') || '';
-      this.router.navigate([`/admin/tables/${this.funId}/orderdetail/${tableId}`]);
-    } else {
-      this.notificationService.showInfo('1004');
-    }
+  onTableDoubleClick(table: any): void {
+    // if (this.selectTable.status != 'empty') {
+    //   this.funId = this.route.snapshot.paramMap.get('funId') || '';
+    //   this.router.navigate([`/admin/tables/${this.funId}/orderdetail/${tableId}`]);
+    // } else {
+    //   this.notificationService.showInfo('1004');
+    // }
+    // console.log(tableId);
+    this.doubleClick.emit(table);
   }
 
   clickTable(table: any) {

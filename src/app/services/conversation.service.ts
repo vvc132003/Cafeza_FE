@@ -12,6 +12,8 @@ import * as signalR from '@microsoft/signalr';
 export class ConversationService {
     private hubUrl = API_URLS.hub;
     private apiUrl = API_URLS.api + '/Conversation';
+    private apiUrlChat = API_URLS.api + '/Chat';
+
     private hubConnection1: signalR.HubConnection;
     private hubConnection2: signalR.HubConnection;
 
@@ -96,6 +98,15 @@ export class ConversationService {
         });
     }
 
+    onaddupChatAL(): Observable<any> {
+        return new Observable((observer) => {
+            this.hubConnection1.on('LoadMessagesAL', (data: any) => {
+                observer.next(data);
+                // console.log(data);
+            });
+        });
+    }
+
     loadConversation(): Observable<any> {
         return new Observable((observer) => {
             this.hubConnection2.on('LoadConversation', (data: any) => {
@@ -127,7 +138,7 @@ export class ConversationService {
 
     // Phương thức POST
 
-    postData(): Observable<any> {
+    postData_Chat(): Observable<any> {
         const token = this.cookieService.get('access_token');
         // if (!token) {
         //     return EMPTY;
@@ -148,6 +159,28 @@ export class ConversationService {
         return this.http.post<any>(`${this.apiUrl}/createConverstation`, data);
     }
 
+
+    postData_Chat_AI(): Observable<any> {
+        const token = this.cookieService.get('access_token');
+        // if (!token) {
+        //     return EMPTY;
+        // }
+
+        const decoded: any = jwt_decode(token);
+        const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+
+        // if (role === "customer") {
+        //     return EMPTY; 
+        // }
+
+        const data = {
+            userId2: decoded.id,
+            role: role
+        };
+
+        return this.http.post<any>(`${this.apiUrl}/createConverstationAI`, data);
+    }
+
     postChat(data: any): Observable<any> {
         const token = this.cookieService.get('access_token');
         const decoded: any = jwt_decode(token);
@@ -160,7 +193,19 @@ export class ConversationService {
         return this.http.post<any>(`${this.apiUrl}/createChat`, data);
     }
 
-      postChatReply(data: any): Observable<any> {
+    postChatAI(data: any): Observable<any> {
+        // const token = this.cookieService.get('access_token');
+        // const decoded: any = jwt_decode(token);
+        // const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+        // const data = {
+        //     userId2: decoded.id,
+        //     role: role
+        // };
+
+        return this.http.post<any>(`${this.apiUrlChat}/createChatAI`, data);
+    }
+
+    postChatReply(data: any): Observable<any> {
         const token = this.cookieService.get('access_token');
         const decoded: any = jwt_decode(token);
         const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
@@ -186,10 +231,10 @@ export class ConversationService {
     //     return this.http.get<any>(`${this.apiUrl}/getMessages/${conversationId}/${decoded.id}`);
     // }
     getMessages(conversationId: string, page: number, pageSize: number): Observable<any> {
-    const token = this.cookieService.get('access_token');
-    const decoded: any = jwt_decode(token);
-    return this.http.get<any>(`${this.apiUrl}/getMessages/${conversationId}/${decoded.id}?page=${page}&pageSize=${pageSize}`);
-}
+        const token = this.cookieService.get('access_token');
+        const decoded: any = jwt_decode(token);
+        return this.http.get<any>(`${this.apiUrl}/getMessages/${conversationId}/${decoded.id}?page=${page}&pageSize=${pageSize}`);
+    }
 
 
     // Phương thức PUT

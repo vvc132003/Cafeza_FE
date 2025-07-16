@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter, Subscription } from 'rxjs';
+import { filter, forkJoin, Subscription } from 'rxjs';
 import { CartService } from 'src/app/services/cart.service';
+import { ConversationService } from 'src/app/services/conversation.service';
 
 @Component({
   selector: 'app-layout-home',
@@ -15,13 +16,14 @@ export class LayoutHomeComponent implements OnInit, OnDestroy {
   @Input() cartCount: number = 0;
   private subscription = new Subscription();
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private cartService: CartService) { }
+  constructor(private router: Router, private conversationService: ConversationService, private activatedRoute: ActivatedRoute, private cartService: CartService) { }
 
   ngOnInit(): void {
     if (this.router.url !== '/') {
       this.showHeader = false;
     }
     this.fetCart();
+    this.loadInitialChat();
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -40,6 +42,24 @@ export class LayoutHomeComponent implements OnInit, OnDestroy {
 
   onSearchChange(keyword: string): void {
     this.keywordFromNavbar = keyword;
+  }
+
+  conversations: any[] = [];
+
+  loadInitialChat() {
+    this.subscription.add(
+      forkJoin([
+        this.conversationService.postData_Chat(),
+        this.conversationService.postData_Chat_AI()
+      ]).subscribe(([resChat, resAI]) => {
+        if (resChat === true || resAI === true) {
+          this.conversationService.getConversations().subscribe((data: any) => {
+            this.conversations = data;
+            // console.log(data);
+          });
+        }
+      })
+    );
   }
 
 }

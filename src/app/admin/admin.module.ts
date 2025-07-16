@@ -23,9 +23,7 @@ import { OrderComponent } from './pages-admin/order/order.component';
 import { OrderAddComponent } from './pages-admin/order/order-add/order-add.component';
 import { SelectOrderTypeComponent } from './pages-admin/table/select-order-type/select-order-type.component';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { ImgComponent } from 'src/app/core/img/img.component';
 import { ImgsComponent } from 'src/app/core/imgs/imgs.component';
@@ -37,6 +35,10 @@ import { EmployeeDetailComponent } from './pages-admin/employee/employee-detail/
 import { UpdatequantityDetailComponent } from './pages-admin/order/updatequantity-detail/updatequantity-detail.component';
 import { ConfirmModalComponent } from '../core/confirm-modal/confirm-modal.component';
 import { SharedModule } from '../shared/shared.module';
+import { TableKabanComponent } from './pages-admin/table/table-kaban/table-kaban.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FormsModule } from '@angular/forms';
+import { TableStatusComponent } from '../core/table-status/table-status.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import { SharedModule } from '../shared/shared.module';
     EmployeeAddComponent,
     EmployeeDetailComponent,
     UpdatequantityDetailComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    TableKabanComponent,
+    TableStatusComponent
   ],
   imports: [
     CommonModule,
@@ -76,7 +80,8 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     ToastrModule.forRoot(),
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    DragDropModule
   ]
 })
 export class AdminModule { }

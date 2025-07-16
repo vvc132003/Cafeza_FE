@@ -60,26 +60,31 @@ export class CartComponent implements OnInit, OnDestroy {
   statusAll: boolean = false;
   togglestatusAll() {
     const newStatus = this.statusAll ? '10' : '90';
-    const ids = this.carts.map(c => c.id);
+    // const ids = this.carts.map(c => c.id);
 
     this.carts.forEach(cart => {
       cart.status = newStatus;
     });
 
-    this.subscription.add(
-      this.cartService.updateStatusMultiple(ids, newStatus).subscribe()
-    );
+    // console.log(this.carts);
+    // trường hợp cần lưu vào db
+
+    // this.subscription.add(
+    //   this.cartService.updateStatusMultiple(ids, newStatus).subscribe()
+    // );
   }
 
 
   toggleSingleStatus(cart: any) {
     cart.status = cart.status === '10' ? '90' : '10';
     this.statusAll = this.carts.every(c => c.status === '10');
-    this.subscription.add(
-      this.cartService.updateStatus(cart.id, cart.status).subscribe(() => {
+    // console.log(this.carts);
+    // trường hợp cần lưu vào db
+    // this.subscription.add(
+    //   this.cartService.updateStatus(cart.id, cart.status).subscribe(() => {
 
-      })
-    )
+    //   })
+    // )
   }
 
 
@@ -100,6 +105,9 @@ export class CartComponent implements OnInit, OnDestroy {
         if (item.quantity > 1) {
           item.quantity--;
         }
+        if (data == true) {
+          this.carts = this.carts.filter(c => c.id !== item.id);
+        }
       })
     )
   }
@@ -109,6 +117,9 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   removeCartItem(item: any) {
+    this.subscription.add(
+      // this.cartService.changeQuantity()
+    )
     this.cartService.updateCartCount(-item.quantity);
     this.carts = this.carts.filter(x => x !== item);
   }

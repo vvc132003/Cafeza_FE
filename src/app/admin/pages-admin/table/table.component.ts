@@ -1,5 +1,7 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { NotificationService } from 'src/app/services/notification';
 import { TableService } from 'src/app/services/table.service';
 
 @Component({
@@ -18,7 +20,7 @@ export class TableComponent implements OnInit, OnDestroy {
   showToast = false;
   private subscription = new Subscription();
 
-  constructor(private cdr: ChangeDetectorRef, private tableService: TableService) { }
+  constructor(private cdr: ChangeDetectorRef, private notificationService: NotificationService, private router: Router, private route: ActivatedRoute, private tableService: TableService) { }
 
   tables: any[] = [
     // { id: 1, tableName: 'Bàn 1', capacity: 4, location: 'Khu A', status: 'empty', parentId: 'A' },
@@ -27,6 +29,26 @@ export class TableComponent implements OnInit, OnDestroy {
     // { id: 4, tableName: 'Bàn 4', capacity: 6, location: 'Khu B', status: 'occupied', parentId: 'B' },
     // { id: 5, tableName: 'Bàn 5', capacity: 4, location: 'Khu C', status: 'occupied', parentId: 'C' },
   ];
+
+  dropdowns = [
+    { label: 'Board', icon: 'fa-dashboard', action: 'board' },
+    { label: 'Kaban', icon: 'fa-columns', action: 'kaban' },
+    { label: 'List', icon: 'fa-list', action: 'roomlist' },
+    { label: 'Calendar', icon: 'fa-calendar', action: 'calendar' }
+  ];
+
+  showKaban: boolean = false;
+  showBoard: boolean = false;
+
+  toggleSection(text: string): void {
+    if (text == 'board') {
+      this.showBoard = true;
+      this.showKaban = false;
+    } else if (text == 'kaban') {
+      this.showKaban = true;
+      this.showBoard = false;
+    }
+  }
 
 
   count: number = 0;
@@ -201,5 +223,14 @@ export class TableComponent implements OnInit, OnDestroy {
     this.evetnbuttons(this.pendingActions);
 
   }
+  funId: string = '';
 
+  onTableDoubleClick(table: any): void {
+    if (this.selectTable.status != 'empty') {
+      this.funId = this.route.snapshot.paramMap.get('funId') || '';
+      this.router.navigate([`/admin/tables/${this.funId}/orderdetail/${table.id}`]);
+    } else {
+      this.notificationService.showInfo('1004');
+    }
+  }
 }

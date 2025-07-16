@@ -13,9 +13,9 @@
       <div class="chat-header p-3 bg-primary d-flex align-items-center">
         <input type="text" class="form-control me-2" placeholder="Tìm kiếm cuộc trò chuyện..." [(ngModel)]="searchTerm"
           (input)="onSearchChange()" />
-        <button class="btn btn-light">
+        <!-- <button class="btn btn-light">
           <i class="bi bi-search"></i>
-        </button>
+        </button> -->
       </div>
 
       <div class="conversation-list">
@@ -57,7 +57,7 @@
       </div>
 
       <div *ngIf="replyaddToMessage" class="reply-preview-box">
-        <div>Trả lời tin nhắn:</div>
+        <div>Trả lời tin nhắn: {{replyaddToMessage.fullename}}</div>
         <div *ngIf="replyaddToMessage.messageType === 'text'">{{ replyaddToMessage.text }}</div>
         <div *ngIf="replyaddToMessage.messageType === 'like'">{{ replyaddToMessage.text }}</div>
         <div *ngIf="replyaddToMessage.messageType === 'image'">

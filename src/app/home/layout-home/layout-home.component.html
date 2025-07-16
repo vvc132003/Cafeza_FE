@@ -6,4 +6,5 @@
     </div>
     <app-header *ngIf="showHeader" (quantityChanged)="updatecartCount()" [keyword]="keywordFromNavbar"></app-header>
 </div>
-<app-chat></app-chat>
+<app-chat [data]="conversations"></app-chat>
+<app-chat-ai [data]="conversations"></app-chat-ai>

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { ConversationService } from 'src/app/services/conversation.service';
 import jwt_decode from 'jwt-decode';
@@ -10,7 +10,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit, OnDestroy {
+export class ChatComponent implements OnInit, OnDestroy, OnChanges {
 
   isShowChat: boolean = false;
   showChat: boolean = false;
@@ -74,7 +74,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   //#region  load
 
   ngOnInit(): void {
-    this.fetChat();
+    // this.fetChat();
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -85,25 +85,45 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
 
-  fetChat() {
-    this.subscription.add(
-      this.conversationService.postData().subscribe((data: any) => {
-        // this.conversations = data;
-        // this.selectedConversation = this.conversations[0];
-        if (data === true) {
-          this.conversationService.getConversations().subscribe((data: any) => {
-            this.conversations = data;
-            this.allConversations = data;
-            // console.log(data);
-            this.selectedConversation = this.conversations[0];
-            this.getMess(data[0]);
-            this.loadsoket(this.selectedConversation);
-            // this.cdr.detectChanges();
-          })
-        }
-      })
-    )
+  @Input() data: any[] = [];
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data'] && changes['data'].currentValue) {
+      const filtered = this.data.filter((conv: any) => conv.name !== 'Bot');
+      this.conversations = filtered;
+      this.allConversations = filtered;
+      // this.selectedConversation = this.conversations[0];
+      if (filtered.length > 0 && filtered[0]) {
+        this.selectedConversation = filtered[0];
+        this.getMess(this.selectedConversation);
+        this.loadsoket(this.selectedConversation);
+      } else {
+        this.selectedConversation = null;
+      }
+    }
   }
+
+
+  // fetChat() {
+  //   this.subscription.add(
+  //     this.conversationService.postData_Chat().subscribe((data: any) => {
+  //       // this.conversations = data;
+  //       // this.selectedConversation = this.conversations[0];
+  //       if (data === true) {
+  //         this.conversationService.getConversations().subscribe((data: any) => {
+  //           const filtered = data.filter((conv: any) => conv.name !== 'Bot');
+  //           this.conversations = filtered;
+  //           this.allConversations = filtered;
+  //           // console.log(data);
+  //           this.selectedConversation = this.conversations[0];
+  //           this.getMess(filtered[0]);
+  //           this.loadsoket(this.selectedConversation);
+  //           // this.cdr.detectChanges();
+  //         })
+  //       }
+  //     })
+  //   )
+  // }
 
   //#region add tin nhắn và cuộc hội thoại
 
@@ -175,6 +195,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   listmessage: any = {
     messages: []
   };
+  
   @ViewChild('messageInput') messageInput!: ElementRef;
 
   selectConversation(convo: any) {
@@ -281,8 +302,8 @@ export class ChatComponent implements OnInit, OnDestroy {
       })
     )
   }
-  @ViewChild('chatContent') chatContent!: ElementRef;
 
+  @ViewChild('chatContent') chatContent!: ElementRef;
   scrollToBottom(): void {
     setTimeout(() => {
       if (this.chatContent) {
@@ -489,7 +510,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.menuMessage = null;
   }
 
-  cancelReply(){
+  cancelReply() {
     this.replyaddToMessage = null;
   }
 

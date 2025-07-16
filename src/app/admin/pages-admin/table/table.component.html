@@ -4,7 +4,24 @@
 
 <ng-template #tableList>
     <div class="bottom-card">
-        <app-table-list [tables]="tables" [selectTable]="selectTable" (table)="clickTable($event)"></app-table-list>
+        <div class="d-flex justify-content-end">
+            <div *ngIf="dropdowns.length > 0" class="dropdown">
+                <button class="btn btn-sm btn-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <ul style="z-index: 100000;" class="dropdown-menu dropdown-menu-end"
+                    aria-labelledby="dropdownMenuButton">
+                    <li *ngFor="let item of dropdowns">
+                        <a class="dropdown-item" (click)="toggleSection(item.action)">
+                            <i class="fa" [ngClass]="item.icon"></i> {{ item.label }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <app-table-list *ngIf="showBoard" [tables]="tables" (doubleClick)="onTableDoubleClick($event)" [selectTable]="selectTable" (table)="clickTable($event)"></app-table-list>
+        <app-table-kaban *ngIf="showKaban" [tables]="tables" (doubleClick)="onTableDoubleClick($event)"  (tableSelected)="clickTable($event)"></app-table-kaban>
     </div>
 </ng-template>
 

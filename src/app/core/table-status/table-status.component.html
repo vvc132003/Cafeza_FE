@@ -1,0 +1,9 @@
+<div class="d-flex justify-content-between align-items-center">
+    <span class="task-status" [ngClass]="getStatusClass()">
+        {{
+        getStatusText()
+        }}</span>
+    <i *ngIf="table.endDate" class="fa-solid fa-flag task-flag" [ngStyle]="getFlagClass()"></i>
+    <i *ngIf="table.status != 'Rented'" class="task-flags" [class]="getStatusIcon()"  [ngStyle]="getIconStyle()"></i>
+
+</div>

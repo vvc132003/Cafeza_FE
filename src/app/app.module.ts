@@ -7,10 +7,9 @@ import { AppComponent } from './app.component';
 
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 import { AdminModule } from './admin/admin.module';
 import { HomeModule } from './home/home.module';
-import { ChatComponent } from './shared/chat/chat.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
