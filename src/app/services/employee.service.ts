@@ -32,7 +32,7 @@ export class EmployeeService implements CanActivate {
             const currentRoutePath = route.url.map(segment => segment.path).join('/');
 
             if (role === "Staff") {
-                if (currentRoutePath === 'admin/categories/1001') {
+                if (currentRoutePath === 'staff/bartending/1006') {
                     return true;
                 } else {
                     return this.router.parseUrl(currentRoutePath);

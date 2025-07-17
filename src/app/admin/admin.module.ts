@@ -42,7 +42,7 @@ import { TableStatusComponent } from '../core/table-status/table-status.componen
 
 @NgModule({
   declarations: [
-    AdminComponent,
+    // AdminComponent,
     ImgComponent,
     ImgsComponent,
     FormAddComponent,

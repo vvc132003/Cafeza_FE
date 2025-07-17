@@ -21,7 +21,7 @@
             </div>
         </div>
         <app-table-list *ngIf="showBoard" [tables]="tables" (doubleClick)="onTableDoubleClick($event)" [selectTable]="selectTable" (table)="clickTable($event)"></app-table-list>
-        <app-table-kaban *ngIf="showKaban" [tables]="tables" (doubleClick)="onTableDoubleClick($event)"  (tableSelected)="clickTable($event)"></app-table-kaban>
+        <app-table-kaban *ngIf="showKaban" [tables]="tables" (doubleClick)="onTableDoubleClick($event)"  (tableSelected)="clickTable($event)" (tableDropped)="handleTableDropped($event)"></app-table-kaban>
     </div>
 </ng-template>
 

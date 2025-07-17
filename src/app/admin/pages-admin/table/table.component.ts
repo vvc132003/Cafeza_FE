@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -55,6 +56,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // this.loadTables();
+    this.showBoard = true;
     this.tableService.startConnection().subscribe(() => {
       this.loadTables();
     });
@@ -233,4 +235,39 @@ export class TableComponent implements OnInit, OnDestroy {
       this.notificationService.showInfo('1004');
     }
   }
+
+  handleTableDropped(events: any): void {
+    const event = events.event;
+    const columns = events.columns;
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      const movedRoom = event.previousContainer.data[event.previousIndex];
+      const newColumn = columns.find((col: any) => col.status === event.container.id);
+      if (newColumn) {
+        this.updateTableStatusDrop(movedRoom, newColumn.status, event);
+      }
+    }
+  }
+
+
+  updateTableStatusDrop(movedRoom: any, status: string, event: CdkDragDrop<any[]>): void {
+    // console.log(status);
+    // if (movedRoom.status === 'reserved') { // đã đặt
+    //   this.notificationService.showWarning('1015');
+    //   return;
+    // }
+    // this.roomService.updateRoomStatus(movedRoom.roomID, status).subscribe((data) => {
+    //   this.notificationService.showSuccess('1006');
+    //   movedRoom.status = status;
+    //   // this.addNewRoom(movedRoom);
+    //   if (data) {
+    //     this.room = data;
+    //     this.room.action = 'sort';
+    //   }
+    // this.refreshButton(movedRoom.status);
+    transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+    // });
+  }
+
 }

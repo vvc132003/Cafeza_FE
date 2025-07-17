@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminModule } from './admin/admin.module';
 import { HomeModule } from './home/home.module';
 import { FormsModule } from '@angular/forms';
+import { StaffModule } from './staff/staff.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     ToastrModule.forRoot(),
     HttpClientModule,
     AdminModule,
-    HomeModule
+    HomeModule,
+    StaffModule
   ],
   providers: [],
   bootstrap: [AppComponent]

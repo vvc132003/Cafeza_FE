@@ -319,6 +319,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.orderdetail.drinkId = sp.id;
     this.orderdetail.unitPrice = sp.price;
     this.orderdetail.total = sp.price * this.orderdetail.quantity;
+    this.orderdetail.status = "waiting";
     const requestData = {
       orderDetailDto: this.orderdetail,
       drinkDTO: sp,

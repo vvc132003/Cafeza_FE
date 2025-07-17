@@ -77,6 +77,10 @@ export class OrderDetailService {
         return this.http.get<any>(`${this.apiUrl}/orderId/${orderId}`);
     }
 
+    getAllOrdersDetail(): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/getAllOrdersDetail`);
+    }
+
     getExportInvoice(orderId: string): Observable<any> {
         return this.http.get<any>(`${this.apiUrl}/exportInvoice/${orderId}`);
     }

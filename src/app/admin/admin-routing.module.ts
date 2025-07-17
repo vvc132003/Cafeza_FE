@@ -9,7 +9,6 @@ import { EmployeeComponent } from './pages-admin/employee/employee.component';
 import { EmployeeService } from '../services/employee.service';
 
 const routes: Routes = [
-  // { path: '', component: AdminComponent },
   { path: 'admin/tables/:funId', component: TableComponent, canActivate: [EmployeeService] },
   { path: 'admin/tables/:funId/orderdetail/:id', component: OrderComponent, canActivate: [EmployeeService] },
   { path: 'admin/drinks/:funId', component: AdminMenuComponent, canActivate: [EmployeeService] },

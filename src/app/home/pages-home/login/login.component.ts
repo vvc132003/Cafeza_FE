@@ -29,11 +29,11 @@ export class LoginComponent {
         const token = res.token;
         const decoded: any = jwt_decode(token);
         const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-
+        console.log(role);
         if (role === 'Admin') {
           this.router.navigate(['/admin/tables/1002']);
         } else if (role === 'Staff') {
-          this.router.navigate(['/admin/categories/1001']);
+          this.router.navigate(['/staff/bartending/1006']);
         } else if (role === 'customer') {
           this.router.navigate(['/']);
         }
