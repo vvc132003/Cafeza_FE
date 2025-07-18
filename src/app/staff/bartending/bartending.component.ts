@@ -20,7 +20,13 @@ export class BartendingComponent implements OnChanges, OnInit, OnDestroy {
   // @Input() tables: any[] = [];
 
   private subscription: Subscription = new Subscription();
-  constructor(private cookieService: CookieService, private cdr: ChangeDetectorRef, private notificationService: NotificationService, private router: Router, private route: ActivatedRoute, private tableService: TableService, private orderDetailService: OrderDetailService) { }
+  constructor(private cookieService: CookieService, private cdr: ChangeDetectorRef, private notificationService: NotificationService, private router: Router, private route: ActivatedRoute, private tableService: TableService, private orderDetailService: OrderDetailService) {
+
+    this.orderDetailService.startConnectionBartending().subscribe(() => {
+      this.loadTables();
+    })
+
+  }
   currentUserName: string = "";
   currentUserRole: string = "";
 
@@ -39,7 +45,6 @@ export class BartendingComponent implements OnChanges, OnInit, OnDestroy {
     }
     this.updateTime();
     setInterval(() => this.updateTime(), 1000);
-    this.loadTables();
   }
 
   updateTime() {
@@ -56,8 +61,36 @@ export class BartendingComponent implements OnChanges, OnInit, OnDestroy {
       this.orderDetailService.getAllOrdersDetail().subscribe((data: any) => {
         this.orderdetails = data;
         this.updateColumns();
+        this.orderDetailService.onLoadStatusOrderdetail().subscribe((data) => {
+          this.neworupdateStatusOrderdetail(data);
+        })
       })
     );
+  }
+
+  playTingSound() {
+    const audio = new Audio();
+    audio.src = 'assets/ting1.mp3';
+    audio.load();
+    audio.play();
+  }
+
+
+  neworupdateStatusOrderdetail(data: any) {
+    // console.log(data);
+    const column = this.columns.find(col => col.status === data.status);
+    if (column) {
+      const index = column.orderdetails.findIndex((item: any) => item.orderId === data.orderId && item.drinkId === data.drinkId);
+      if (index !== -1) {
+        column.orderdetails[index] = data;
+      } else {
+        column.orderdetails.unshift(data);
+      }
+    }
+
+    this.notificationService.showSuccess('1020');
+    this.playTingSound();
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -114,6 +114,7 @@ export class OrderComponent implements OnInit, OnDestroy {
         // console.log("ok");
         this.orderdetails = data;
         // console.log(data);
+        // console.log(data);
         this.orderdeatilService.onaddupOrderDetailLoaded().subscribe((newd: any) => {
           this.newOrderdetail(newd);
         })
@@ -123,6 +124,25 @@ export class OrderComponent implements OnInit, OnDestroy {
         })
       })
     )
+  }
+
+
+  getStatusClasss(status: string): string {
+    switch (status) {
+      case 'waiting': return 'status-waitings';
+      case 'processing': return 'status-processings';
+      case 'done': return 'status-dones';
+      default: return 'status-deletes';
+    }
+  }
+
+  getStatusText(status: string): string {
+    switch (status) {
+      case 'waiting': return 'Đơn cần pha';
+      case 'processing': return 'Đang pha';
+      case 'done': return 'Hoàn thành';
+      default: return 'Đã huỷ';
+    }
   }
 
   timKiemTen: string = '';

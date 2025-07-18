@@ -13,10 +13,17 @@ export class OrderDetailService {
     private apiUrl = API_URLS.api + '/OrderDetail';
     private hubUrl = API_URLS.hub;
     private hubConnection: signalR.HubConnection;
+    private hubConnectionbartending: signalR.HubConnection;
+
 
 
     constructor(private http: HttpClient, private cookieService: CookieService) {
         this.hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl(this.hubUrl)
+            .configureLogging(signalR.LogLevel.Error)
+            .build();
+
+        this.hubConnectionbartending = new signalR.HubConnectionBuilder()
             .withUrl(this.hubUrl)
             .configureLogging(signalR.LogLevel.Error)
             .build();
@@ -107,6 +114,45 @@ export class OrderDetailService {
     // Phương thức DELETE
     deleteData(id: string): Observable<any> {
         return this.http.delete<any>(`${this.apiUrl}/${id}`);
+    }
+
+
+
+    /// websoket nhân vinê pha chế
+
+    startConnectionBartending(): Observable<void> {
+        return new Observable<void>((observer) => {
+            this.hubConnectionbartending
+                .start()
+                .then(() => {
+                    // console.log('Connection established with SignalR hub');
+                    observer.next();
+                    observer.complete();
+                })
+                .catch((error) => {
+                    // console.error('Error connecting to SignalR hub:', error);
+                    observer.error(error);
+                });
+        });
+    }
+
+    /// ngắt kết nối websoket 
+    stopConnectionBartending(): void {
+        if (this.hubConnectionbartending) {
+            this.hubConnectionbartending.stop()
+                .catch();
+        }
+    }
+    
+    /// lắng nghe sự kiện onLoadStatusOrderdetail từ server
+
+    onLoadStatusOrderdetail(): Observable<any> {
+        return new Observable((observer) => {
+            this.hubConnectionbartending.on('loadStatusOrderdetail', (data) => {
+                observer.next(data);
+                // console.log(data);
+            });
+        });
     }
 
 }
