@@ -20,6 +20,14 @@ export class MessageService {
     { code: '1013', text: 'Bạn chưa nhập số lượng !' },
     { code: '1014', text: 'Bạn chưa nhập số tiền khách hàng đưa !' },
     { code: '1015', text: 'Thêm vào giỏ hành thành công !' },
+    { code: '1016', text: 'Cập nhật trạng thái thành công !' },
+    { code: '1017', text: 'Món này đã huỷ, không thể hoàn món !' },
+    { code: '1018', text: 'Món này đã hoàn thành, không thể hoàn món !' },
+    { code: '1019', text: 'Món này chưa pha, không thể hoàn thành !' },
+
+
+
+
 
 
 

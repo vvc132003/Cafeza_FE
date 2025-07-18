@@ -46,11 +46,6 @@
             {{ orderdetail.drinkName }}
           </h5>
 
-          <!-- <p class="card-text mb-2 text-muted">
-            <i class="bi bi-cash me-1 text-success"></i>
-            <strong>Giá:</strong> {{ orderdetail.unitPrice | currency:'VND' }}
-          </p> -->
-
           <p class="card-text mb-2 text-muted">
             <i class="bi bi-box-seam me-1 text-secondary"></i>
             <strong>Số lượng:</strong> {{ orderdetail.quantity }}
@@ -61,15 +56,16 @@
             <strong>Ghi chú:</strong> {{ orderdetail.note || '' }}
           </p>
 
-          <p class="card-text mb-0 text-muted">
-            <i class="bi bi-table me-1 text-info"></i>
-            <strong>{{ orderdetail.tableName || 'Chưa xác định' }}</strong>
-          </p>
 
           <div class="d-flex justify-content-between align-items-center">
-            <p *ngIf="orderdetail?.endDate" style="opacity: 0.6; font-size: 15px;"><i class="fa fa-calendar me-2"></i>{{
-              orderdetail?.endDate | date: 'dd/MM/yyyy' }}</p>
+            <p class="card-text mb-0 text-muted">
+              <i class="bi bi-table me-1 text-info"></i>
+              <strong>{{ orderdetail.tableName || 'Chưa xác định' }}</strong>
+            </p>
+            <p *ngIf="orderdetail?.createdAt" style="opacity: 0.6; font-size: 14px;"><i class="fa fa-calendar me-2"></i>
+              {{ orderdetail?.createdAt | date: 'dd/MM/yyyy HH:mm' }}
           </div>
+          
         </div>
         <div class="loading-spinner" *ngIf="isLoading[column.status]">
           <div class="spinner"></div>

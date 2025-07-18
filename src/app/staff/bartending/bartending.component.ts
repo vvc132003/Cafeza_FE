@@ -70,7 +70,7 @@ export class BartendingComponent implements OnChanges, OnInit, OnDestroy {
       case 'waiting': return 'Đơn cần pha';
       case 'processing': return 'Đang pha';
       case 'done': return 'Đã hoàn thành';
-      default: return '';
+      default: return 'Đã huỷ';
     }
   }
 
@@ -174,8 +174,25 @@ export class BartendingComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   updateTableStatusDrop(movedRoom: any, status: string, event: CdkDragDrop<any[]>): void {
-
-    transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+    // console.log(status);
+    if (movedRoom.status === 'delete') {
+      this.notificationService.showWarning('1017');
+      return;
+    }
+    if (movedRoom.status === 'done') {
+      this.notificationService.showWarning('1018');
+      return;
+    }
+    if (movedRoom.status !== 'processing' && status === 'done') {
+      this.notificationService.showWarning('1019');
+      return;
+    }
+    this.orderDetailService.updateOrderDetailStatus(movedRoom.orderdetailId, status).subscribe((data: any) => {
+      if (!data)
+        transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      // if(status === 'processing'){}
+      this.notificationService.showSuccess('1016');
+    })
   }
 
   isScrolling: boolean = false;

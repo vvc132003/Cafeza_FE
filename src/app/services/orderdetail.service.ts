@@ -85,6 +85,9 @@ export class OrderDetailService {
         return this.http.get<any>(`${this.apiUrl}/exportInvoice/${orderId}`);
     }
 
+    updateOrderDetailStatus(orderdetailId: number, status: string): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/updateStatusdetail/${orderdetailId}/${status}`);
+    }
 
     // Phương thức POST
     postData(data: any): Observable<any> {
