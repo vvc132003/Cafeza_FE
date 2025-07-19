@@ -20,7 +20,10 @@ export class BartendingComponent implements OnChanges, OnInit, OnDestroy {
   // @Input() tables: any[] = [];
 
   private subscription: Subscription = new Subscription();
-  constructor(private cookieService: CookieService, private cdr: ChangeDetectorRef, private notificationService: NotificationService, private router: Router, private route: ActivatedRoute, private tableService: TableService, private orderDetailService: OrderDetailService) {
+  constructor(private cookieService: CookieService, private cdr: ChangeDetectorRef,
+    private notificationService: NotificationService, private router: Router,
+    private route: ActivatedRoute, private tableService: TableService,
+    private orderDetailService: OrderDetailService) {
 
     this.orderDetailService.startConnectionBartending().subscribe(() => {
       this.loadTables();
@@ -34,6 +37,7 @@ export class BartendingComponent implements OnChanges, OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.orderDetailService.stopConnectionBartending();
   }
   ngOnInit(): void {
     const token = this.cookieService.get('access_token');
@@ -221,8 +225,9 @@ export class BartendingComponent implements OnChanges, OnInit, OnDestroy {
       return;
     }
     this.orderDetailService.updateOrderDetailStatus(movedRoom.orderdetailId, status).subscribe((data: any) => {
-      if (!data)
-        transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      // if (!data)
+      movedRoom.status = status;
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       // if(status === 'processing'){}
       this.notificationService.showSuccess('1016');
     })
