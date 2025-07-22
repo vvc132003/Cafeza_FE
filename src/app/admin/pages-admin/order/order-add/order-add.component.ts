@@ -55,6 +55,7 @@ export class OrderAddComponent implements OnChanges {
     this.order.tableId = this.tableId;
     this.order.totalAmount = "0";
     this.order.status = "Chờ thanh toán";
+    this.order.type = "90";
     this.customer.membershipLevel = "Thường";
     this.customer.rewardPoints = "0";
     const requestData = {
@@ -64,6 +65,7 @@ export class OrderAddComponent implements OnChanges {
     };
     // console.log(requestData);
     this.orderService.postData(requestData).subscribe((res: any) => {
+      this.notificationService.showSuccess("1003");
       this.close();
     })
   }

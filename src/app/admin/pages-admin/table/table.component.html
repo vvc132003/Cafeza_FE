@@ -10,7 +10,7 @@
                     aria-expanded="false">
                     <i class="fa fa-bars"></i>
                 </button>
-                <ul style="z-index: 100000;" class="dropdown-menu dropdown-menu-end"
+                <ul style="z-index: 100000; cursor: pointer;" class="dropdown-menu dropdown-menu-end"
                     aria-labelledby="dropdownMenuButton">
                     <li *ngFor="let item of dropdowns">
                         <a class="dropdown-item" (click)="toggleSection(item.action)">

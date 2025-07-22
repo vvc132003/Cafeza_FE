@@ -1,4 +1,4 @@
-<div class="kanban-header d-flex justify-content-between align-items-center p-3 bg-light shadow-sm">
+<div class="kanban-header d-flex justify-content-between align-items-center p-1 bg-light shadow-sm sticky-top">
   <div class="d-flex align-items-center gap-2">
     <div class="logo fs-5 text-dark">☕ Cafeza</div>
     <!-- <h4 class="fw-bold text-primary m-0">Pha Chế</h4> -->
@@ -19,6 +19,38 @@
     </button>
   </div>
 </div>
+
+
+
+<div class="container-fluid px-3 mt-4">
+  <div class="d-flex justify-content-end">
+    <div class="d-flex align-items-end gap-3 flex-nowrap">
+
+      <div class="d-flex align-items-center gap-2">
+        <label for="startDate" class="form-label mb-0">Từ ngày:</label>
+        <input id="startDate" type="date" class="form-control" [(ngModel)]="startDate" name="startDate"
+          style="width: 200px;">
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <label for="endDate" class="form-label mb-0">Đến ngày:</label>
+        <input id="endDate" type="date" class="form-control" [(ngModel)]="endDate" name="endDate" style="width: 200px;">
+      </div>
+
+      <div>
+        <button class="btn btn-primary" (click)="filterColumns()" type="button">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
 
 
 <div class="kanban-board">
@@ -65,7 +97,7 @@
             <p *ngIf="orderdetail?.createdAt" style="opacity: 0.6; font-size: 14px;"><i class="fa fa-calendar me-2"></i>
               {{ orderdetail?.createdAt | date: 'dd/MM/yyyy HH:mm' }}
           </div>
-          
+
         </div>
         <div class="loading-spinner" *ngIf="isLoading[column.status]">
           <div class="spinner"></div>

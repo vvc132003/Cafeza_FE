@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { StaffRoutingModule } from './staff-routing.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BartendingComponent } from './bartending/bartending.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { BartendingComponent } from './bartending/bartending.component';
   imports: [
     CommonModule,
     StaffRoutingModule,
-    DragDropModule
+    DragDropModule,
+    FormsModule
   ]
 })
 export class StaffModule { }

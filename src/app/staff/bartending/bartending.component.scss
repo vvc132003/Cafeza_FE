@@ -1,10 +1,10 @@
 .kanban-board {
   display: flex;
-  gap: 20px;
+  gap: 15px;
   overflow-x: auto;
   // flex-wrap: wrap;
   height: 90%;
-  padding: 48px;
+  padding: 20px;
 }
 
 .kanban-group {
@@ -33,7 +33,7 @@
   width: 350px;
   display: flex;
   flex-direction: column;
-  height: 88%;
+  height: 100%;
 }
 
 .kanban-tasks {

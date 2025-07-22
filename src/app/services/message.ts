@@ -25,6 +25,9 @@ export class MessageService {
     { code: '1018', text: 'Món này đã hoàn thành, không thể hoàn món !' },
     { code: '1019', text: 'Món này chưa pha, không thể hoàn thành !' },
     { code: '1020', text: 'Có món mới !' },
+    { code: '1021', text: 'Thanh toán thành công !' },
+    { code: '1022', text: 'Chưa thể thanh toán !' },
+
 
 
 

@@ -88,11 +88,10 @@ export class BartendingComponent implements OnChanges, OnInit, OnDestroy {
       if (index !== -1) {
         column.orderdetails[index] = data;
       } else {
+        this.notificationService.showSuccess('1020');
         column.orderdetails.unshift(data);
       }
     }
-
-    this.notificationService.showSuccess('1020');
     this.playTingSound();
 
   }
@@ -143,6 +142,54 @@ export class BartendingComponent implements OnChanges, OnInit, OnDestroy {
     }
   }
 
+
+  startDate: Date | null = null;
+  endDate: Date | null = null;
+  searchText: string = '';
+
+  filterColumns(): void {
+    const filtered = this.orderdetails.filter(r => {
+      const createdAt = new Date(r.createdAt);
+
+      if (this.startDate && createdAt < new Date(this.startDate)) return false;
+      if (this.endDate && createdAt > new Date(this.endDate)) return false;
+
+      // if (this.searchText) {
+      //   const search = this.searchText.toLowerCase();
+      //   const hasText = (r.drinkName?.toLowerCase().includes(search) ||
+      //     r.tableName?.toLowerCase().includes(search) ||
+      //     r.note?.toLowerCase().includes(search));
+      //   if (!hasText) return false;
+      // }
+
+      return true;
+    });
+
+    this.columns = [
+      {
+        name: 'Đơn cần pha', status: 'waiting',
+        orderdetails: filtered.filter(r => r.status === 'waiting').slice(0, 5),
+        fullorderdetails: filtered.filter(r => r.status === 'waiting')
+      },
+      {
+        name: 'Đang pha', status: 'processing',
+        orderdetails: filtered.filter(r => r.status === 'processing').slice(0, 5),
+        fullorderdetails: filtered.filter(r => r.status === 'processing')
+      },
+      {
+        name: 'Đã hoàn thành', status: 'done',
+        orderdetails: filtered.filter(r => r.status === 'done').slice(0, 5),
+        fullorderdetails: filtered.filter(r => r.status === 'done')
+      },
+      {
+        name: 'Đã huỷ', status: 'delete',
+        orderdetails: filtered.filter(r => r.status === 'delete').slice(0, 5),
+        fullorderdetails: filtered.filter(r => r.status === 'delete')
+      },
+    ];
+
+    this.connectedLists = this.columns.map(col => col.status);
+  }
 
 
 

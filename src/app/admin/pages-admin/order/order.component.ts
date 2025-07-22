@@ -232,10 +232,15 @@ export class OrderComponent implements OnInit, OnDestroy {
           this.notificationService.showWarning("1014")
           return;
         }
-
+        const statusOrdetail = this.orderdetails.findIndex((s: any) => s.status == "waiting" || s.status == "processing");
+        if (statusOrdetail !== -1) {
+          this.notificationService.showWarning("1022");
+          return;
+        }
         this.orderService.pay(pay).subscribe(() => {
           this.close();
           this.router.navigate(['/admin/tables/1002']);
+          this.notificationService.showSuccess("1021");
         })
         // this.close();
         break;
