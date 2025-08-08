@@ -24,7 +24,7 @@ import { StaffModule } from './staff/staff.module';
     HttpClientModule,
     AdminModule,
     HomeModule,
-    StaffModule
+    StaffModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

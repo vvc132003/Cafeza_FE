@@ -107,7 +107,7 @@ export class TableComponent implements OnInit, OnDestroy {
     switch (this.selectTable.status) {
       case 'empty':
         this.showButtonsnone = actions.map(action => {
-          if (action.id === '110' || action.id === '111' || action.id === '112' || action.id === '113' || action.id === '114' || action.id === '115') {
+          if (action.id === '110' || action.id === '111' || action.id === '112' || action.id === '113' || action.id === '114' || action.id === '115' || action.id === '103') {
             return { ...action, display: 'none' };
           }
           return action;
@@ -131,6 +131,9 @@ export class TableComponent implements OnInit, OnDestroy {
   data: any = {};
   click(event: any) {
     switch (event) {
+      case '103':
+        this.onTableDoubleClick(this.selectTable);
+        break;
       case '105':
         this.showoffcanvas = true;
         this.table = this.tables.find(t => t.id === this.tableId);

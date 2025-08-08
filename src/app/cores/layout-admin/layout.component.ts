@@ -4,7 +4,7 @@ import { ConversationService } from 'src/app/services/conversation.service';
 import { DrinkService } from 'src/app/services/drinkservice';
 
 @Component({
-  selector: 'app-layout',
+  selector: 'app-layouts',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })

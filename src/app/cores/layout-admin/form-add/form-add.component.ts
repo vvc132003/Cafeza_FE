@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 
 @Component({
-  selector: 'app-form-add',
+  selector: 'app-form-adds',
   templateUrl: './form-add.component.html',
   styleUrls: ['./form-add.component.scss']
 })

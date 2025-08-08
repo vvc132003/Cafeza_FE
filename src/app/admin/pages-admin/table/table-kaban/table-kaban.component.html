@@ -9,6 +9,7 @@
           (dblclick)="onDoubleClick(table)" (click)="onTableClick(table)"
           [ngClass]="{'selected-table': selectedTable?.id === table?.id}">
           <app-table-status [table]="table"></app-table-status>
+          <!-- <lib-tablestatus [table]="table"></lib-tablestatus> -->
           <h5 class="card-title text-dark fw-bold mb-3">
             <i class="bi bi-grid-3x3-gap-fill me-2 text-primary"></i>{{ table.tableName }}
           </h5>

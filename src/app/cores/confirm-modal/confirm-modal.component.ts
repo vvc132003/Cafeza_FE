@@ -6,7 +6,7 @@ import { OrderService } from 'src/app/services/order.service';
 import { TableService } from 'src/app/services/table.service';
 
 @Component({
-  selector: 'app-confirm-modal',
+  selector: 'app-confirm-modals',
   templateUrl: './confirm-modal.component.html',
   styleUrls: ['./confirm-modal.component.scss']
 })

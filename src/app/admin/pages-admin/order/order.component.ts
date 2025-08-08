@@ -30,6 +30,9 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.paramMap.get('id') || '';
     this.orderService.getOrderByTableId(this.id).subscribe((data: any) => {
       this.order = data[0];
+      if (this.order.type == "90") {
+        this.isDeleted = true;
+      }
       this.orderdeatilService.startConnection(this.order.orderId).subscribe(() => {
         this.fetOrderdetail();
       })
@@ -336,6 +339,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
 
   orderdetail: any = {};
+  isDeleted: boolean = false;
   addOrderDetail(sp: any) {
     // console.log(sp);
     this.orderdetail.quantity = 1;
@@ -345,6 +349,9 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.orderdetail.unitPrice = sp.price;
     this.orderdetail.total = sp.price * this.orderdetail.quantity;
     this.orderdetail.status = "waiting";
+    if (this.isDeleted === true) {
+      this.orderdetail.note = "mang về";
+    }
     const requestData = {
       orderDetailDto: this.orderdetail,
       drinkDTO: sp,

@@ -1,5 +1,5 @@
-<app-layout tableName="{{order.tableName}}" [text]="'Quản lý chi tiết hoá đơn'" (showButtonss)="evetnbuttons($event)"
-    [buttonNone]="showButtonsnone" [tabTemplates]="{tableList,adminMenuAdd}" (showPupAdd)="click($event)"></app-layout>
+<app-layouts tableName="{{order.tableName}}" [text]="'Quản lý chi tiết hoá đơn'" (showButtonss)="evetnbuttons($event)"
+    [buttonNone]="showButtonsnone" [tabTemplates]="{tableList,adminMenuAdd}" (showPupAdd)="click($event)"></app-layouts>
 
 <ng-template #tableList>
     <div class="container-fluid p-2 modern-layout bg-light rounded">
@@ -13,7 +13,16 @@
                         </h5>
                         <!-- Thanh tìm kiếm và lọc -->
                         <div class="row g-2 align-items-center text-center mb-4">
-                            <div class="col-md-7">
+                            <div class="col-md-3">
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="isDeleted">
+                                        {{ isDeleted ? 'Mang về' : 'Tại chổ' }}
+                                    </label>
+                                    <input class="form-check-input" type="checkbox" role="switch" id="isDeleted"
+                                        [(ngModel)]="isDeleted" name="isDeleted" />
+                                </div>
+                            </div>
+                            <div class="col-md-5">
                                 <div class="input-group">
                                     <span class="input-group-text bg-white border-end-0">
                                         <i class="fas fa-search text-muted"></i>
@@ -22,7 +31,7 @@
                                         [(ngModel)]="timKiemTen" placeholder="Tìm theo tên...">
                                 </div>
                             </div>
-                            <div class="col-md-5 d-flex">
+                            <div class="col-md-4 d-flex">
                                 <select class="form-select form-select-sm" [(ngModel)]="loaiDuocChon">
                                     <option *ngFor="let category of categorys" [value]="category.id">{{ category.name }}
                                     </option>
@@ -148,7 +157,7 @@
                                     <span>{{ order.fullNameCustomer }}</span>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center py-3">
-                                    <span><strong>Tiền khách trả:</strong></span>
+                                    <span><strong>Tiền khách đưa:</strong></span>
                                     <input type="number" class="form-control form-control-sm w-50"
                                         [(ngModel)]="amountPaid" (input)="tinhTienThoi()"
                                         placeholder="Nhập số tiền..." />
@@ -172,33 +181,33 @@
     (categoryIconSelected)="updateQuantity($event)"></app-updatequantity-detail>
 
 <ng-container *ngIf="isModalVisible">
-    <app-confirm-modal [show]="showModal" title="Xác nhận hủy đơn" message="Bạn có chắc chắn muốn hủy đơn này không?"
+    <app-confirm-modals [show]="showModal" title="Xác nhận hủy đơn" message="Bạn có chắc chắn muốn hủy đơn này không?"
         confirmText="Có, hủy đơn" cancelText="Không" (onCancel)="close()" [action]="action"
         (onConfirm)="confirm($event)">
-    </app-confirm-modal>
+    </app-confirm-modals>
 </ng-container>
 
 <ng-container *ngIf="isModalVisible">
-    <app-confirm-modal [show]="showModalInvoice" title="Xác nhận in hoá đơn" message="Bạn có muốn in hoá đơn không?"
+    <app-confirm-modals [show]="showModalInvoice" title="Xác nhận in hoá đơn" message="Bạn có muốn in hoá đơn không?"
         confirmText="Có, in hoá đơn" cancelText="Không" (onCancel)="close()" [action]="action"
         (onConfirm)="confirm($event)">
-    </app-confirm-modal>
+    </app-confirm-modals>
 </ng-container>
 
 <ng-container *ngIf="isModalVisible">
-    <app-confirm-modal [show]="showModalChangeTable" title="Chuyển bàn" confirmText="Có, chuyển bàn" cancelText="Không"
+    <app-confirm-modals [show]="showModalChangeTable" title="Chuyển bàn" confirmText="Có, chuyển bàn" cancelText="Không"
         (onCancel)="close()" [action]="action" [fromTableId]="order.tableId" [tableName]="order.tableName"
         [height]="'40vh'" (onConfirm)="confirm($event)">
-    </app-confirm-modal>
+    </app-confirm-modals>
 </ng-container>
 
 
 <!-- thanh toán -->
 <ng-container *ngIf="isModalVisible">
-    <app-confirm-modal [show]="showModalpaymen" title="Thanh toán" message="Bạn có muốn thanh toán bàn này không?"
+    <app-confirm-modals [show]="showModalpaymen" title="Thanh toán" message="Bạn có muốn thanh toán bàn này không?"
         confirmText="Có, thanh toán" cancelText="Không" (onCancel)="close()" [action]="action"
         (onConfirm)="confirm($event)">
-    </app-confirm-modal>
+    </app-confirm-modals>
 </ng-container>
 
 <ng-container *ngIf="isorderCancellationVisible">

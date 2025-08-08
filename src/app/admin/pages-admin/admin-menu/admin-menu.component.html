@@ -1,6 +1,6 @@
-<app-layout [text]="'Quản lý món'" (showButtonss)="evetnbuttons($event)" [buttonNone]="showButtonsnone" [count]="count"
+<app-layouts [text]="'Quản lý món'" (showButtonss)="evetnbuttons($event)" [buttonNone]="showButtonsnone" [count]="count"
     (showPupAdd)="click($event)" [tabTemplates]="{adminMenuList, adminMenuAdd}">
-</app-layout>
+</app-layouts>
 
 <ng-template #adminMenuAdd>
     <app-admin-menu-add [showoffcanvas]="showoffcanvas" [data]="data" [drink]="drinkUpdate"
