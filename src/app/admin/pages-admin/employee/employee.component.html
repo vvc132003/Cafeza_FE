@@ -1,6 +1,6 @@
-<app-layouts [text]="'Quản lý nhân viên'" (showButtonss)="evetnbuttons($event)" [buttonNone]="showButtonsnone" [count]="count"
+<app-layout [text]="'Quản lý nhân viên'" (showButtonss)="evetnbuttons($event)" [buttonNone]="showButtonsnone" [count]="count"
     (showPupAdd)="click($event)" [tabTemplates]="{adminMenuList, employeeAdd}">
-</app-layouts>
+</app-layout>
 
 <ng-template #employeeAdd>
 <app-employee-add [data]="data" [showoffcanvas]="showoffcanvas" (closePupAdd)="close()"></app-employee-add>

@@ -1,5 +1,5 @@
-<app-layouts tableName="{{order.tableName}}" [text]="'Quản lý chi tiết hoá đơn'" (showButtonss)="evetnbuttons($event)"
-    [buttonNone]="showButtonsnone" [tabTemplates]="{tableList,adminMenuAdd}" (showPupAdd)="click($event)"></app-layouts>
+<app-layout tableName="{{order.tableName}}" [text]="'Quản lý chi tiết hoá đơn'" (showButtonss)="evetnbuttons($event)"
+    [buttonNone]="showButtonsnone" [tabTemplates]="{tableList,adminMenuAdd}" (showPupAdd)="click($event)"></app-layout>
 
 <ng-template #tableList>
     <div class="container-fluid p-2 modern-layout bg-light rounded">

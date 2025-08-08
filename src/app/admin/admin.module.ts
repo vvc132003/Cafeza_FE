@@ -40,7 +40,15 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormsModule } from '@angular/forms';
 // import { TableStatusComponent } from '../core/table-status/table-status.component';
 import { CoresModule } from '../cores/cores.module';
-import { MyLibModule } from "my-lib";
+import { MyLibConfig, MyLibModule, provideMyLib } from "my-lib";
+
+
+const myLibConfig: MyLibConfig = {
+  hubUrl: 'https://192.168.1.10:7282/signalrHub',
+  apiUrl: 'https://192.168.1.10:7282/api',
+  apiUrlChat: 'https://192.168.1.10:7282/api'
+};
+
 
 @NgModule({
   declarations: [
@@ -85,9 +93,11 @@ import { MyLibModule } from "my-lib";
     SharedModule,
     DragDropModule,
     CoresModule,
-    MyLibModule
-],
-   exports: [
+    // MyLibModule
+    MyLibModule,
+    provideMyLib(myLibConfig) 
+  ],
+  exports: [
     // LayoutComponent
   ]
 })
