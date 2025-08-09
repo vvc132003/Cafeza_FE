@@ -181,33 +181,33 @@
     (categoryIconSelected)="updateQuantity($event)"></app-updatequantity-detail>
 
 <ng-container *ngIf="isModalVisible">
-    <app-confirm-modals [show]="showModal" title="Xác nhận hủy đơn" message="Bạn có chắc chắn muốn hủy đơn này không?"
+    <app-confirm-modal [show]="showModal" title="Xác nhận hủy đơn" message="Bạn có chắc chắn muốn hủy đơn này không?"
         confirmText="Có, hủy đơn" cancelText="Không" (onCancel)="close()" [action]="action"
         (onConfirm)="confirm($event)">
-    </app-confirm-modals>
+    </app-confirm-modal>
 </ng-container>
 
 <ng-container *ngIf="isModalVisible">
-    <app-confirm-modals [show]="showModalInvoice" title="Xác nhận in hoá đơn" message="Bạn có muốn in hoá đơn không?"
+    <app-confirm-modal [show]="showModalInvoice" title="Xác nhận in hoá đơn" message="Bạn có muốn in hoá đơn không?"
         confirmText="Có, in hoá đơn" cancelText="Không" (onCancel)="close()" [action]="action"
         (onConfirm)="confirm($event)">
-    </app-confirm-modals>
+    </app-confirm-modal>
 </ng-container>
 
 <ng-container *ngIf="isModalVisible">
-    <app-confirm-modals [show]="showModalChangeTable" title="Chuyển bàn" confirmText="Có, chuyển bàn" cancelText="Không"
+    <app-confirm-modal [show]="showModalChangeTable" title="Chuyển bàn" confirmText="Có, chuyển bàn" cancelText="Không"
         (onCancel)="close()" [action]="action" [fromTableId]="order.tableId" [tableName]="order.tableName"
         [height]="'40vh'" (onConfirm)="confirm($event)">
-    </app-confirm-modals>
+    </app-confirm-modal>
 </ng-container>
 
 
 <!-- thanh toán -->
 <ng-container *ngIf="isModalVisible">
-    <app-confirm-modals [show]="showModalpaymen" title="Thanh toán" message="Bạn có muốn thanh toán bàn này không?"
+    <app-confirm-modal [show]="showModalpaymen" title="Thanh toán" message="Bạn có muốn thanh toán bàn này không?"
         confirmText="Có, thanh toán" cancelText="Không" (onCancel)="close()" [action]="action"
         (onConfirm)="confirm($event)">
-    </app-confirm-modals>
+    </app-confirm-modal>
 </ng-container>
 
 <ng-container *ngIf="isorderCancellationVisible">

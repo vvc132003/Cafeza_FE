@@ -24,7 +24,7 @@
     "bootstrap": "^5.3.5",
     "font-awesome": "^4.7.0",
     "jwt-decode": "^3.1.2",
-    "my-lib": "file:../angular-lib/dist/my-lib/my-lib-0.0.0-watch+1754663910069.tgz",
+    "my-lib": "file:../angular-lib/dist/my-lib/my-lib-0.0.0-watch+1754708094421.tgz",
     "ngx-cookie-service": "^16.0.0",
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",

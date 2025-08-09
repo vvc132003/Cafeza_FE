@@ -39,7 +39,7 @@ import { TableKabanComponent } from './pages-admin/table/table-kaban/table-kaban
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormsModule } from '@angular/forms';
 // import { TableStatusComponent } from '../core/table-status/table-status.component';
-import { CoresModule } from '../cores/cores.module';
+// import { CoresModule } from '../cores/cores.module';
 import { MyLibConfig, MyLibModule, provideMyLib } from "my-lib";
 
 
@@ -92,7 +92,7 @@ const myLibConfig: MyLibConfig = {
     HttpClientModule,
     SharedModule,
     DragDropModule,
-    CoresModule,
+    // CoresModule,
     // MyLibModule
     MyLibModule,
     provideMyLib(myLibConfig) 
