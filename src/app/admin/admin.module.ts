@@ -41,12 +41,13 @@ import { FormsModule } from '@angular/forms';
 // import { TableStatusComponent } from '../core/table-status/table-status.component';
 // import { CoresModule } from '../cores/cores.module';
 import { MyLibConfig, MyLibModule, provideMyLib } from "my-lib";
+import { API_URLS } from '../config/api-urls';
 
 
 const myLibConfig: MyLibConfig = {
-  hubUrl: 'https://192.168.1.10:7282/signalrHub',
-  apiUrl: 'https://192.168.1.10:7282/api',
-  apiUrlChat: 'https://192.168.1.10:7282/api'
+  hubUrl: API_URLS.hub,
+  apiUrl: API_URLS.api,
+  apiUrlChat: API_URLS.api
 };
 
 
@@ -95,7 +96,7 @@ const myLibConfig: MyLibConfig = {
     // CoresModule,
     // MyLibModule
     MyLibModule,
-    provideMyLib(myLibConfig) 
+    provideMyLib(myLibConfig)
   ],
   exports: [
     // LayoutComponent

@@ -7,8 +7,15 @@ import { BartendingComponent } from './bartending/bartending.component';
 import { FormsModule } from '@angular/forms';
 import { AdminModule } from '../admin/admin.module';
 import { CounterStaffComponent } from './counter-staff/counter-staff.component';
-import { MyLibModule } from 'my-lib';
+import { API_URLS } from '../config/api-urls';
+import { MyLibConfig, MyLibModule, provideMyLib } from 'my-lib';
 
+
+const myLibConfig: MyLibConfig = {
+  hubUrl: API_URLS.hub,
+  apiUrl: API_URLS.api,
+  apiUrlChat: API_URLS.api
+};
 
 @NgModule({
   declarations: [
@@ -21,7 +28,9 @@ import { MyLibModule } from 'my-lib';
     DragDropModule,
     FormsModule,
     AdminModule,
-    MyLibModule
+    MyLibModule,
+    provideMyLib(myLibConfig)
+
   ]
 })
 export class StaffModule { }

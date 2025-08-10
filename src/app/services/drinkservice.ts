@@ -107,7 +107,17 @@ export class DrinkService {
         return this.http.get<any[]>(`${this.apiUrl}/drink-list`);
     }
 
-     getDataDrink_random(): Observable<any> {
+    generateDrinkRevenueReport(): Observable<any> {
+        return this.http.get<any[]>(`${this.apiUrl}/generateDrinkRevenueReport`);
+    }
+    monthlyRevenue(): Observable<any> {
+        return this.http.get<any[]>(`${this.apiUrl}/monthlyRevenue`);
+    }
+    getMonthlyOrderCount(): Observable<any> {
+        return this.http.get<any[]>(`${this.apiUrl}/getMonthlyOrderCount`);
+    }
+
+    getDataDrink_random(): Observable<any> {
         return this.http.get<any[]>(`${this.apiUrl}/random`);
     }
 
