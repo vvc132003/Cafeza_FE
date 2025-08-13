@@ -29,6 +29,11 @@ export class TableAddComponent implements OnChanges {
     this.closePupAdd.emit();
   }
 
+  onInputChange(event: { name: string, value: any }) {
+    this.table[event.name] = event.value;
+  }
+
+
   @Input() table: any = {};
   @Input() listTablesparentId: any[] = [];
 

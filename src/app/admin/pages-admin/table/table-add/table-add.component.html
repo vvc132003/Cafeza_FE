@@ -5,11 +5,13 @@
 <ng-template #categoryContent>
 
   <div *ngIf="action === 'addkv'">
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <label for="location" class="form-label small">Khu vực</label>
       <input type="text" class="form-control form-control-sm" id="location" name="location"
         [(ngModel)]="table.location">
-    </div>
+    </div> -->
+    <lib-label [name]="'location'" [value]="table.location" (dataChange)="onInputChange($event)"></lib-label>
+
   </div>
 
   <div *ngIf="action === 'addb' || action === 'copy'">
@@ -23,11 +25,13 @@
       </select>
     </div>
 
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <label for="tableName" class="form-label small ">Tên bàn</label>
       <input type="text" class="form-control form-control-sm" id="tableName" name="tableName"
         [(ngModel)]="table.tableName" required>
-    </div>
+    </div> -->
+    <lib-label [name]="'tableName'" [value]="table.tableName" (dataChange)="onInputChange($event)"></lib-label>
+
     <div class="mb-3">
       <label for="capacity" class="form-label small ">Sức chứa</label>
       <input type="text" class="form-control form-control-sm" id="capacity" name="capacity" [(ngModel)]="table.capacity"
