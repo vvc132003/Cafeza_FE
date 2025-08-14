@@ -11,6 +11,7 @@ import { AdminModule } from './admin/admin.module';
 import { HomeModule } from './home/home.module';
 import { FormsModule } from '@angular/forms';
 import { StaffModule } from './staff/staff.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { StaffModule } from './staff/staff.module';
     AdminModule,
     HomeModule,
     StaffModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

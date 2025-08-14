@@ -42,6 +42,7 @@ import { FormsModule } from '@angular/forms';
 // import { CoresModule } from '../cores/cores.module';
 import { MyLibConfig, MyLibModule, provideMyLib } from "my-lib";
 import { API_URLS } from '../config/api-urls';
+import { DashboardOverviewComponent } from './pages-admin/dashboard/dashboard-overview/dashboard-overview.component';
 
 
 const myLibConfig: MyLibConfig = {
@@ -83,6 +84,7 @@ const myLibConfig: MyLibConfig = {
     UpdatequantityDetailComponent,
     // ConfirmModalComponent,
     TableKabanComponent,
+    DashboardOverviewComponent,
     // TableStatusComponent
   ],
   imports: [

@@ -1,0 +1,117 @@
+<app-layout [text]="'Thống kê'" [tabTemplates]="{char}">
+</app-layout>
+<ng-template #char>
+    <!-- <lib-pie-canvas [reportData]="reportData"></lib-pie-canvas>
+    <lib-bar-canvas [revenueData]="revenueData"></lib-bar-canvas>
+    <lib-line-canvas [orderCountData]="orderCountData"></lib-line-canvas>
+    <lib-radar-canvas [reportData]="reportData"></lib-radar-canvas>
+    <lib-area-canvas [revenueData]="revenueData"></lib-area-canvas>
+    <lib-polar-area-canvas [reportData]="reportData"></lib-polar-area-canvas>
+    <lib-mixed-canvas [revenueData]="revenueData" [orderCountData]="orderCountData"></lib-mixed-canvas>
+    <lib-doughnut-canvas [reportData]="reportData"></lib-doughnut-canvas> -->
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="icon">☕</div>
+            <div class="label">Cà phê đã bán</div>
+            <div class="value">1,240</div>
+        </div>
+        <div class="stat-card">
+            <div class="icon">💰</div>
+            <div class="label">Doanh thu hôm nay</div>
+            <div class="value">5.200.000₫</div>
+        </div>
+        <div class="stat-card">
+            <div class="icon">📦</div>
+            <div class="label">Số đơn hàng</div>
+            <div class="value">312</div>
+        </div>
+        <div class="stat-card">
+            <div class="icon">👥</div>
+            <div class="label">Khách hàng</div>
+            <div class="value">289</div>
+        </div>
+        <div class="stat-card">
+            <div class="icon">🏆</div>
+            <div class="label">Top sản phẩm</div>
+            <div class="value">Cà phê sữa đá</div>
+        </div>
+    </div>
+    <br>
+    <div class="date-filter">
+        <label>
+            Từ ngày:
+            <input type="date" [(ngModel)]="fromDate" />
+        </label>
+
+        <label>
+            Đến ngày:
+            <input type="date" [(ngModel)]="toDate" />
+        </label>
+
+        <button (click)="onFilter()">Lọc</button>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-12 col-md-6 mb-3 mb-md-0">
+            <lib-pie-canvas [reportData]="reportData"></lib-pie-canvas>
+        </div>
+        <div class="col-12 col-md-6">
+            <lib-radar-canvas [reportData]="reportData"></lib-radar-canvas>
+        </div>
+    </div>
+    <lib-mixed-canvas [revenueData]="revenueData" [orderCountData]="orderCountData"></lib-mixed-canvas>
+    <lib-area-canvas [revenueData]="revenueData"></lib-area-canvas>
+    <lib-bar-canvas [revenueData]="revenueData"></lib-bar-canvas>
+    <lib-line-canvas [orderCountData]="orderCountData"></lib-line-canvas>
+    <div class="row">
+        <div class="col-12 col-md-6 mb-3 mb-md-0">
+            <lib-polar-area-canvas [reportData]="reportData"></lib-polar-area-canvas>
+        </div>
+        <div class="col-12 col-md-6">
+            <lib-doughnut-canvas [reportData]="reportData"></lib-doughnut-canvas>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-6">
+            <div class="card chart-card">
+                <div class="card-header">Biểu đồ tròn</div>
+                <div class="card-body">
+                    <lib-pie-canvas [reportData]="reportData"></lib-pie-canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="card chart-card">
+                <div class="card-header">Biểu đồ Doughnut</div>
+                <div class="card-body">
+                    <lib-doughnut-canvas [reportData]="reportData"></lib-doughnut-canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="lib-mixed" style="transform: scale(0.8); transform-origin: top left;">
+        <lib-mixed-canvas [revenueData]="revenueData" [orderCountData]="orderCountData"></lib-mixed-canvas>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <div class="lib-radar" style="transform: scale(0.7); transform-origin: top left;">
+                <lib-radar-canvas [reportData]="reportData"></lib-radar-canvas>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="lib-polar-area" style="transform: scale(0.8); transform-origin: top left;">
+                <lib-polar-area-canvas [reportData]="reportData"></lib-polar-area-canvas>
+            </div>
+        </div>
+    </div>
+    <div class="lib-line" style="transform: scale(0.8); transform-origin: top left;">
+        <lib-line-canvas [orderCountData]="orderCountData"></lib-line-canvas>
+    </div>
+    <div class="lib-bar" style="transform: scale(0.8); transform-origin: top left;">
+        <lib-bar-canvas [revenueData]="revenueData"></lib-bar-canvas>
+    </div>
+    <lib-area-canvas [revenueData]="revenueData"></lib-area-canvas> -->
+
+</ng-template>

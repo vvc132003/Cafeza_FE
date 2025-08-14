@@ -7,8 +7,10 @@ import { AdminMenuComponent } from './pages-admin/admin-menu/admin-menu.componen
 import { CategoryComponent } from './pages-admin/category/category.component';
 import { EmployeeComponent } from './pages-admin/employee/employee.component';
 import { EmployeeService } from '../services/employee.service';
+import { DashboardOverviewComponent } from './pages-admin/dashboard/dashboard-overview/dashboard-overview.component';
 
 const routes: Routes = [
+  { path: 'admin/dashboard/:funId', component: DashboardOverviewComponent, canActivate: [EmployeeService] },
   { path: 'admin/tables/:funId', component: TableComponent, canActivate: [EmployeeService] },
   { path: 'admin/tables/:funId/orderdetail/:id', component: OrderComponent, canActivate: [EmployeeService] },
   { path: 'admin/drinks/:funId', component: AdminMenuComponent, canActivate: [EmployeeService] },
