@@ -61,7 +61,7 @@ export class OrderService {
         const token = this.cookieService.get('access_token');
         if (token) {
             const decoded: any = jwt_decode(token);
-            data.orderDto.employeeId = decoded.id;
+            data.orderDto.userId = decoded.id;
         }
         return this.http.post<any>(`${this.apiUrl}/createOrder`, data);
     }

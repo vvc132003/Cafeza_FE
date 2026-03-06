@@ -8,8 +8,8 @@ import jwt_decode from 'jwt-decode';
 @Injectable({
     providedIn: 'root'
 })
-export class EmployeeService implements CanActivate {
-    private apiUrl = API_URLS.api + '/Employee';
+export class Userservice implements CanActivate {
+    private apiUrl = API_URLS.api + '/User';
     private token = this.cookieService.get('access_token');
 
     constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {
@@ -24,14 +24,13 @@ export class EmployeeService implements CanActivate {
         if (token) {
             const decoded: any = jwt_decode(token);
             const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-
-            if (role === "Admin") {
+            if (role === "admin") {
                 return true;
             }
 
             const currentRoutePath = route.url.map(segment => segment.path).join('/');
 
-            if (role === "Staff") {
+            if (role === "employee") {
                 if (currentRoutePath === 'staff/bartending/1006') {
                     return true;
                 } else {
@@ -56,8 +55,8 @@ export class EmployeeService implements CanActivate {
     }
 
     // Phương thức PUT
-    updateData(data: any): Observable<any> {
-        return this.http.put<any>(this.apiUrl, data);
+    updateData(id: string, data: any): Observable<any> {
+        return this.http.put<any>(`${this.apiUrl}/${id}`, data);
     }
 
     // Phương thức DELETE

@@ -1,11 +1,12 @@
-<app-layout [text]="'Quản lý nhân viên'" (showButtonss)="evetnbuttons($event)" [buttonNone]="showButtonsnone" [count]="count"
-    (showPupAdd)="click($event)" [tabTemplates]="{adminMenuList, employeeAdd}">
+<app-layout [text]="'Quản lý nhân viên'" (showButtonss)="evetnbuttons($event)" [buttonNone]="showButtonsnone"
+    [count]="count" (showPupAdd)="click($event)" [tabTemplates]="{adminMenuList, employeeAdd}">
 </app-layout>
 
 <ng-template #employeeAdd>
-<app-employee-add [data]="data" [showoffcanvas]="showoffcanvas" (closePupAdd)="close()"></app-employee-add>
+    <app-employee-add  (newData)="newData($event)" [user]="userUpdate" [data]="data" [showoffcanvas]="showoffcanvas" (closePupAdd)="close()"></app-employee-add>
 </ng-template>
 
 <ng-template #adminMenuList>
-<app-employee-list></app-employee-list>
+    <app-employee-list [users]="users" [userselect]="user" (Employee)="selectEm($event)"
+        (dblclick)="dbclickEm()"></app-employee-list>
 </ng-template>

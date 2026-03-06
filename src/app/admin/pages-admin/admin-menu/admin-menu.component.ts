@@ -25,7 +25,7 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private drinkService: DrinkService, private cdr: ChangeDetectorRef,private notificationService: NotificationService) { }
+  constructor(private drinkService: DrinkService, private cdr: ChangeDetectorRef, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.loadDrinks();
@@ -56,9 +56,12 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
     const index = this.drinks.findIndex(drink => drink.id === data.id);
     if (index === -1) {
       this.count += 1;
-      this.drinks.unshift(data);
+      // this.drinks.unshift(data);
+      this.drinks = [data, ...this.drinks];
     } else {
-      this.drinks[index] = data;
+      const updated = [...this.drinks];
+      updated[index] = data;
+      this.drinks = updated;
     }
     this.drink = data;
     if (this.pendingActions.length > 0) {
@@ -107,6 +110,8 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
         this.drinkService.deleteData(this.drink.id).subscribe(data => {
           this.drinks = this.drinks.filter(d => d.id !== this.drink.id);
           this.drink = this.drinks[0];
+          this.count -= 1;
+          this.notificationService.showSuccess('1025');
         })
         break;
       default:

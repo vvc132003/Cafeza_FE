@@ -1,14 +1,6 @@
 <app-layout [text]="'Thống kê'" [tabTemplates]="{char}">
 </app-layout>
 <ng-template #char>
-    <!-- <lib-pie-canvas [reportData]="reportData"></lib-pie-canvas>
-    <lib-bar-canvas [revenueData]="revenueData"></lib-bar-canvas>
-    <lib-line-canvas [orderCountData]="orderCountData"></lib-line-canvas>
-    <lib-radar-canvas [reportData]="reportData"></lib-radar-canvas>
-    <lib-area-canvas [revenueData]="revenueData"></lib-area-canvas>
-    <lib-polar-area-canvas [reportData]="reportData"></lib-polar-area-canvas>
-    <lib-mixed-canvas [revenueData]="revenueData" [orderCountData]="orderCountData"></lib-mixed-canvas>
-    <lib-doughnut-canvas [reportData]="reportData"></lib-doughnut-canvas> -->
     <div class="stats-container">
         <div class="stat-card">
             <div class="icon">☕</div>
@@ -38,17 +30,30 @@
     </div>
     <br>
     <div class="date-filter">
-        <label>
-            Từ ngày:
-            <input type="date" [(ngModel)]="fromDate" />
-        </label>
+        <div class="container-fluid px-3">
+            <div class="d-flex justify-content-end">
+                <div class="d-flex align-items-end gap-3 flex-nowrap">
+                    <div class="d-flex align-items-center gap-2">
+                        <label for="startDate" class="form-label mb-0">Từ ngày:</label>
+                        <input id="startDate" type="date" class="form-control" [(ngModel)]="fromDate" name="startDate"
+                            style="width: 200px;">
+                    </div>
 
-        <label>
-            Đến ngày:
-            <input type="date" [(ngModel)]="toDate" />
-        </label>
+                    <div class="d-flex align-items-center gap-2">
+                        <label for="endDate" class="form-label mb-0">Đến ngày:</label>
+                        <input id="endDate" type="date" class="form-control" [(ngModel)]="toDate" name="endDate"
+                            style="width: 200px;">
+                    </div>
 
-        <button (click)="onFilter()">Lọc</button>
+                    <div>
+                        <button class="btn btn-primary" (click)="onFilter()" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
     <br>
     <div class="row">

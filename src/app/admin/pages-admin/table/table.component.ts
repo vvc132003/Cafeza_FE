@@ -97,7 +97,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
   evetnbuttons(actions: any[]) {
     this.pendingActions = actions;
-    console.log(this.pendingActions);
+    // console.log(this.pendingActions);
     this.showButtonsnone = actions.filter(action => action.id === '109' || action.id === '101');
     this.cdr.detectChanges();
 

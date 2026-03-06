@@ -4,7 +4,7 @@
 <ng-template #category>
     <div class="mb-3">
         <label for="code" class="form-label small">Mã nhân viên</label>
-        <input type="text" id="code" name="code" class="form-control form-control-sm" [(ngModel)]="employee.code"
+        <input type="text" id="code" name="code" class="form-control form-control-sm" [(ngModel)]="user.code"
             readonly />
     </div>
     <div class="mb-3">
@@ -46,16 +46,16 @@
             [(ngModel)]="user.password" />
     </div>
 
-    <!-- <div class="mb-3">
+    <div class="mb-3">
         <label for="startDate" class="form-label small">Ngày bắt đầu</label>
         <input type="date" id="startDate" name="startDate" class="form-control form-control-sm"
-            [(ngModel)]="employee.startDate" />
-    </div> -->
+            [(ngModel)]="user.startDate" />
+    </div>
 
     <div class="mb-3">
         <label for="salary" class="form-label small">Lương</label>
         <input type="number" id="salary" name="salary" class="form-control form-control-sm"
-            [(ngModel)]="employee.salary" />
+            [(ngModel)]="user.salary" />
     </div>
 
     <div class="mb-3">
@@ -67,7 +67,7 @@
     <div class="mb-3">
         <label for="identityNumber" class="form-label small">CMND/CCCD</label>
         <input type="text" id="identityNumber" name="identityNumber" class="form-control form-control-sm"
-            [(ngModel)]="employee.identityNumber" />
+            [(ngModel)]="user.identityNumber" />
     </div>
 
     <div class="offcanvas-footer">
@@ -82,7 +82,7 @@
 <ng-template #setting>
     <div class="mb-3">
         <label for="position" class="form-label small">Vị trí</label>
-        <select id="position" name="position" class="form-select form-select-sm" [(ngModel)]="employee.position">
+        <select id="position" name="position" class="form-select form-select-sm" [(ngModel)]="user.position">
             <option value="">-- Chọn vị trí --</option>
             <option value="Pha chế">Pha chế</option>
             <option value="Thu ngân">Thu ngân</option>
@@ -93,7 +93,7 @@
 
     <div class="mb-3">
         <label for="shift" class="form-label small">Ca làm</label>
-        <select id="shift" name="shift" class="form-select form-select-sm" [(ngModel)]="employee.shift">
+        <select id="shift" name="shift" class="form-select form-select-sm" [(ngModel)]="user.shift">
             <option value="">-- Chọn ca --</option>
             <option value="Sáng">Sáng</option>
             <option value="Chiều">Chiều</option>
@@ -102,13 +102,18 @@
         </select>
     </div>
     <div class="mb-3">
-        <label for="roles" class="form-label small">Quyền (phân cách bằng dấu phẩy)</label>
-        <input type="text" id="roles" name="roles" class="form-control form-control-sm" [(ngModel)]="rolesInput" />
-    </div>
-    <div class="mb-3">
         <label for="avatarUrl" class="form-label small">Ảnh đại diện (URL)</label>
         <input type="text" id="avatarUrl" name="avatarUrl" class="form-control form-control-sm"
-            [(ngModel)]="employee.avatarUrl" />
+            [(ngModel)]="user.avatarUrl" />
+    </div>
+
+    <div class="mb-3">
+        <label for="status" class="form-label small">Trạng thái</label>
+        <select id="status" name="status" class="form-select form-select-sm" [(ngModel)]="user.status">
+            <option value="">-- Chọn trạng thái --</option>
+            <option value="đang làm">Đang làm</option>
+            <option value="đã nghĩ">Đã nghĩ</option>
+        </select>
     </div>
 
     <div class="offcanvas-footer">

@@ -1,1 +1,50 @@
-<p>employee-list works!</p>
+<div class="container mt-4 mb-4">
+    <div class="list-group-item d-flex fw-bold shadow-sm mb-2 sticky-header">
+
+        <div class="flex-fill">Mã nhân viên</div>
+        <div class="flex-fill">Họ và tên</div>
+        <div class="flex-fill">Giới tính</div>
+        <div class="flex-fill">Ngày sinh</div>
+        <div class="flex-fill">Số điện thoại</div>
+        <div class="flex-fill">Vị trí</div>
+        <div class="flex-fill">Ca làm</div>
+        <div class="flex-fill">Trạng thái</div>
+
+    </div>
+    <div class="list-group">
+        <div *ngFor="let employee of pagedEmployee" (dblclick)="dblclickEmployee()" (click)="clickEmployee(employee)"
+            class="list-group-item d-flex mb-2" [ngClass]="{'selected-employee': userselect?.id === employee?.id}">
+            <div class="flex-fill">{{ employee.code }}</div>
+            <div class="flex-fill">{{ employee.fullName }}</div>
+            <div class="flex-fill">{{ employee.gender }}</div>
+            <div class="flex-fill">{{ employee.dateOfBirth | date:'dd/MM/yyyy' }}</div>
+            <div class="flex-fill">{{ employee.phoneNumber }}</div>
+            <div class="flex-fill">{{ employee.position }}</div>
+            <div class="flex-fill">{{ employee.shift }}</div>
+
+            <div class="flex-fill">
+                <span class="task-status" [ngClass]="getStatusClass(employee.status)">
+                    {{ getStatusText(employee.status) }}
+                </span>
+            </div>
+
+        </div>
+    </div>
+    <!-- PAGINATION -->
+    <div class="d-flex justify-content-center mt-3">
+
+        <button class="btn btn-sm btn-secondary me-2" (click)="prevPage()" [disabled]="currentPage === 1">
+            ←
+        </button>
+
+        <span class="me-2">
+            Trang {{currentPage}} / {{totalPages}}
+        </span>
+
+        <button class="btn btn-sm btn-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages">
+            →
+        </button>
+
+    </div>
+
+</div>

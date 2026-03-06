@@ -15,7 +15,6 @@ export class OrderAddComponent implements OnChanges {
   text: string = "";
   @Input() data: any;
   action: string = "";
-  @Input() customer: any = {};
   order: any = {};
   @Input() user: any = {};
 
@@ -56,11 +55,10 @@ export class OrderAddComponent implements OnChanges {
     this.order.totalAmount = "0";
     this.order.status = "Chờ thanh toán";
     this.order.type = "90";
-    this.customer.membershipLevel = "Thường";
-    this.customer.rewardPoints = "0";
+    this.user.membershipLevel = "Thường";
+    this.user.rewardPoints = "0";
     const requestData = {
       orderDto: this.order,
-      customerDetailsDTO: this.customer,
       userDTO: this.user
     };
     // console.log(requestData);

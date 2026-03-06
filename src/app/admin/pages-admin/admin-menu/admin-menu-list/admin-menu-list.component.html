@@ -8,7 +8,7 @@
         <div class="col-2">Trạng thái</div>
     </div>
     <div class="list-group">
-        <div *ngFor="let drink of drinks" (dblclick)="dblclickDrink()" (click)="clickDrink(drink)"
+        <div *ngFor="let drink of pagedDrinks" (dblclick)="dblclickDrink()" (click)="clickDrink(drink)"
             class="list-group-item d-flex mb-2" [ngClass]="{'selected-drink': drinkselect?.id === drink?.id}">
             <div class="col-2 p"><img src="{{drink.imagePath}}" width="30" alt=""></div>
             <div class="col-2 p">{{ drink.sku }}</div>
@@ -19,4 +19,21 @@
                     {{ getStatusText(drink.status) }}</span></div>
         </div>
     </div>
+    <!-- PAGINATION -->
+    <div class="d-flex justify-content-center mt-3">
+
+        <button class="btn btn-sm btn-secondary me-2" (click)="prevPage()" [disabled]="currentPage === 1">
+            ←
+        </button>
+
+        <span class="me-2">
+            Trang {{currentPage}} / {{totalPages}}
+        </span>
+
+        <button class="btn btn-sm btn-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages">
+            →
+        </button>
+
+    </div>
+
 </div>

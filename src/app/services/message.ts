@@ -29,6 +29,23 @@ export class MessageService {
     { code: '1022', text: 'Chưa thể thanh toán !' },
 
 
+    { code: '1023', text: 'Thêm món thành công !' },
+    { code: '1024', text: 'Cập nhật món thành công !' },
+    { code: '1025', text: 'Xoá món thành công !' },
+
+
+    { code: '1026', text: 'Thêm loại món thành công !' },
+    { code: '1027', text: 'Cập nhật loại thành công !' },
+    { code: '1028', text: 'Xoá loại món thành công !' },
+
+
+    { code: '1029', text: 'Thêm nhân viên thành công !' },
+    { code: '1030', text: 'Vui lòng nhập đầy đủ thông tin !' },
+    { code: '1031', text: 'Cập nhật nhân viên thành công !' },
+
+
+
+
 
 
 
@@ -45,7 +62,7 @@ export class MessageService {
 
 
   ];
-  
+
   getMessageByCode(code: string) {
     const message = this.messages.find(msg => msg.code === code);
     return message ? message.text : 'Thông báo không tìm thấy!';

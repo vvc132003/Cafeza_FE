@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { EmployeeService } from 'src/app/services/employee.service';
+import { NotificationService } from 'src/app/services/notification';
+import { Userservice } from 'src/app/services/Userservice';
 
 @Component({
   selector: 'app-employee-add',
@@ -14,11 +15,10 @@ export class EmployeeAddComponent implements OnChanges {
   text: string = "";
   action: string = "";
   @Input() user: any = {};
-  @Input() employee: any = {};
 
 
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private userService: Userservice, private notificationService: NotificationService) { }
 
   tables = [
     // { label: 'Danh mục', icon: 'bi-folder', tab: 'category' },
@@ -33,15 +33,18 @@ export class EmployeeAddComponent implements OnChanges {
       this.text = this.data.text;
       this.action = this.data.action;
     }
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const numbers = '0123456789';
-    let code = 'MN-';
+    if (this.user && !this.user.code) {
 
-    for (let i = 0; i < 3; i++) {
-      code += letters[Math.floor(Math.random() * letters.length)];
-      code += numbers[Math.floor(Math.random() * numbers.length)];
+      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const numbers = '0123456789';
+      let code = 'MN-';
+
+      for (let i = 0; i < 3; i++) {
+        code += letters[Math.floor(Math.random() * letters.length)];
+        code += numbers[Math.floor(Math.random() * numbers.length)];
+      }
+      this.user.code = code
     }
-    this.employee.code = code
   }
 
   close() {
@@ -49,19 +52,43 @@ export class EmployeeAddComponent implements OnChanges {
   }
 
   rolesInput: string = '';
-
+  @Output() newData = new EventEmitter<void>();
   save() {
-    this.employee.roles = this.rolesInput.split(',').map(role => role.trim());
-    this.employee.status = 'đang làm';
+    if (this.action === 'add') {
+      this.saveE();
+    } else if (this.action === 'update') {
+      this.updateE();
+    }
+  }
+  saveE() {
+
+    if (!this.user) {
+      return;
+    }
+
+    if (!this.user.fullName || !this.user.phoneNumber) {
+      this.notificationService.showSuccess("1030");
+      return;
+    }
     this.user.isDeleted = true;
     this.user.role = 'employee';
-    const data = {
-      employeeDetailsDTO: this.employee,
-      userDTO: this.user,
-    }
+    this.user.membershipLevel = "Thường";
+    this.user.rewardPoints = "0";
+
     // console.log(data);
-    this.employeeService.postData(data).subscribe((res: any) => {
-      console.log('thành công !');
+    this.userService.postData(this.user).subscribe((res: any) => {
+      this.close();
+      this.newData.emit(res);
+      this.notificationService.showSuccess("1029");
+    })
+  }
+
+
+  updateE() {
+    this.userService.updateData(this.user.id, this.user).subscribe((res: any) => {
+      this.close();
+      this.newData.emit(res);
+      this.notificationService.showSuccess("1031");
     })
   }
 

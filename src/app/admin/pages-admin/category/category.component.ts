@@ -118,6 +118,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.categoryService.deleteData(this.category.id).subscribe(data => {
           this.categories = this.categories.filter(d => d.id !== this.category.id);
           this.category = this.categories[0];
+          this.count -= 1;
+          this.notificationService.showSuccess('1028');
         })
         break;
       default:

@@ -105,6 +105,8 @@ export class AdminMenuAddComponent implements OnInit, OnChanges, OnDestroy {
       this.close();
       // console.log(data);
       this.newData.emit(data);
+      this.notificationService.showSuccess('1023');
+
     })
   }
 
@@ -113,6 +115,8 @@ export class AdminMenuAddComponent implements OnInit, OnChanges, OnDestroy {
       this.close();
       // console.log(data);
       this.newData.emit(data);
+      this.notificationService.showSuccess('1024');
+
     })
   }
 

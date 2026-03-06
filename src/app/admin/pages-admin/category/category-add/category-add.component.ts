@@ -90,6 +90,7 @@ export class CategoryAddComponent implements OnChanges {
       // console.log(data);
       this.close();
       this.newData.emit(data);
+      this.notificationService.showSuccess('1026');
     })
   }
   updateCategory() {
@@ -98,6 +99,8 @@ export class CategoryAddComponent implements OnChanges {
       // console.log(data);
       this.close();
       this.newData.emit(data);
+      this.notificationService.showSuccess('1027');
+
     })
   }
 

@@ -6,7 +6,7 @@ import { DrinkService } from 'src/app/services/drinkservice';
 import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-headers',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })

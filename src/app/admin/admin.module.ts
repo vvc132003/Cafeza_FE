@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
@@ -34,7 +34,7 @@ import { EmployeeAddComponent } from './pages-admin/employee/employee-add/employ
 import { EmployeeDetailComponent } from './pages-admin/employee/employee-detail/employee-detail.component';
 import { UpdatequantityDetailComponent } from './pages-admin/order/updatequantity-detail/updatequantity-detail.component';
 // import { ConfirmModalComponent } from '../core/confirm-modal/confirm-modal.component';
-import { SharedModule } from '../shared/shared.module';
+// import { SharedModule } from '../shared/shared.module';
 import { TableKabanComponent } from './pages-admin/table/table-kaban/table-kaban.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormsModule } from '@angular/forms';
@@ -53,6 +53,7 @@ const myLibConfig: MyLibConfig = {
 
 
 @NgModule({
+  providers: [DatePipe],
   declarations: [
     // AdminComponent,
     // ImgComponent,
@@ -93,7 +94,7 @@ const myLibConfig: MyLibConfig = {
     FormsModule,
     ToastrModule.forRoot(),
     HttpClientModule,
-    SharedModule,
+    // SharedModule,
     DragDropModule,
     // CoresModule,
     // MyLibModule
