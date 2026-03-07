@@ -1,0 +1,237 @@
+<lib-layout-staff  tableName="{{order.tableName}}" [text]="'Quản lý chi tiết hoá đơn'" (showButtonss)="evetnbuttons($event)"
+    [buttonNone]="showButtonsnone" [tabTemplates]="{tableList,adminMenuAdd}" (showPupAdd)="click($event)"></lib-layout-staff >
+
+<ng-template #tableList>
+    <div class="container-fluid p-2 modern-layout bg-light rounded">
+        <div class="row mb-4 g-4">
+            <!-- Danh sách sản phẩm -->
+            <div class="col-md-5">
+                <div class="card border-0 fixed-height-no-scroll-drinks">
+                    <div class="card-body">
+                        <h5 class="section-header mb-4">
+                            <i class="fas fa-coffee me-2 icon-brown"></i> Món
+                        </h5>
+                        <!-- Thanh tìm kiếm và lọc -->
+                        <div class="row g-2 align-items-center text-center mb-4">
+                            <div class="col-md-3">
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="isDeleted">
+                                        {{ isDeleted ? 'Mang về' : 'Tại chổ' }}
+                                    </label>
+                                    <input class="form-check-input" type="checkbox" role="switch" id="isDeleted"
+                                        [(ngModel)]="isDeleted" name="isDeleted" />
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="fas fa-search text-muted"></i>
+                                    </span>
+                                    <input type="text" class="form-control form-control-sm border-start-0"
+                                        [(ngModel)]="timKiemTen" placeholder="Tìm theo tên...">
+                                </div>
+                            </div>
+                            <div class="col-md-4 d-flex">
+                                <select class="form-select form-select-sm" [(ngModel)]="loaiDuocChon">
+                                    <option *ngFor="let category of categorys" [value]="category.id">{{ category.name }}
+                                    </option>
+                                </select>
+                                <button class="btn btn-outline-black ms-2" (click)="clickAdd()">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Danh sách sản phẩm -->
+                        <div class="row g-3 category-list">
+                            <div class="col-6 col-lg-4" *ngFor="let drink of sanPhamLoc">
+                                <div class="card product-card text-center border-0  h-100  hover-scale">
+                                    <img [src]="drink.imagePath" alt="{{ drink.name }}"
+                                        class="card-img-top p-2 rounded-top-4"
+                                        style="height: 100px; object-fit: cover;">
+                                    <div class="card-body">
+                                        <p class="fw-bold text-dark mb-1">{{ drink.name }}</p>
+                                        <p class="text-muted small mb-2">{{ drink.price | number }} VNĐ</p>
+                                        <button class="btn btn-sm btn-outline-primary w-100"
+                                            (click)="addOrderDetail(drink)">
+                                            <i class="fas fa-plus me-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Chi tiết hóa đơn + Thông tin thanh toán -->
+            <div class="col-md-7">
+                <!-- Chi tiết hóa đơn -->
+                <div class="card border-0  mb-4 fixed-height-no-scroll">
+                    <div class="card-body">
+                        <h5 class="header-section mb-4">
+                            <i class="fas fa-list-alt me-2 icon-green"></i> Chi tiết hóa đơn
+                        </h5>
+                        <div class="list-group-item d-flex fw-bold shadow-sm mb-2 sticky-header">
+                            <div class="col-2 p">Thức uống</div>
+                            <div class="col-2">Số lượng</div>
+                            <div class="col-2">Giá bán</div>
+                            <div class="col-2">Thành tiền</div>
+                            <div class="col-2">Ghi chú</div>
+                            <div class="col-2 p">Thao tác / Trạng thái</div>
+                        </div>
+                        <!-- <div class="row g-3 category-list"> -->
+
+                        <div class="list-group orderdetail-list">
+                            <div *ngFor="let orderdetail of orderdetails" class="list-group-item d-flex mb-2">
+                                <div class="col-2 p">{{ orderdetail.drinkName }} </div>
+                                <div class="col-2">{{ orderdetail.quantity }}</div>
+                                <div class="col-2">{{ orderdetail.unitPrice | number }} VNĐ</div>
+                                <div class="col-2">{{ orderdetail.unitPrice * orderdetail.quantity| number }} VNĐ</div>
+                                <div class="col-2">{{orderdetail.note}}</div>
+                                <div class="col-2">
+                                    <!-- <span *ngIf="orderdetail.status === 'done' || orderdetail.status === 'processing'">
+                                        {{ orderdetail.status }}
+                                    </span> -->
+                                    <span *ngIf="orderdetail.status === 'done' || orderdetail.status === 'processing'"
+                                        class="task-status" [ngClass]="getStatusClasss(orderdetail.status)">
+                                        {{
+                                        getStatusText(orderdetail.status)
+                                        }}</span>
+                                    <ng-container
+                                        *ngIf="orderdetail.status !== 'done' && orderdetail.status !== 'processing'">
+                                        <button class="btn btn-warning btn-sm me-1" (click)="updateor(orderdetail)">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" (click)="deleteor(orderdetail)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thông tin thanh toán -->
+                <div class="card border-0  mb-4 fixed-height-no-scroll">
+                    <!-- <div class="card-header  bg-brown  text-white fw-bold">
+                        <i class="fas fa-receipt me-2"></i> Thông tin hóa đơn
+                    </div> -->
+                    <div class="card-body">
+                        <h5 class="section-header-bill mb-2">
+                            <i class="fas fa-receipt me-2 icon-bill"></i> Hóa đơn
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between py-3 border-bottom">
+                                    <span><strong>Mã hóa đơn:</strong></span>
+                                    <span>{{ order.code }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between py-3 border-bottom">
+                                    <span><strong>Tổng tiền:</strong></span>
+                                    <span>{{ tinhTongTien() | number }} VNĐ</span>
+                                </div>
+                                <div class="d-flex justify-content-between py-3 border-bottom">
+                                    <span><strong>Tiền thối:</strong></span>
+                                    <span>{{ tinhTienThoi() | number }} VNĐ</span>
+                                </div>
+                                <div class="d-flex justify-content-between py-3">
+                                    <span><strong>Nhân viên:</strong></span>
+                                    <span>{{ order.fullNameEmployee }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- <div class="d-flex justify-content-between py-3 border-bottom">
+                                    <span><strong>Bàn:</strong></span>
+                                    <span>{{ tenBan }}</span>
+                                </div> -->
+                                <div class="d-flex justify-content-between py-3 border-bottom">
+                                    <span><strong>Ngày:</strong></span>
+                                    <span>{{ order.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between py-3 border-bottom">
+                                    <span><strong>Khách hàng:</strong></span>
+                                    <span>{{ order.fullNameCustomer }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center py-3">
+                                    <span><strong>Tiền khách đưa:</strong></span>
+                                    <input type="number" class="form-control form-control-sm w-50"
+                                        [(ngModel)]="amountPaid" (input)="tinhTienThoi()"
+                                        placeholder="Nhập số tiền..." />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #adminMenuAdd>
+    <app-staff-order-menu-add [showoffcanvas]="showoffcanvas" [drink]="drinkUpdate" [data]="data"
+        (closePupAdd)="close()"></app-staff-order-menu-add>
+</ng-template>
+
+<app-staff-order-udquantity [isorderdetailOpen]="isorderdetailOpen" (closenModal)="close()"
+    (categoryIconSelected)="updateQuantity($event)"></app-staff-order-udquantity>
+
+<ng-container *ngIf="isModalVisible">
+    <app-confirm-modal [show]="showModal" title="Xác nhận hủy đơn" message="Bạn có chắc chắn muốn hủy đơn này không?"
+        confirmText="Có, hủy đơn" cancelText="Không" (onCancel)="close()" [action]="action"
+        (onConfirm)="confirm($event)">
+    </app-confirm-modal>
+</ng-container>
+
+<ng-container *ngIf="isModalVisible">
+    <app-confirm-modal [show]="showModalInvoice" title="Xác nhận in hoá đơn" message="Bạn có muốn in hoá đơn không?"
+        confirmText="Có, in hoá đơn" cancelText="Không" (onCancel)="close()" [action]="action"
+        (onConfirm)="confirm($event)">
+    </app-confirm-modal>
+</ng-container>
+
+<ng-container *ngIf="isModalVisible">
+    <app-confirm-modal [show]="showModalChangeTable" title="Chuyển bàn" confirmText="Có, chuyển bàn" cancelText="Không"
+        (onCancel)="close()" [action]="action" [fromTableId]="order.tableId" [tableName]="order.tableName"
+        [height]="'40vh'" (onConfirm)="confirm($event)">
+    </app-confirm-modal>
+</ng-container>
+
+
+<!-- thanh toán -->
+<ng-container *ngIf="isModalVisible">
+    <app-confirm-modal [show]="showModalpaymen" title="Thanh toán" message="Bạn có muốn thanh toán bàn này không?"
+        confirmText="Có, thanh toán" cancelText="Không" (onCancel)="close()" [action]="action"
+        (onConfirm)="confirm($event)">
+    </app-confirm-modal>
+</ng-container>
+
+<ng-container *ngIf="isorderCancellationVisible">
+    <div [class.show]="isorderCancellation" class="overlay"></div>
+    <div class="card ordercancel-card" [class.show]="isorderCancellation">
+        <div class="card-body">
+            <button class="btn-close position-absolute top-0 end-0 m-2" (click)="close()"></button>
+            <h5 class="card-title text-center">Huỷ đơn</h5>
+            <!-- <div class="mb-3">
+                <label for="quantity" class="form-label small">Số lượng</label>
+                <input type="number" class="form-control form-control-sm" id="quantity" name="quantity"
+                    [(ngModel)]="data.quantity">
+            </div> -->
+            <div class="mb-3">
+                <label for="reason" class="form-label small">Lý do</label>
+                <!-- <input type="text" class="form-control form-control-sm" id="note" name="note" [(ngModel)]="data.note"> -->
+                <textarea class="form-control form-control-sm" [(ngModel)]="orderCancellation.reason" id="reason"
+                    name="reason" rows="6" cols="50"></textarea>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+                <button class="btn btn-primary px-4" (click)="cancelOrder()">
+                    <i class="fa fa-save"></i> Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-container>

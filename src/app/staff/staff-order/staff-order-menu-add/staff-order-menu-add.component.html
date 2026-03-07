@@ -1,0 +1,105 @@
+<app-form-add [headerDiv]="tables" [text]="text" [showoffcanvas]="showoffcanvas" (closePupAdd)="close()"
+    [tabTemplates]="{ category: categoryContent, extraContent: extraContent }">
+</app-form-add>
+
+<ng-template #categoryContent>
+    <div class="mb-3">
+        <label for="sku" class="form-label small">Mã món</label>
+        <input type="text" id="sku" name="sku" class="form-control form-control-sm" [(ngModel)]="drink.sku"
+            readonly />
+    </div>
+    <div class="mb-3">
+        <label for="name" class="form-label small">Tên món</label>
+        <input type="text" id="name" name="name" class="form-control form-control-sm" [(ngModel)]="drink.name"
+            (input)="onNameChange()" required />
+    </div>
+    <div class="mb-3">
+        <label for="slug" class="form-label small">Đường dẫn</label>
+        <input type="text" id="slug" name="slug" class="form-control form-control-sm" [(ngModel)]="drink.slug"
+            readonly />
+    </div>
+    <div class="mb-3">
+        <label for="category" class="form-label small">Danh mục</label>
+        <select id="category" name="category" class="form-control form-control-sm" [(ngModel)]="drink.categoryId"
+            required>
+            <option *ngFor="let category of categorys" [value]="category.id">
+                {{ category.name }}
+            </option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="price" class="form-label small">Giá món</label>
+        <input type="number" id="price" name="price" class="form-control form-control-sm" [(ngModel)]="drink.price"
+            required min="0" />
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label small">Mô tả món</label>
+        <textarea id="description" name="description" class="form-control form-control-sm"
+            [(ngModel)]="drink.description" required></textarea>
+    </div>
+    <div class="mb-3">
+        <!-- <label for="image" class="form-label small">Hình ảnh</label> -->
+        <div class="custom-file">
+            <input type="file" id="image" name="image" class="form-control form-control-sm"
+                (change)="onFilesSelected($event)" #fileInput style="display: none" />
+            <a href="javascript:void(0)" class="custom-file-link" (click)="fileInput.click()">
+                Chọn ảnh
+            </a>
+        </div>
+    </div>
+    <div class="offcanvas-footer">
+        <button type="button" class="btn btn-primary px-4" (click)="save()">
+            <i class="fa fa-save"></i>
+            Lưu
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #extraContent>
+    <div class="mb-3">
+        <label for="viewCount" class="form-label small">Lượt xem </label>
+        <input type="number" id="viewCount" class="form-control form-control-sm" [(ngModel)]="drink.viewCount" min="0"
+            readonly />
+    </div>
+    <div class="mb-3">
+        <label for="quantity" class="form-label small">Số lượng món</label>
+        <input type="number" id="quantity" name="quantity" class="form-control form-control-sm"
+            [(ngModel)]="drink.quantity" required min="0" />
+    </div>
+
+    <!-- Thêm tình trạng món -->
+    <div class="mb-3">
+        <label for="status" class="form-label small">Tình trạng món</label>
+        <select id="status" name="status" class="form-control form-control-sm" [(ngModel)]="drink.status" required>
+            <option value="available">Có sẵn</option>
+            <option value="out_of_stock">Hết hàng</option>
+            <option value="discontinued">Ngừng bán</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="size" class="form-label small me-4">Kích thước phần ăn</label>
+
+        <button type="button" class="btn btn-outline-primary btn-sm" [ngClass]="{'active': drink.size === 'small'}"
+            (click)="drink.size = 'small'">
+            Nhỏ
+        </button>
+
+        <button type="button" class="btn btn-outline-primary btn-sm" [ngClass]="{'active': drink.size === 'medium'}"
+            (click)="drink.size = 'medium'">
+            Vừa
+        </button>
+
+        <button type="button" class="btn btn-outline-primary btn-sm" [ngClass]="{'active': drink.size === 'large'}"
+            (click)="drink.size = 'large'">
+            Lớn
+        </button>
+    </div>
+
+    <div class="offcanvas-footer">
+        <button type="button" class="btn btn-primary px-4" (click)="save()">
+            <i class="fa fa-save"></i>
+            Lưu
+        </button>
+    </div>
+</ng-template>

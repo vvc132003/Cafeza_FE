@@ -1,0 +1,89 @@
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { NotificationService } from 'src/app/services/notification';
+import { TableService } from 'src/app/services/table.service';
+
+@Component({
+  selector: 'app-staff-table-add',
+  templateUrl: './staff-table-add.component.html',
+  styleUrls: ['./staff-table-add.component.scss']
+})
+export class StaffTableAddComponent implements OnChanges {
+  @ViewChild('extraContent') extraContent!: TemplateRef<any>;
+  @ViewChild('categoryContent') categoryContent!: TemplateRef<any>;
+  @ViewChild('setting') setting!: TemplateRef<any>;
+  // @ViewChild('button') button!: TemplateRef<any>;
+
+  @Input() showoffcanvas = false;
+  @Output() closePupAdd = new EventEmitter<void>();
+  @Output() newPupAdd = new EventEmitter<void>();
+
+  text: string = "";
+  @Input() data: any;
+  action: string = "";
+
+
+  constructor(private cdr: ChangeDetectorRef, private tableService: TableService, private notificationService: NotificationService) { }
+
+
+  close() {
+    this.closePupAdd.emit();
+  }
+
+  onInputChange(event: { name: string, value: any }) {
+    this.table[event.name] = event.value;
+  }
+
+
+  @Input() table: any = {};
+  @Input() listTablesparentId: any[] = [];
+
+  tables = [
+    { label: 'Thông tin chung', icon: 'bi-folder', tab: 'category' },
+    { label: 'Cài đặt', icon: 'bi-gear', tab: 'setting' }
+  ];
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data'] && changes['data'].currentValue) {
+      this.data = { ...changes['data'].currentValue };
+      this.text = this.data.text;
+      this.action = this.data.action;
+    }
+    if (changes['listTablesparentId'] && changes['listTablesparentId'].currentValue) {
+      const raw = changes['listTablesparentId'].currentValue;
+      const list = Array.isArray(raw) ? raw : Object.values(raw);
+      this.listTablesparentId = list.filter(item => item.parentId == null);
+    }
+    /// tạo bản sao khi bị dính đến compent cha của chức năng copy
+    if (this.action === 'copy')
+      this.table = { ...this.table };
+  }
+
+  save(): void {
+    if (this.action === 'addkv') {
+      this.saveLocation();
+      this.notificationService.showSuccess('1005');
+    } else if (this.action === 'addb' || this.action === 'copy') {
+      this.table.status = 'empty';
+      this.table.location = this.listTablesparentId.find((tb: any) => tb.id === this.table.parentId)?.location || null;
+      this.saveLocation();
+      this.notificationService.showSuccess('1002');
+    }
+    else if (this.action === 'update') {
+      this.updateLocation();
+    }
+  }
+
+  saveLocation() {
+    if (!this.table.location) return;
+    this.tableService.postData(this.table).subscribe((data) => {
+      this.close();
+      // this.newPupAdd.emit(data);
+    })
+  }
+
+  updateLocation() {
+
+  }
+
+}

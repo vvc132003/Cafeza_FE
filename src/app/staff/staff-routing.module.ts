@@ -3,12 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { BartendingComponent } from './bartending/bartending.component';
 import { CounterStaffComponent } from './counter-staff/counter-staff.component';
 import { Userservice } from '../services/Userservice';
+import { StaffTableComponent } from './staff-table/staff-table.component';
+import { StaffOrderComponent } from './staff-order/staff-order.component';
 
 const routes: Routes = [
   { path: 'staff/bartending/:funId', component: BartendingComponent, canActivate: [Userservice] },
+  { path: 'staff/tables/:funId', component: StaffTableComponent, canActivate: [Userservice] },
+  { path: 'staff/tables/:funId/orderdetail/:id', component: StaffOrderComponent, canActivate: [Userservice] },
+
   { path: 'staff/counter-staff/:funId', component: CounterStaffComponent },
-  
-];  
+
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

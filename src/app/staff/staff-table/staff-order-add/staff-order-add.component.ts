@@ -1,0 +1,71 @@
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { CustomerService } from 'src/app/services/customer.service';
+import { NotificationService } from 'src/app/services/notification';
+import { OrderService } from 'src/app/services/order.service';
+
+@Component({
+  selector: 'app-staff-order-add',
+  templateUrl: './staff-order-add.component.html',
+  styleUrls: ['./staff-order-add.component.scss']
+})
+export class StaffOrderAddComponent implements OnChanges {
+
+  @Input() showoffcanvas = false;
+  @Output() closePupAddOrder = new EventEmitter<void>();
+  text: string = "";
+  @Input() data: any;
+  action: string = "";
+  order: any = {};
+  @Input() user: any = {};
+
+  @Input() tableId: number = 0;
+
+
+
+  tables = [
+    { label: 'Thông tin khách hàng', icon: 'bi-person-vcard', tab: 'category' },
+  ];
+
+  constructor(private cdr: ChangeDetectorRef, private customerService: CustomerService, private orderService: OrderService, private notificationService: NotificationService) { }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data'] && changes['data'].currentValue) {
+      this.data = { ...changes['data'].currentValue };
+      this.text = this.data.text;
+      this.action = this.data.action;
+    }
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+    let code = 'HD-';
+
+    for (let i = 0; i < 3; i++) {
+      code += letters[Math.floor(Math.random() * letters.length)];
+      code += numbers[Math.floor(Math.random() * numbers.length)];
+    }
+    this.order.code = code;
+  }
+
+  close() {
+    this.closePupAddOrder.emit();
+  }
+
+  save() {
+    this.order.tableId = this.tableId;
+    this.order.totalAmount = "0";
+    this.order.status = "Chờ thanh toán";
+    this.order.type = "90";
+    this.user.membershipLevel = "Thường";
+    this.user.rewardPoints = "0";
+    const requestData = {
+      orderDto: this.order,
+      userDTO: this.user
+    };
+    // console.log(requestData);
+    this.orderService.postData(requestData).subscribe((res: any) => {
+      this.notificationService.showSuccess("1003");
+      this.close();
+    })
+  }
+
+}

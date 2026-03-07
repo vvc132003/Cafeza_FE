@@ -14,7 +14,7 @@ import { DrinksDetailComponent } from './drinks/drinks-detail/drinks-detail.comp
 import { LoginComponent } from './pages-home/login/login.component';
 import { CookieService } from 'ngx-cookie-service';
 import { CartComponent } from './cart/cart.component';
-import { SharedModule } from '../shared/shared.module';
+// import { SharedModule } from '../shared/shared.module';
 import { MyLibModule } from "my-lib";
 
 
@@ -35,7 +35,7 @@ import { MyLibModule } from "my-lib";
     FormsModule,
     ToastrModule.forRoot(),
     HttpClientModule,
-    SharedModule,
+    // SharedModule,
     MyLibModule
 ],
   // providers: [CookieService],

@@ -1,0 +1,41 @@
+<lib-layout-staff [text]="'Quản lý bàn'" (showButtonss)="evetnbuttons($event)" [buttonNone]="showButtonsnone" [count]="count"
+    (showPupAdd)="click($event)" [tabTemplates]="{tableList}">
+</lib-layout-staff>
+
+<ng-template #tableList>
+    <div class="bottom-card">
+        <div class="d-flex justify-content-end">
+            <div *ngIf="dropdowns.length > 0" class="dropdown">
+                <button class="btn btn-sm btn-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <ul style="z-index: 100000; cursor: pointer;" class="dropdown-menu dropdown-menu-end"
+                    aria-labelledby="dropdownMenuButton">
+                    <li *ngFor="let item of dropdowns">
+                        <a class="dropdown-item" (click)="toggleSection(item.action)">
+                            <i class="fa" [ngClass]="item.icon"></i> {{ item.label }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <app-staff-table-list *ngIf="showBoard" [tables]="tables" (doubleClick)="onTableDoubleClick($event)" [selectTable]="selectTable" (table)="clickTable($event)"></app-staff-table-list>
+        <app-staff-table-kaban *ngIf="showKaban" [tables]="tables" (doubleClick)="onTableDoubleClick($event)"  (tableSelected)="clickTable($event)" (tableDropped)="handleTableDropped($event)"></app-staff-table-kaban>
+    </div>
+</ng-template>
+
+<!-- <ng-container *ngIf="showAdd"> -->
+<app-staff-table-add [listTablesparentId]="tables" [showoffcanvas]="showoffcanvas" [table]="table" [data]="data"
+    (closePupAdd)="close()"></app-staff-table-add>
+<!-- </ng-container> -->
+
+<app-staff-select-order-type [isTypeOpen]="isTypeOpen" [tableId]="tableId" (showOrder_Type)="showOrderType()"
+    (closeTypeModal)="closeType()"></app-staff-select-order-type>
+
+<app-staff-order-add [showoffcanvas]="showoffOrder" [tableId]="tableId" [data]="data"
+    (closePupAddOrder)="close()"></app-staff-order-add>
+
+<div class="custom-toast" *ngIf="showToast">
+    {{ toastMessage }}
+</div>

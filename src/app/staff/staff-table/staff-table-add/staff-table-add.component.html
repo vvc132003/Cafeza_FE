@@ -1,0 +1,98 @@
+<app-form-add [text]="text" [headerDiv]="tables" [showoffcanvas]="showoffcanvas" (closePupAdd)="close()"
+  [tabTemplates]="{ category: categoryContent,setting:setting }">
+</app-form-add>
+
+<ng-template #categoryContent>
+
+  <div *ngIf="action === 'addkv'">
+    <!-- <div class="mb-3">
+      <label for="location" class="form-label small">Khu vực</label>
+      <input type="text" class="form-control form-control-sm" id="location" name="location"
+        [(ngModel)]="table.location">
+    </div> -->
+    <lib-label [name]="'location'" [value]="table.location" (dataChange)="onInputChange($event)"></lib-label>
+
+  </div>
+
+  <div *ngIf="action === 'addb' || action === 'copy'">
+    <div class="mb-3">
+      <label for="parentId" class="form-label small">Khu vực (nếu có)</label>
+      <select class="form-select form-select-sm" id="parentId" name="parentId" [(ngModel)]="table.parentId">
+        <option [ngValue]="null">-- Không có --</option>
+        <option *ngFor="let item of listTablesparentId" [value]="item.id">
+          {{ item.location }}
+        </option>
+      </select>
+    </div>
+
+    <!-- <div class="mb-3">
+      <label for="tableName" class="form-label small ">Tên bàn</label>
+      <input type="text" class="form-control form-control-sm" id="tableName" name="tableName"
+        [(ngModel)]="table.tableName" required>
+    </div> -->
+    <lib-label [name]="'tableName'" [value]="table.tableName" (dataChange)="onInputChange($event)"></lib-label>
+
+    <div class="mb-3">
+      <label for="capacity" class="form-label small ">Sức chứa</label>
+      <input type="text" class="form-control form-control-sm" id="capacity" name="capacity" [(ngModel)]="table.capacity"
+        required>
+    </div>
+    <div class="mb-3">
+      <label for="type" class="form-label small">Loại bàn</label>
+      <input type="text" class="form-control form-control-sm" id="type" name="type" [(ngModel)]="table.type">
+    </div>
+    <div class="mb-3">
+      <label for="note" class="form-label small">Ghi chú</label>
+      <textarea class="form-control form-control-sm" id="note" name="note" [(ngModel)]="table.note"></textarea>
+    </div>
+  </div>
+
+  <div class="offcanvas-footer">
+    <button type="button" class="btn btn-primary px-4" (click)="save()">
+      <i class="fa fa-save"></i>
+      Lưu
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #setting>
+
+  <!-- <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" id="isDeleted" name="isDeleted" [(ngModel)]="table.isDeleted">
+    <label class="form-check-label small" for="isDeleted">
+      Đã xoá
+    </label>
+  </div> -->
+
+  <div class="form-check form-switch">
+    <label class="form-check-label" for="isDeleted">
+      {{ table.isDeleted ? 'Đang hoạt động' : 'Không hoạt động' }}
+    </label>
+    <input class="form-check-input" type="checkbox" role="switch" id="isDeleted" [(ngModel)]="table.isDeleted"
+      name="isDeleted" />
+  </div>
+
+  <div class="form-check form-switch">
+    <label class="form-check-label" for="isReservable">
+      {{ table.isReservable ? 'Cho phép đặt chỗ online' : 'Không cho phép đặt chỗ online' }}
+    </label>
+    <input class="form-check-input" type="checkbox" role="switch" id="isReservable" [(ngModel)]="table.isReservable"
+      name="isReservable" />
+  </div>
+
+  <div class="offcanvas-footer">
+    <button type="button" class="btn btn-primary px-4" (click)="save()">
+      <i class="fa fa-save"></i>
+      Lưu
+    </button>
+  </div>
+
+  <!-- <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" id="isReservable" name="isReservable"
+      [(ngModel)]="table.isReservable">
+    <label class="form-check-label small" for="isReservable">
+      Cho phép đặt chỗ online
+    </label>
+  </div> -->
+
+</ng-template>

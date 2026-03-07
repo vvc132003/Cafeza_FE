@@ -20,27 +20,41 @@ export class Userservice implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
+
         const token = this.cookieService.get('access_token');
-        if (token) {
-            const decoded: any = jwt_decode(token);
-            const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-            if (role === "admin") {
-                return true;
-            }
 
-            const currentRoutePath = route.url.map(segment => segment.path).join('/');
-
-            if (role === "employee") {
-                if (currentRoutePath === 'staff/bartending/1006') {
-                    return true;
-                } else {
-                    return this.router.parseUrl(currentRoutePath);
-                }
-            }
-
+        if (!token) {
+            return this.router.parseUrl('/');
         }
 
-        return this.router.parseUrl('/');
+        try {
+
+            const decoded: any = jwt_decode(token);
+            const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+
+            const url = state.url;
+
+            // ===== ADMIN =====
+            if (url.startsWith('/admin')) {
+                if (role === 'admin') {
+                    return true;
+                }
+                return this.router.parseUrl('/staff/bartending/1006');
+            }
+
+            // ===== STAFF =====
+            if (url.startsWith('/staff')) {
+                if (role === 'employee') {
+                    return true;
+                }
+                return this.router.parseUrl('/admin/dashboard/1006');
+            }
+
+            return this.router.parseUrl('/');
+
+        } catch {
+            return this.router.parseUrl('/');
+        }
     }
 
 

@@ -1,0 +1,34 @@
+<div *ngFor="let khu of getUniqueAreas()" class="container mt-3">
+  <h4 class="mb-4 text-primary border-bottom pb-2 fw-semibold d-flex align-items-center">
+    <i class="bi bi-geo-alt-fill me-2 text-danger"></i>{{ khu.location }}
+  </h4>
+
+  <div class="row g-4 ">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 custom-col-2" *ngFor="let table of getTablesByArea(khu.id)"
+      (click)="clickTable(table)" (dblclick)="onTableDoubleClick(table)" (mouseenter)="onMouseEnter(table)"
+      (mouseleave)="onMouseLeave()">
+      <div class="card h-100 border-0 table-card-custom position-relative">
+        <div class="card-body" [ngClass]="{'table-card-custom-body': selectTable?.id === table.id}">
+          <h5 class="card-title text-dark fw-bold mb-3">
+            <i class="bi bi-grid-3x3-gap-fill me-2 text-primary"></i>{{ table.tableName }}
+          </h5>
+          <p class="card-text mb-2 text-muted">
+            <i class="bi bi-people-fill me-1 text-secondary"></i> <strong>Sức chứa:</strong> {{ table.capacity }} người
+          </p>
+          <p class="card-text mb-3 text-muted">
+            <i class="bi bi-map me-1 text-secondary"></i> <strong>Khu vực:</strong> {{ table.location }}
+          </p>
+          <span class="badge status-badge" [ngClass]="getStatusClass(table.status)">
+            {{ getStatusText(table.status) }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="hover-info-fixed" *ngIf="hoveredTable">
+  <div><strong>Bàn:</strong> {{ hoveredTable.tableName }}</div>
+  <div><strong>Khách:</strong> {{ hoveredTable.customerName || '---' }}</div>
+  <div><strong>Số lượng:</strong> {{ hoveredTable.sumQuantity }}</div>
+</div> -->

@@ -1,0 +1,71 @@
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationService } from 'src/app/services/notification';
+@Component({
+  selector: 'app-staff-table-list',
+  templateUrl: './staff-table-list.component.html',
+  styleUrls: ['./staff-table-list.component.scss']
+})
+export class StaffTableListComponent {
+  funId: string = '';
+  @Input() tables: any[] = [];
+  @Input() selectTable: any;
+  @Output() table = new EventEmitter<void>();
+  @Output() doubleClick: EventEmitter<any> = new EventEmitter<any>();
+
+  constructor(private router: Router, private route: ActivatedRoute, private notificationService: NotificationService) { }
+
+  onTableDoubleClick(table: any): void {
+    // if (this.selectTable.status != 'empty') {
+    //   this.funId = this.route.snapshot.paramMap.get('funId') || '';
+    //   this.router.navigate([`/admin/tables/${this.funId}/orderdetail/${tableId}`]);
+    // } else {
+    //   this.notificationService.showInfo('1004');
+    // }
+    // console.log(tableId);
+    this.doubleClick.emit(table);
+  }
+
+  clickTable(table: any) {
+    this.selectTable = table;
+    // console.log(table);
+    this.table.emit(table);
+  }
+
+  getUniqueAreas(): any[] {
+    return this.tables.filter(t => t.parentId == null);
+  }
+
+
+  getTablesByArea(parentId: string): any[] {
+    return this.tables.filter(t => t.parentId === parentId);
+  }
+
+  getStatusText(status: string): string {
+    switch (status) {
+      case 'empty': return 'Trống';
+      case 'reserved': return 'Đã đặt';
+      case 'occupied': return 'Có khách';
+      default: return '';
+    }
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'empty': return 'status-empty';
+      case 'reserved': return 'status-reserved';
+      case 'occupied': return 'status-occupied';
+      default: return '';
+    }
+  }
+  hoveredTable: any = null;
+
+  onMouseEnter(table: any) {
+    this.hoveredTable = table;
+  }
+
+  onMouseLeave() {
+    this.hoveredTable = null;
+  }
+
+}

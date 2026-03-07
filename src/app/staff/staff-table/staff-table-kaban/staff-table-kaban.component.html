@@ -1,0 +1,36 @@
+<div class="kanban-board">
+  <div *ngFor="let column of columns" class="kanban-group">
+    <h3 [ngClass]="getStatusClass(column.status)">{{ column.name }}</h3>
+    <div class="kanban-column" cdkDropList [cdkDropListData]="column.tables" [cdkDropListConnectedTo]="connectedLists"
+      [id]="column.status" (cdkDropListDropped)="drop($event)">
+      <div #kanbanTasks [attr.data-status]="column.status" class="kanban-tasks" (scroll)="onScroll(column, $event)"
+        (touchstart)="onTouchStart()" (touchmove)="onTouchMove()" (touchend)="onTouchEnd()" (wheel)="onWheel()">
+        <div class="kanban-task" *ngFor="let table of column.tables" cdkDrag [cdkDragDisabled]="isScrolling"
+          (dblclick)="onDoubleClick(table)" (click)="onTableClick(table)"
+          [ngClass]="{'selected-table': selectedTable?.id === table?.id}">
+          <table-status [table]="table"></table-status>
+          <!-- <lib-tablestatus [table]="table"></lib-tablestatus> -->
+          <h5 class="card-title text-dark fw-bold mb-3">
+            <i class="bi bi-grid-3x3-gap-fill me-2 text-primary"></i>{{ table.tableName }}
+          </h5>
+          <p class="card-text mb-2 text-muted">
+            <i class="bi bi-people-fill me-1 text-secondary"></i> <strong>Sức chứa:</strong> {{ table.capacity }} người
+          </p>
+          <p class="card-text mb-3 text-muted">
+            <i class="bi bi-map me-1 text-secondary"></i> <strong>Khu vực:</strong> {{ table.location }}
+          </p>
+          <div class="d-flex justify-content-between align-items-center">
+            <p *ngIf="table?.endDate" style="opacity: 0.6; font-size: 15px;"><i class="fa fa-calendar me-2"></i>{{
+              table?.endDate | date: 'dd/MM/yyyy' }}</p>
+          </div>
+        </div>
+        <div class="loading-spinner" *ngIf="isLoading[column.status]">
+          <div class="spinner"></div>
+        </div>
+      </div>
+      <!-- <div class="icon-container">
+        <i class="bi bi-arrow-repeat rotating scroll-down" (click)="scrollToBottom(column.status)"></i>
+      </div> -->
+    </div>
+  </div>
+</div>

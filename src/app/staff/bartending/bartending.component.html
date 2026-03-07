@@ -1,111 +1,99 @@
-<div class="kanban-header d-flex justify-content-between align-items-center p-1 bg-light shadow-sm sticky-top">
-  <div class="d-flex align-items-center gap-2">
-    <div class="logo fs-5 text-dark">☕ Cafeza</div>
-    <!-- <h4 class="fw-bold text-primary m-0">Pha Chế</h4> -->
-  </div>
+<lib-layout-staff [text]="'Quản lý đơn món'" (showButtonss)="evetnbuttons($event)" [buttonNone]="showButtonsnone"
+  [tabTemplates]="{staff}"></lib-layout-staff>
 
-  <div class="text-center d-none d-md-block">
-    <h5 class="text-secondary mb-0" id="currentTime">--:--:--</h5>
-    <small class="text-muted" id="currentDate">--/--/----</small>
-  </div>
+<ng-template #staff>
 
-  <div class="d-flex align-items-center gap-3">
-    <div class="text-end">
-      <div class="fw-bold text-dark"><i class="bi bi-person-fill me-1"></i>{{ currentUserName }}</div>
-      <small class="text-muted">{{ currentUserRole }}</small>
-    </div>
-    <button class="btn btn-outline-danger btn-sm">
-      <i class="bi bi-box-arrow-right me-1"></i> Đăng xuất
-    </button>
-  </div>
-</div>
+  <div class="container-fluid ">
+    <div class="d-flex justify-content-end">
+      <div class="d-flex align-items-end gap-3 flex-nowrap">
 
+        <div class="d-flex align-items-center gap-2">
+          <label for="startDate" class="form-label mb-0">Từ ngày:</label>
+          <input id="startDate" type="date" class="form-control" [(ngModel)]="startDate" name="startDate"
+            style="width: 200px;">
+        </div>
 
+        <div class="d-flex align-items-center gap-2">
+          <label for="endDate" class="form-label mb-0">Đến ngày:</label>
+          <input id="endDate" type="date" class="form-control" [(ngModel)]="endDate" name="endDate"
+            style="width: 200px;">
+        </div>
 
-<div class="container-fluid px-3 mt-4">
-  <div class="d-flex justify-content-end">
-    <div class="d-flex align-items-end gap-3 flex-nowrap">
+        <div>
+          <button class="btn btn-primary" (click)="filterColumns()" type="button">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
 
-      <div class="d-flex align-items-center gap-2">
-        <label for="startDate" class="form-label mb-0">Từ ngày:</label>
-        <input id="startDate" type="date" class="form-control" [(ngModel)]="startDate" name="startDate"
-          style="width: 200px;">
       </div>
-
-      <div class="d-flex align-items-center gap-2">
-        <label for="endDate" class="form-label mb-0">Đến ngày:</label>
-        <input id="endDate" type="date" class="form-control" [(ngModel)]="endDate" name="endDate" style="width: 200px;">
-      </div>
-
-      <div>
-        <button class="btn btn-primary" (click)="filterColumns()" type="button">
-          <i class="bi bi-search"></i>
-        </button>
-      </div>
-
     </div>
   </div>
-</div>
 
 
 
 
+  <div class="bottom-card">
 
 
 
-<div class="kanban-board">
-  <div *ngFor="let column of columns" class="kanban-group">
-    <h3 [ngClass]="getStatusClass(column.status)">{{ column.name }}</h3>
-    <div class="kanban-column" cdkDropList [cdkDropListData]="column.orderdetails"
-      [cdkDropListConnectedTo]="connectedLists" [id]="column.status" (cdkDropListDropped)="drop($event)">
-      <div #kanbanTasks [attr.data-status]="column.status" class="kanban-tasks" (scroll)="onScroll(column, $event)"
-        (touchstart)="onTouchStart()" (touchmove)="onTouchMove()" (touchend)="onTouchEnd()" (wheel)="onWheel()">
-        <div class="kanban-task" *ngFor="let orderdetail of column.orderdetails" cdkDrag [cdkDragDisabled]="isScrolling"
-          (dblclick)="onDoubleClick(orderdetail)" (click)="onTableClick(orderdetail)"
-          [ngClass]="{'selected-table': selectedTable?.orderdetailId === orderdetail?.orderdetailId}">
-          <!-- <app-table-status [table]="table"></app-table-status> -->
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="task-status" [ngClass]="getStatusClasss(column.status)">
-              {{
-              getStatusText(column.status)
-              }}</span>
-            <!-- <i *ngIf="table.endDate" class="fa-solid fa-flag task-flag" [ngStyle]="getFlagClass()"></i> -->
-            <i class="task-flags" [class]="getStatusIcon(column.status)" [ngStyle]="getIconStyle(column.status)"></i>
+    <div class="kanban-board">
+      <div *ngFor="let column of columns" class="kanban-group">
+        <h3 [ngClass]="getStatusClass(column.status)">{{ column.name }}</h3>
+        <div class="kanban-column" cdkDropList [cdkDropListData]="column.orderdetails"
+          [cdkDropListConnectedTo]="connectedLists" [id]="column.status" (cdkDropListDropped)="drop($event)">
+          <div #kanbanTasks [attr.data-status]="column.status" class="kanban-tasks" (scroll)="onScroll(column, $event)"
+            (touchstart)="onTouchStart()" (touchmove)="onTouchMove()" (touchend)="onTouchEnd()" (wheel)="onWheel()">
+            <div class="kanban-task" *ngFor="let orderdetail of column.orderdetails" cdkDrag
+              [cdkDragDisabled]="isScrolling" (dblclick)="onDoubleClick(orderdetail)"
+              (click)="onTableClick(orderdetail)"
+              [ngClass]="{'selected-table': selectedTable?.orderdetailId === orderdetail?.orderdetailId}">
+              <!-- <app-table-status [table]="table"></app-table-status> -->
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="task-status" [ngClass]="getStatusClasss(column.status)">
+                  {{
+                  getStatusText(column.status)
+                  }}</span>
+                <!-- <i *ngIf="table.endDate" class="fa-solid fa-flag task-flag" [ngStyle]="getFlagClass()"></i> -->
+                <i class="task-flags" [class]="getStatusIcon(column.status)"
+                  [ngStyle]="getIconStyle(column.status)"></i>
 
+              </div>
+              <h5 class="card-title text-dark fw-bold mb-2">
+                <i class="bi bi-cup-straw text-primary"></i>
+                {{ orderdetail.drinkName }}
+              </h5>
+
+              <p class="card-text mb-2 text-muted">
+                <i class="bi bi-box-seam me-1 text-secondary"></i>
+                <strong>Số lượng:</strong> {{ orderdetail.quantity }}
+              </p>
+
+              <p *ngIf="orderdetail.note" class="card-text mb-2 text-muted">
+                <i class="bi bi-chat-left-text me-1 text-warning"></i>
+                <strong>Ghi chú:</strong> {{ orderdetail.note || '' }}
+              </p>
+
+
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="card-text mb-0 text-muted">
+                  <i class="bi bi-table me-1 text-info"></i>
+                  <strong>{{ orderdetail.tableName || 'Chưa xác định' }}</strong>
+                </p>
+                <p *ngIf="orderdetail?.createdAt" style="opacity: 0.6; font-size: 14px;"><i
+                    class="fa fa-calendar me-2"></i>
+                  {{ orderdetail?.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+              </div>
+
+            </div>
+            <div class="loading-spinner" *ngIf="isLoading[column.status]">
+              <div class="spinner"></div>
+            </div>
           </div>
-          <h5 class="card-title text-dark fw-bold mb-2">
-            <i class="bi bi-cup-straw text-primary"></i>
-            {{ orderdetail.drinkName }}
-          </h5>
-
-          <p class="card-text mb-2 text-muted">
-            <i class="bi bi-box-seam me-1 text-secondary"></i>
-            <strong>Số lượng:</strong> {{ orderdetail.quantity }}
-          </p>
-
-          <p *ngIf="orderdetail.note" class="card-text mb-2 text-muted">
-            <i class="bi bi-chat-left-text me-1 text-warning"></i>
-            <strong>Ghi chú:</strong> {{ orderdetail.note || '' }}
-          </p>
-
-
-          <div class="d-flex justify-content-between align-items-center">
-            <p class="card-text mb-0 text-muted">
-              <i class="bi bi-table me-1 text-info"></i>
-              <strong>{{ orderdetail.tableName || 'Chưa xác định' }}</strong>
-            </p>
-            <p *ngIf="orderdetail?.createdAt" style="opacity: 0.6; font-size: 14px;"><i class="fa fa-calendar me-2"></i>
-              {{ orderdetail?.createdAt | date: 'dd/MM/yyyy HH:mm' }}
-          </div>
-
-        </div>
-        <div class="loading-spinner" *ngIf="isLoading[column.status]">
-          <div class="spinner"></div>
-        </div>
-      </div>
-      <!-- <div class="icon-container">
+          <!-- <div class="icon-container">
         <i class="bi bi-arrow-repeat rotating scroll-down" (click)="scrollToBottom(column.status)"></i>
       </div> -->
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</ng-template>

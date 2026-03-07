@@ -345,5 +345,42 @@ export class BartendingComponent implements OnChanges, OnInit, OnDestroy {
     this.selectedTable = table;
     this.tableSelected.emit(table);
   }
+  showButtonsnone: any[] = [];
+  pendingActions: any[] = [];
+  selectTable: any = {};
 
+  evetnbuttons(actions: any[]) {
+    this.pendingActions = actions;
+    // console.log(this.pendingActions);
+    this.showButtonsnone = actions.filter(action => action.id === '109' || action.id === '101');
+    this.cdr.detectChanges();
+
+    if (!this.selectTable || !this.selectTable.id) {
+      this.pendingActions = actions;
+      return;
+    }
+    // console.log(this.pendingActions);
+    switch (this.selectTable.status) {
+      case 'empty':
+        this.showButtonsnone = actions.map(action => {
+          if (action.id === '110' || action.id === '111' || action.id === '112' || action.id === '113' || action.id === '114' || action.id === '115' || action.id === '103') {
+            return { ...action, display: 'none' };
+          }
+          return action;
+        });
+        break;
+      case 'occupied':
+        this.showButtonsnone = actions.map(action => {
+          if (action.id === '110' || action.id === '102' || action.id === '104' || action.id === '108' || action.id === '111' || action.id === '112' || action.id === '113' || action.id === '114' || action.id === '115') {
+            return { ...action, display: 'none' };
+          }
+          return action;
+        });
+        break;
+      default:
+        break;
+    }
+
+    this.cdr.detectChanges();
+  }
 }

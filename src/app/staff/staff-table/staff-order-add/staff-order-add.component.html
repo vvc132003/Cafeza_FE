@@ -1,0 +1,31 @@
+<app-form-add [text]="text" [headerDiv]="tables" [showoffcanvas]="showoffcanvas" (closePupAdd)="close()"
+    [tabTemplates]="{category:category}"></app-form-add>
+
+<ng-template #category>
+    <div class="mb-3">
+        <label for="fullName" class="form-label small">Tên khách hàng</label>
+        <input type="text" class="form-control form-control-sm" id="fullName" name="fullName"
+            [(ngModel)]="user.fullName">
+    </div>
+    <div class="mb-3">
+        <label for="phoneNumber" class="form-label small">Số điện thoại</label>
+        <input type="text" class="form-control form-control-sm" id="phoneNumber" name="phoneNumber"
+            [(ngModel)]="user.phoneNumber">
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label small">Email</label>
+        <input type="email" class="form-control form-control-sm" id="email" name="email"
+            [(ngModel)]="user.email">
+    </div>
+    <div class="mb-3">
+        <label for="address" class="form-label small">Địa chỉ</label>
+        <input type="text" class="form-control form-control-sm" id="address" name="address"
+            [(ngModel)]="user.address">
+    </div>
+    <div class="offcanvas-footer">
+        <button type="button" class="btn btn-primary px-4" (click)="save()">
+            <i class="fa fa-save"></i>
+            Lưu
+        </button>
+    </div>
+</ng-template>
